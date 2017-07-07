@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <title>充值未绑定</title>
+    <script src="js/flexible.js"></script>
+    <link rel="stylesheet" href="css/iconfont.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+    <div id="wrap">
+        <div class="wrapCenter">
+            <div class="headTop flex bgWhite">
+                <a class="headTopLeft" href="javascript:history.back(-1);"><span class="messageIcon" style="font-size:0.266666667rem;display: inline-block;"> <i class="iconfont icon-fanhui" style="font-size: 0.693333333rem;"></i></span></a>
+                <div class="headTopCenter"><span class="logo"></span>充值</div>
+                <div class="headTopRight withdrawRecord">记录</div>
+            </div>
+            <div class="rechargingBankWrap bgWhite borderTop">
+                <div class="rechargeBankWrapCenter flex">
+                    <div class="bankIcon rechargeBankIcon"><img src="images/newImg.png" alt=""></div>
+                    <div class="bankRight">
+                        <div class="userCardInfo">
+                            <span class="bankTitle">银行卡支付</span>
+                        </div>
+                        <div class="rechargeExplain">
+                           先绑卡，后支付
+                        </div>
+                    </div>
+                    <div class="goAuthentication">
+                        <span class="authenticationFont">去认证</span>
+                        <span class="authenticationIcon"> <i class="iconfont icon-fanhui-copy"></i> </span>
+                    </div>
+                </div>
+            </div>
+            <div class="chongZhiWrap bgWhite borderBottom">
+                <div class="chongZhiWrapCenter flex">
+                    <div class="jinETile">金额(元)</div>
+                    <input type="number" class="czMoney" placeholder="最低充值金额100元">
+                    <div class="reset" style="text-align: center;">x</div>
+                </div>
+            </div>
+            <div class="confirmBtnWrap">
+                <input type="button" class="confirmBtn" value="确认">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

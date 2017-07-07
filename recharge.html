@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <title>充值</title>
+    <!--<link rel="stylesheet" href="css/swiper-3.4.2.min.css">-->
+    <script src="js/flexible.js"></script>
+    <link rel="stylesheet" href="css/iconfont.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+<div id="wrap">
+    <div class="wrapCenter">
+        <div class="headTop flex bgWhite">
+            <div class="headTopLeft"><a class="messageIcon" style="font-size:0.266666667rem;display: inline-block;width: 1.4rem;text-align: left;">  <i class="iconfont icon-fanhui" style="font-size: 0.693333333rem;"></i></a></div>
+            <div class="headTopCenter"><span class="logo"></span>充值</div>
+            <div class="headTopRight withdrawRecord">记录</div>
+        </div>
+        <div class="rechargingBankWrap bgWhite borderTop">
+            <div class="rechargeBankWrapCenter flex">
+                <div class="bankIcon rechargeBankIcon"><img src="images/jianshebank.png" alt=""></div>
+                <div class="bankRight">
+                    <div class="userCardInfo">
+                        <span class="bankTitle">建设银行</span>
+                        <span class="bankCardNumber">6227****397</span>
+                    </div>
+                    <div class="rechargeExplain">
+                        <span class="danBi">单笔5万</span>
+                        <span class="danRi">单日100万</span>
+                        <span class="danYue">单月一万</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="chongZhiWrap bgWhite borderBottom">
+            <div class="chongZhiWrapCenter flex">
+                <div class="jinETile">金额(元)</div>
+                <input type="number" class="czMoney" placeholder="最低充值金额100元">
+                <div class="reset">x</div>
+            </div>
+        </div>
+        <div class="confirmBtnWrap">
+            <input type="button" class="confirmBtn" value="确认">
+        </div>
+    </div>
+    <div class="popupBg"></div>
+    <div class="popupWrap bgGray">
+        <div class="popupTop flex borderBottom">
+            <div class="popupTopLeft"> X </div>
+            <div class="popupTopCenter">充值金额 <span class="userRechargeNum">￥100000.00</span></div>
+            <div class="popupTopRight"></div>
+        </div>
+        <div class="yourPhone"></div>
+        <div class="verificationCodeWrap flex bgWhite">
+            <div class="verificationCodeFont">验证码</div>
+            <input type="number" class="verificationCodeNum" placeholder="请输入验证码">
+        </div>
+        <div class="rechargeBankWrap">
+            使用<span class="rechargeBank">中国建设银行</span><span>(0397)</span>付款
+        </div>
+        <div class="rechargeConfirmBtnWrap">
+            <input type="button" class="rechargeConfirmBtn" value="确认">
+        </div>
+    </div>
+</div>
+</body>
+</html>

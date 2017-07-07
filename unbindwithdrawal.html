@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <title>提现未绑定</title>
+    <script src="js/flexible.js"></script>
+    <link rel="stylesheet" href="css/iconfont.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+    <div id="wrap">
+        <div class="wrapCenter">
+            <div class="headTop flex bgWhite">
+                <a class="headTopLeft" href="javascript:history.back(-1);"><span class="messageIcon" style="font-size:0.266666667rem;display: inline-block;padding-left: 0.133333333rem;"> <i class="iconfont icon-fanhui" style="font-size: 0.693333333rem;"></i></span></a>
+                <div class="headTopCenter"><span class="logo"></span>提现</div>
+                <div class="headTopRight"></div>
+            </div>
+            <div class="cashAvailableWrap">
+                <div class="cashAvailable">可提现金额：<span class="cashAvailableNum">0.00</span>元</div>
+            </div>
+            <div class="noTransactionWrap bgWhite">
+                <div class="noTransaction">
+                    您暂无交易，没有可提现的金额
+                </div>
+            </div>
+            <div class="withdrawBtnWrap bgWhite" style="margin-top: 0.32rem;">
+                <div class="withdrawBtnWrapCenter flex">
+                    <div class="jineFont">金额</div>
+                    <input type="number" placeholder="输入提现金额" class="inputWithDrawNum" disabled="disabled">
+                    <input type="button" value="全部提现" class="withdrawAllBtn" disabled="disabled" style="color: #666">
+                </div>
+            </div>
+            <div class="applyWithdrawals">
+                <input type="button" class="applyWithdrawalsBtn" value="申请提现" disabled="disabled">
+            </div>
+        </div>
+    </div>
+</body>
+</html>
