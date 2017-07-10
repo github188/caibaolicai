@@ -9,18 +9,20 @@ $(function(){
         var t = new Date(nowTime+dayTime).toLocaleString(); //把两个时间戳转换成普通时间
         var timeStr = t.substr(0,9);
         var arr=timeStr.split("/");
-        var year = arr[0];
-        var month = $.trim(arr[1]);
-        var day = $.trim(arr[2]) ;
-        if(month.length == 1){
-            var month = 0 + month;
+        var year = parseInt($.trim(arr[0]));
+        var month = parseInt($.trim(arr[1]));
+        var day = parseInt($.trim(arr[2]));
+        console.log(typeof (month))
+        if(month < 10){
+            var month = "0"+ month;
+            console.log(month)
         }
-        if(day.length == 1){
-            var day = 0 + day;
+        if(day<10){
+            var day = '0' + day;
         }
         var interestTime = year + "-" + month + "-" + day ;
         $(".interestDay").text(interestTime);
-        alert(interestTime)
+        //alert(interestTime)
     }
     interestDay(1); //当前时间添加1天
     //默认到期日
@@ -55,10 +57,9 @@ $(function(){
         }
         var interestTime = year + "-" + month + "-" + day ;
         $(".expireDay").text(interestTime);
-        alert(interestTime)
+        alert(interestTime);
     }
     expireDay(2); //当前时间添加2天
-
     //获取金价
     $.ajax({
         url:"http://106.14.165.194:8000/history-price",
@@ -71,4 +72,14 @@ $(function(){
             console.log(res);
         }
     });
+    $(".buyMoney").on('input porpertychange',function(){
+        calculateExpectProfit();
+    });
+    function calculateExpectProfit(){
+        var principal = parseFloat($(".buyMoney").val());
+        var index = $(".expireDay").text() - $(".interestDay").text();
+        console.log(index);
+        console.log(typeof(index));
+    }
+
 });

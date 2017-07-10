@@ -5,6 +5,9 @@ $(function(){
     $(".goSellHqjBtn").click(function(){
        window.location.href = "sellHqj.html";
     });
+    $(".goBuyHqjBtn").click(function(){
+        window.location.href = "buyHqj.html";
+    });
     function productsAssets(){
         //活期金资产查询
         $.ajax({
