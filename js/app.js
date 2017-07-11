@@ -78,9 +78,7 @@ $(function(){
             success:function(res){
                 console.log(res);
                 var goldPrice = window.sessionStorage.goldPrice;
-                console.log(goldPrice)
                 var assetNum = res.asset.balance + res.asset.currentGoldSum + (res.asset.qiandaiGoldSum * goldPrice) + (res.asset.jinshengGoldSum * goldPrice) + res.asset.wenzhuanGoldSum;
-                console.log(assetNum)
                 $(".asset").text(assetNum);
                 $(".balance").text(res.asset.balance);
                 $(".dataLeftBottom").text(res.asset.earnYtdSum);

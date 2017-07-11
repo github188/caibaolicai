@@ -87,13 +87,33 @@ $(function(){
         $(".jixiEndDay360").text(interestTime);
     }
     interestEndTime360(360);
+    //点击购买产品
+    $(".buyHqjBtn").click(function(){
+        $.ajax({
+            url:'http://106.14.165.194:8000/authQuery',
+            type:"GET",
+            headers:{
+                "token":window.localStorage.token
+            },
+            data:{
+                "phone":window.localStorage.phoneNumber
+            },
+            success:function(res){
+                console.log(res);
+            },
+            error:function(res){
+                console.log(res);
+            }
 
-
+        });
+        //window.location.href = 'buyHqj.html';
+    });
     setTimeout('$(".loading").css("display","none")',1000);
     $(".productBtn ").on('click',function(){
         $(this).addClass("bottomColor footBtnOrange").siblings().removeClass("bottomColor footBtnOrange");
         $("body").scrollTop(0);
     });
+    //默认显示稳赚金360
     if(window.sessionStorage.pageMark == "wzj360"){
         var mySwiper = new Swiper('#swiper-container4',{
             initialSlide :3,
@@ -172,6 +192,7 @@ $(function(){
             }
         });
     }
+    //默认显示活期金
     if(window.sessionStorage.pageMark == "hqj"){
         var mySwiper3 = new Swiper('#swiper-container3',{
             initialSlide :0,
@@ -215,5 +236,7 @@ $(function(){
             }
         });
     }
+
+
 });
 
