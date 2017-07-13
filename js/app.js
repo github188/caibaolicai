@@ -30,6 +30,7 @@ $(function(){
     //});
     $(".faXian").click(function(){
         if(window.localStorage.token == undefined){
+            window.sessionStorage.checkedLoginCode = "faXian";
             window.location.href = "ready.html";
         }else {
             window.location.href = "find.html";
@@ -67,7 +68,7 @@ $(function(){
         $(".dataRightTop").text("昨日收益克数(克)");
         //资产查询接口
         $.ajax({
-            url:"http://10.0.92.198:1111/assetQuery",
+            url:"http://106.14.165.194:1111/assetQuery",
             type:"GET",
             headers:{
                 "token":window.localStorage.token
@@ -121,44 +122,11 @@ $(function(){
     //    $(".swiper-wrapper").find(".page").css("display","none");
     //    $(".swiper-wrapper").find(".page").eq($(this).index()).css("display","block");
     //});
-    //设置支付密码
-    $(".setPwdBtn").click(function(){
-        if($(".inputPwd").val() !== $(".confirmPwd").val()){
-            $(".popup").show();
-            $(".popup").text("密码不一致");
-            setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
-        }else {
-            var payPwd = sha256_digest($(".confirmPwd").val());
-            console.log(payPwd);
-            $.ajax({
-                url:"http://10.0.92.198:1111/paypwd",
-                type:"POST",
-                headers:{
-                    "Content-Type":"application/x-www-form-urlencoded",
-                    "token":window.localStorage.token
-                },
-                data:{
-                    "phone":window.localStorage.phoneNumber,
-                    "paypwd":payPwd
-                },
-                success:function(res){
-                    console.log(res);
-                    if(res.code == 0){
 
-                    }
-                },
-                error:function(res){
-                    console.log(res);
-                }
-            })
-        }
-    });
     //资产
     $(".messageIcon").click(function(){
        window.location.href = "personalInfo.html"
     });
-
-
     //    退出登录
     $(".quitLoginBtn").click(function(){
         localStorage.clear();

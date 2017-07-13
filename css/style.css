@@ -1033,6 +1033,14 @@ input:focus{
     text-align: right;
     font-size: 0.426666667rem;
 }
+.accountNumber{
+    -webkit-box-flex:5;
+    -webkit-flex:5;
+    -ms-flex: 5;
+    flex: 5;
+    text-align: right;
+    font-size: 0.426666667rem;
+}
 .rightArrow{
     -webkit-box-flex:1;
     -webkit-flex:1;

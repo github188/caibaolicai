@@ -12,7 +12,7 @@ $(function(){
     function productsAssets(){
         //活期金资产查询
         $.ajax({
-            url:"http://10.0.92.198:1111/cgQuery",
+            url:"http://106.14.165.194:1111/cgQuery",
             type:"GET",
             headers:{
                 "token":window.localStorage.token
@@ -32,7 +32,7 @@ $(function(){
         });
         //稳赚金资产查询
         $.ajax({
-            url:"http://10.0.92.198:1111/wenzhuanGold",
+            url:"http://106.14.165.194:1111/wenzhuanGold",
             type:"GET",
             headers:{
                 "token":window.localStorage.token
@@ -51,7 +51,7 @@ $(function(){
         });
         //稳赚金预期总收益
         $.ajax({
-            url:"http://10.0.92.198:1111/wenzhuanGold/earnSum",
+            url:"http://106.14.165.194:1111/wenzhuanGold/earnSum",
             type:"GET",
             headers:{
                 "token":window.localStorage.token

@@ -25,14 +25,14 @@ $(function(){
     }
     countDown();
     $.ajax({
-        url:"http://10.0.92.198:1111/smsVeri",
+        url:"http://106.14.165.194:1111/smsVeri",
         type:"POST",
         headers:{
             "Content-Type":"application/x-www-form-urlencoded"
         },
         data:{
             "phone":window.localStorage.phoneNumber,
-            "usage":"0"
+            "usage":window.sessionStorage.usage
         },
         success:function(res){
             console.log(res);
@@ -43,14 +43,14 @@ $(function(){
     });
     $(".getVerifyCode").click(function(){
         $.ajax({
-            url:"http://10.0.92.198:1111/smsVeri",
+            url:"http://106.14.165.194:1111/smsVeri",
             type:"POST",
             headers:{
                 "Content-Type":"application/x-www-form-urlencoded"
             },
             data:{
                 "phone":window.localStorage.phoneNumber,
-                "usage":"0"
+                "usage":window.sessionStorage.usage
             },
             success:function(res){
                 console.log(res);
@@ -63,7 +63,7 @@ $(function(){
     });
     $(".loginBtn").click(function(){
        $.ajax({
-           url:"http://10.0.92.198:1111/login",
+           url:"http://106.14.165.194:1111/login",
            type:"POST",
            headers:{
                "Content-Type":"application/x-www-form-urlencoded"
@@ -81,11 +81,11 @@ $(function(){
                }else if(res.code == 0){
                    window.localStorage.token = res.token;
                    window.location.href = "index.html";
-                   //if(window.sessionStorage.checkedLoginCode = "ziChan"){
-                   //     window.location.href = "index.html";
-                   //}else if(window.sessionStorage.checkedLoginCode = "faXian"){
-                   //    window.location.href = "index.html";
-                   //}
+                   if(window.sessionStorage.checkedLoginCode = "ziChan"){
+                        window.location.href = "asset.html";
+                   }else if(window.sessionStorage.checkedLoginCode = "faXian"){
+                       window.location.href = "find.html";
+                   }
                }
            },
            error:function(res){

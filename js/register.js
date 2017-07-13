@@ -2,7 +2,7 @@
  * Created by guojing on 2017-7-4.
  */
 $(function(){
-    $(".phoneNumber").text(window.sessionStorage.phoneNumber);
+    $(".phoneNumber").text(window.localStorage.phoneNumber);
     function countDown(){
         var timer=setTimeout(function(){//按验证按钮后60秒按钮禁用
             clearInterval(timer2);
@@ -25,14 +25,14 @@ $(function(){
     }
     countDown();
     $.ajax({
-        url:"http://10.0.92.198:1111/smsVeri",
+        url:"http://106.14.165.194:1111/smsVeri",
         type:"POST",
         headers:{
             "Content-Type":"application/x-www-form-urlencoded"
         },
         data:{
-            "phone":window.sessionStorage.phoneNumber,
-            "usage":"1"
+            "phone":window.localStorage.phoneNumber,
+            "usage":window.sessionStorage.usage
         },
         success:function(res){
             console.log(res);
@@ -43,14 +43,14 @@ $(function(){
     });
     $(".getVerifyCode").click(function(){
         $.ajax({
-            url:"http://10.0.92.198:1111/smsVeri",
+            url:"http://106.14.165.194:1111/smsVeri",
             type:"POST",
             headers:{
                 "Content-Type":"application/x-www-form-urlencoded"
             },
             data:{
-                "phone":window.sessionStorage.phoneNumber,
-                "usage":"1"
+                "phone":window.localStorage.phoneNumber,
+                "usage":window.sessionStorage.usage
             },
             success:function(res){
                 console.log(res);
@@ -63,13 +63,13 @@ $(function(){
     });
     $(".registerBtn").click(function(){
         $.ajax({
-            url:"http://10.0.92.198:1111/regist",
+            url:"http://106.14.165.194:1111/regist",
             type:"POST",
             headers:{
                 "Content-Type":"application/x-www-form-urlencoded"
             },
             data:{
-                "phone":window.sessionStorage.phoneNumber,
+                "phone":window.localStorage.phoneNumber,
                 "veriCode":$(".verifyCode").val()
             },
             success:function(res){

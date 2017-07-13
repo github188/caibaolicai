@@ -90,7 +90,7 @@ $(function(){
     //点击购买产品
     $(".buyHqjBtn").click(function(){
         $.ajax({
-            url:'http://106.14.165.194:8000/authQuery',
+            url:'http://106.14.165.194:1111/authQuery',
             type:"GET",
             headers:{
                 "token":window.localStorage.token
@@ -100,6 +100,23 @@ $(function(){
             },
             success:function(res){
                 console.log(res);
+                if(res.code == -1){
+                    window.location.href = "certification.html";
+                }else if(res.code == -2){
+                    $(".popup").show();
+                    $(".popup").text(res.msg);
+                    setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
+                }else if(res.code == -3){
+                    $(".popup").show();
+                    $(".popup").text(res.msg);
+                    setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
+                }else if(res.code == -4){
+                    $(".popup").show();
+                    $(".popup").text(res.msg);
+                    setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
+                }else{
+                    window.location.href = "buyHqj.html";
+                }
             },
             error:function(res){
                 console.log(res);
