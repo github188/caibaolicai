@@ -18,9 +18,7 @@ $(function(){
     $(".ziChan").click(function(){
         window.location.href = "asset.html";
     });
-    $(".goChooseBank").click(function(){
-        window.location.href = "choosebank.html";
-    });
+
     //var checkedLoginCode;
     //$(".ziChan").click(function(){
     //    if(window.localStorage.token == undefined){
@@ -36,12 +34,26 @@ $(function(){
             window.location.href = "find.html";
         }
     });
+
+    $(".goBuyWzj360").click(function(){
+        if(window.localStorage.token == undefined){
+            window.sessionStorage.pageMark = "wzj360";
+            window.location.href = "ready.html";
+        }else {
+            window.sessionStorage.pageMark = "wzj360";
+            window.location.href = "productCollection.html";
+        }
+    });
+    $(".goBuyHqj").click(function(){
+        window.location.href = "productCollection.html";
+        window.sessionStorage.pageMark = "hqj";
+    });
     if(window.localStorage.token == undefined){
         $(".dataLeftTop").text("昨日注册(人)");
         $(".dataRightTop").text("累计交易(吨)");
         //获取未登录首页的注册人数
         $.ajax({
-            url:"http://10.0.92.198:1111/count",
+            url:"http://106.14.165.194:1111/count",
             type:"GET",
             success:function(res){
                 $(".dataLeftBottom").text(res.result.usersCountYtd);
@@ -108,14 +120,6 @@ $(function(){
         });
     }
 
-    $(".goBuyWzj360").click(function(){
-        window.location.href = "productCollection.html";
-        window.sessionStorage.pageMark = "wzj360";
-    });
-    $(".goBuyHqj").click(function(){
-        window.location.href = "productCollection.html";
-        window.sessionStorage.pageMark = "hqj";
-    });
     //$(".footBtn").click(function(){
     //    $("body").scrollTop(0);
     //    $(this).css("color","orange").siblings().css("color","#beb8b8");
@@ -131,5 +135,6 @@ $(function(){
     $(".quitLoginBtn").click(function(){
         localStorage.clear();
         window.location.href = "index.html";
-    })
+    });
+
 });

@@ -1349,6 +1349,7 @@ input:focus{
     top:1.866666667rem;
     z-index: 10;
     display: none;
+    padding-bottom: 0.32rem;
 }
 .popupTop{
     padding:0 0.4rem;
@@ -2301,4 +2302,13 @@ input:focus{
 }
 .goldPrice{
     font-size: 0.426666667rem;
+}
+.bankExplain{
+    text-align: center;
+}
+.goChooseBank{
+    text-align: center;
+}
+.icon-jinru:before{
+    transform:rotate(180deg);-ms-transform:rotate(180deg); /* Internet Explorer */-moz-transform:rotate(180deg); /* Firefox */-webkit-transform:rotate(180deg); /* Safari 和 Chrome */-o-transform:rotate(180deg); /* Opera */"
 }

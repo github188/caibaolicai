@@ -32,7 +32,7 @@ $(function(){
         },
         data:{
             "phone":window.localStorage.phoneNumber,
-            "usage":window.sessionStorage.usage
+            "usage":"1"
         },
         success:function(res){
             console.log(res);
@@ -50,7 +50,7 @@ $(function(){
             },
             data:{
                 "phone":window.localStorage.phoneNumber,
-                "usage":window.sessionStorage.usage
+                "usage":"1"
             },
             success:function(res){
                 console.log(res);
@@ -70,12 +70,18 @@ $(function(){
             },
             data:{
                 "phone":window.localStorage.phoneNumber,
-                "veriCode":$(".verifyCode").val()
+                "veriCode":$.trim($(".verifyCode").val())
             },
             success:function(res){
                 console.log(res);
-                window.localStorage.token = res.token;
-                window.location.href = "setpaypwd.html";
+                if(res.code == 0){
+                    window.localStorage.token = res.token;
+                    window.location.href = "setpaypwd.html";
+                }else{
+                    $(".popup").show();
+                    $(".popup").text(res.msg);
+                    setTimeout('$(".popup").hide(),$(".poup").text()',1500);
+                }
             },
             error:function(res){
                 console.log(res);

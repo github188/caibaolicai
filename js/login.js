@@ -32,7 +32,7 @@ $(function(){
         },
         data:{
             "phone":window.localStorage.phoneNumber,
-            "usage":window.sessionStorage.usage
+            "usage":"0"
         },
         success:function(res){
             console.log(res);
@@ -50,7 +50,7 @@ $(function(){
             },
             data:{
                 "phone":window.localStorage.phoneNumber,
-                "usage":window.sessionStorage.usage
+                "usage":"0"
             },
             success:function(res){
                 console.log(res);
@@ -80,11 +80,14 @@ $(function(){
                    setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
                }else if(res.code == 0){
                    window.localStorage.token = res.token;
-                   window.location.href = "index.html";
-                   if(window.sessionStorage.checkedLoginCode = "ziChan"){
+                   if(window.sessionStorage.checkedLoginCode == "ziChan"){
                         window.location.href = "asset.html";
-                   }else if(window.sessionStorage.checkedLoginCode = "faXian"){
+                   }else if(window.sessionStorage.checkedLoginCode == "faXian"){
                        window.location.href = "find.html";
+                   }else if(window.sessionStorage.pageMark ==  "wzj360"){
+                       window.location.href = "productCollection.html";
+                   }else{
+                       window.location.href = "index.html";
                    }
                }
            },

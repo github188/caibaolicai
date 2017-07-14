@@ -13,85 +13,88 @@
     <link rel="stylesheet" href="css/iconfont.css">
 </head>
 <body>
-    <div id="wrap">
-        <div class="wrapCenter">
-            <div class="headTop flex bgWhite">
-                <a class="headTopLeft" href="javascript:history.back(-1);"><span class="messageIcon" style="font-size:0.266666667rem;display: inline-block;"> <i class="iconfont icon-fanhui" style="font-size: 0.693333333rem;"></i></span></a>
-                <div class="headTopCenter"><span class="logo"></span>实名认证</div>
-                <div class="headTopRight"></div>
-            </div>
-            <div class="bindDesWrap">
-                <div class="bindDes">目前只支持绑定一张银行卡，建议您绑定最常用的银行卡</div>
-            </div>
-            <div class="shiMingCardWrap bgWhite borderBottom">
-                <div class="shiMingCard paddingLr12 flex">
-                    <div class="shiMingTitle">开户银行</div>
-                    <div class="shiMingCenter"></div>
-                    <div class="shiMingRight chooseKaiHuBankWrap goChooseBank">
-                        <span class="chooseKaiHuBank">选择开户银行</span>
-                        <span class="chooseKaiHuBankIcon"> <i class="iconfont icon-fanhui-copy" style="font-size: 0.48rem;"></i> </span>
-                    </div>
+<div id="wrap">
+    <div class="wrapCenter">
+        <div class="headTop flex bgWhite">
+            <a class="headTopLeft" href="javascript:history.back(-1);"><span class="messageIcon" style="font-size:0.266666667rem;display: inline-block;"> <i class="iconfont icon-fanhui" style="font-size: 0.693333333rem;"></i></span></a>
+            <div class="headTopCenter"><span class="logo"></span>实名认证</div>
+            <div class="headTopRight"></div>
+        </div>
+        <div class="bindDesWrap">
+            <div class="bindDes">目前只支持绑定一张银行卡，建议您绑定最常用的银行卡</div>
+        </div>
+        <div class="shiMingCardWrap bgWhite borderBottom">
+            <div class="shiMingCard paddingLr12 flex">
+                <div class="shiMingTitle">开户银行</div>
+                <div class="shiMingCenter bankExplain"></div>
+                <div class="shiMingRight chooseKaiHuBankWrap goChooseBank">
+                    <span class="chooseKaiHuBank">选择开户银行</span>
+                    <span class="chooseKaiHuBankIcon"> <i class="iconfont icon-fanhui-copy" style="font-size: 0.48rem;"></i> </span>
                 </div>
-            </div>
-            <div class="shiMingCardWrap bgWhite borderBottom">
-                <div class="shiMingCard paddingLr12 flex">
-                    <div class="kaiHuBankTitle">开户卡号</div>
-                    <div class="shiMingCenter">
-                        <input type="number" placeholder="银行卡号">
-                    </div>
-                    <div class="shiMingRight chooseKaiHuBankWrap">
-                    </div>
-                </div>
-            </div>
-            <div class="shiMingCardWrap bgWhite borderBottom kaiHuRen" >
-                <div class="shiMingCard paddingLr12 flex">
-                    <div class="kaiHuBankTitle">开户人</div>
-                    <div class="shiMingCenter">
-                        <input type="number" placeholder="开户人姓名">
-                    </div>
-                    <div class="shiMingRight chooseKaiHuBankWrap">
-                    </div>
-                </div>
-            </div>
-            <div class="shiMingCardWrap bgWhite borderBottom">
-                <div class="shiMingCard paddingLr12 flex">
-                    <div class="kaiHuBankTitle">身份证号码</div>
-                    <div class="shiMingCenter">
-                        <input type="number" placeholder="开户人身份证号码">
-                    </div>
-                    <div class="shiMingRight chooseKaiHuBankWrap">
-                    </div>
-                </div>
-            </div>
-            <div class="shiMingCardWrap bgWhite borderBottom">
-                <div class="shiMingCard paddingLr12 flex">
-                    <div class="kaiHuBankTitle">手机号码</div>
-                    <div class="shiMingCenter">
-                        <input type="number" placeholder="银行预留手机号码">
-                    </div>
-                    <div class="shiMingRight chooseKaiHuBankWrap">
-                    </div>
-                </div>
-            </div>
-            <div class="shiMingCardWrap bgWhite borderBottom">
-                <div class="shiMingCard paddingLr12 flex">
-                    <div class="kaiHuBankTitle">获取验证码</div>
-                    <div class="shiMingCenter">
-                        <input type="number" placeholder="请输入手机验证码">
-                    </div>
-                    <div class="shiMingRight chooseKaiHuBankWrap">
-                    </div>
-                </div>
-            </div>
-            <div class="nextWrap">
-                <input type="button" class="nextBtn" value="下一步">
-            </div>
-            <div class="shiMingBottom">
-                <span class="star">★</span> 依据《中华人民共和国居民身份证条例》第十五条，为了 保证您的账户及资金安全，请勿冒用他人身份信息及银行卡信息，请使用真实有效的本人身份信息。
             </div>
         </div>
+        <div class="shiMingCardWrap bgWhite borderBottom">
+            <div class="shiMingCard paddingLr12 flex">
+                <div class="kaiHuBankTitle">开户卡号</div>
+                <div class="shiMingCenter">
+                    <input type="tel" placeholder="银行卡号" class="personBankNum">
+                </div>
+                <div class="shiMingRight chooseKaiHuBankWrap">
+                </div>
+            </div>
+        </div>
+        <div class="shiMingCardWrap bgWhite borderBottom kaiHuRen" >
+            <div class="shiMingCard paddingLr12 flex">
+                <div class="kaiHuBankTitle">开户人</div>
+                <div class="shiMingCenter">
+                    <input type="text" placeholder="开户人姓名">
+                </div>
+                <div class="shiMingRight chooseKaiHuBankWrap">
+                </div>
+            </div>
+        </div>
+        <div class="shiMingCardWrap bgWhite borderBottom">
+            <div class="shiMingCard paddingLr12 flex">
+                <div class="kaiHuBankTitle">身份证号码</div>
+                <div class="shiMingCenter">
+                    <input type="text" placeholder="开户人身份证号码" class="personIdCardNum">
+                </div>
+                <div class="shiMingRight chooseKaiHuBankWrap">
+                </div>
+            </div>
+        </div>
+        <div class="shiMingCardWrap bgWhite borderBottom">
+            <div class="shiMingCard paddingLr12 flex">
+                <div class="kaiHuBankTitle">手机号码</div>
+                <div class="shiMingCenter">
+                    <input type="tel" maxlength="11" placeholder="银行预留手机号码">
+                </div>
+                <div class="shiMingRight chooseKaiHuBankWrap">
+                </div>
+            </div>
+        </div>
+        <div class="shiMingCardWrap bgWhite borderBottom">
+            <div class="shiMingCard paddingLr12 flex">
+                <div class="kaiHuBankTitle ysbPayBtn getVerifyCodeBtn">获取验证码</div>
+                <div class="shiMingCenter">
+                    <input type="number" placeholder="请输入手机验证码">
+                </div>
+                <div class="shiMingRight chooseKaiHuBankWrap">
+                </div>
+            </div>
+        </div>
+        <div class="nextWrap">
+            <input type="button" class="nextBtn" value="下一步">
+        </div>
+        <div class="shiMingBottom">
+            <span class="star">★</span> 依据《中华人民共和国居民身份证条例》第十五条，为了 保证您的账户及资金安全，请勿冒用他人身份信息及银行卡信息，请使用真实有效的本人身份信息。
+        </div>
     </div>
+</div>
+<div class="popup"></div>
 <script src="js/zepto.min.js"></script>
-<script src="js/app.js"></script>
+<!--<script src="js/app.js"></script>-->
+<script src="js/md5.js"></script>
+<script src="js/certification.js"></script>
 </body>
 </html>

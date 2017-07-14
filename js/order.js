@@ -38,11 +38,17 @@ $(function(){
         //时间选择
         var start_time_picker = new mui.DtPicker({"type":"date","beginYear":year,"beginMonth":month,"beginDay":day, "endYear":2050});
         $("#useData").on("tap", function(){
-            setTimeout(function(){
-                start_time_picker.show(function(items){
-                    $("#useData").text(items.text);
-                });
-            },200);
+            if($(".buyMoney").val() == ""){
+                $(".popup").show();
+                $(".popup").text("请输入购买金额");
+                setTimeout('$(".popup").hide(),$(".popup").text()',1500);
+            }else{
+                setTimeout(function(){
+                    start_time_picker.show(function(items){
+                        $("#useData").text(items.text);
+                    });
+                },200);
+            }
         });
         //alert(day);
         var month = String(month);
@@ -111,10 +117,22 @@ $(function(){
         //console.
         //return  iDays
     }
-    //监听div内容变化
+    //监听 expireDay  div内容变化
     $(".expireDay").on('DOMNodeInserted',function(e){
         //alert('element now contains: ' + $(e.target).text());
         btnCount_Click();
         calculateExpectProfit();
+    });
+    //    去认证
+    $(".goAuthentication").click(function(){
+        if($(".buyMoney").val() < 1){
+            $(".popup").show();
+            $(".popup").text("请输入购买金额");
+            setTimeout('$(".popup").text(),$(".popup").hide()',1500);
+        }else {
+            window.sessionStorage.amount = $(".buyMoney").val();
+            window.sessionStorage.orderId = window.localStorage.phoneNumber + new Date().getTime();
+            window.location.href = "certification.html";
+        }
     });
 });

@@ -24,7 +24,11 @@ $(".setPwdBtn").click(function(){
             success:function(res){
                 console.log(res);
                 if(res.code == 0){
-
+                    window.location.href = "index.html"
+                }else{
+                    $(".popup").show();
+                    $(".popup").text(res.msg);
+                    setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
                 }
             },
             error:function(res){

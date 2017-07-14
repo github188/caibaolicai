@@ -10,5 +10,11 @@ $(function(){
             item[i].style.borderTop = "1px solid #ccc";
         }
     }
+    $("ul").on('click','li',function(argument) {
+        window.sessionStorage.bankName = $(this).find(".bankTitle").text();
+        window.sessionStorage.bankExplain = $(this).find(".chooseBankExplain span").first().text() + ' ' + $(this).find(".chooseBankExplain span").last().text();
+        window.history.go(-1);
+        //setTimeout(window.history.go(-1));
+    });
     //setTimeout($(".none").css("display","none"),0);
 });

@@ -87,7 +87,7 @@ $(function(){
         $(".jixiEndDay360").text(interestTime);
     }
     interestEndTime360(360);
-    //点击购买产品
+    //点击购买活期金产品
     $(".buyHqjBtn").click(function(){
         $.ajax({
             url:'http://106.14.165.194:1111/authQuery',
@@ -101,7 +101,7 @@ $(function(){
             success:function(res){
                 console.log(res);
                 if(res.code == -1){
-                    window.location.href = "certification.html";
+                    window.location.href = "unbindbuyHQJ.html";
                 }else if(res.code == -2){
                     $(".popup").show();
                     $(".popup").text(res.msg);
