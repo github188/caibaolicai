@@ -988,10 +988,8 @@ input:focus{
     flex: 1;
     margin-right: 0.693333333rem;
 }
-.infoIcon img{
-    width: 0.693333333rem;
-    height: 0.693333333rem;
-    border-radius:100%;
+.infoIcon .iconfont{
+    font-size: 0.693333333rem;
 }
 .infoRight{
     -webkit-box-flex:9;
@@ -1032,6 +1030,9 @@ input:focus{
     flex: 5;
     text-align: right;
     font-size: 0.426666667rem;
+    height: 1.386666667rem;
+    border: none;
+    background: none;
 }
 .accountNumber{
     -webkit-box-flex:5;
@@ -1517,6 +1518,12 @@ input:focus{
     flex: 4;
 }
 .ysbVerifyCode{
+    height: 1.333333333rem;
+    line-height: 1.333333333rem;
+    background: none;
+    display: inline-block;
+}
+.ysbPayBtn{
     height: 1.333333333rem;
     line-height: 1.333333333rem;
     background: none;
@@ -2319,4 +2326,20 @@ input:focus{
 }
 .icon-jinru:before{
     transform:rotate(180deg);-ms-transform:rotate(180deg); /* Internet Explorer */-moz-transform:rotate(180deg); /* Firefox */-webkit-transform:rotate(180deg); /* Safari 和 Chrome */-o-transform:rotate(180deg); /* Opera */"
+}
+.saveInfoWrap{
+    position: fixed;
+    left:0;
+    right:0;
+    bottom:0.426666667rem;
+    text-align: center;
+}
+.saveInfoBtn{
+    height: 1.173333333rem;
+    line-height: 1.173333333rem;
+    text-align: center;
+    font-size: 0.426666667rem;
+    width: 9.2rem;
+    background: #ff5855;
+    color: #fff;
 }

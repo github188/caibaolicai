@@ -1,0 +1,50 @@
+/**
+ * Created by hzc on 2017-7-18.
+ */
+$(function(){
+    $(".accountNumber").text(window.localStorage.phoneNumber);
+    //获取用户信息
+    function getUserInfo(){
+        $.ajax({
+           url:"http://10.0.92.198:1111/userInfo",
+            type:"GET",
+            headers:{
+                "token":window.localStorage.token
+            },
+            data:{
+                "phone":window.localStorage.phoneNumber
+            },
+            success:function(res){
+                console.log(res);
+            },
+            error:function(res){
+                console.log(res);
+            }
+        });
+    }
+    getUserInfo();
+    $(".saveInfoBtn").click(function(){
+       $.ajax({
+           url:"http://10.0.92.198:1111/userInfo",
+           type:"POST",
+           headers:{
+               "Content-Type":"application/x-www-form-urlencoded",
+               "token":window.localStorage.token
+           },
+           data:{
+               "phone":window.localStorage.phoneNumber,
+               "userPic":"",
+               "nickName":$(".nicknameName").val(),
+               "sex":$(".gender").val(),
+               "birthday":$(".birthday").val(),
+               "email":$(".mailbox").val()
+           },
+           success:function(res){
+               console.log(res);
+           },
+           error:function(res){
+               console.log(res);
+           }
+       })
+    });
+});

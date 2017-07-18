@@ -42,16 +42,18 @@ $(function(){
         var phoneNo = phoneNoArr.join("=");
         //银行卡号
         var cardNoName = 'cardNo';
-        var cardNoNum = $.trim($(".personBankNum").val());
+        var cardNoNum = $(".personBankNum").val().replace(/\s/g, "");
         var cardNoArr = [];
         cardNoArr.push(cardNoName,cardNoNum);
         var cardNo = cardNoArr.join("=");
         //身份证号
         var idCardNoName = 'idCardNo';
-        var idCardNoNum = $.trim($(".personIdCardNum").val());
+        var idCardNoNum = $(".personIdCardNum").val().replace(/\s/g, "");
         var idCardNoArr = [];
         idCardNoArr.push(idCardNoName,idCardNoNum);
         var idCardNo = idCardNoArr.join("=");
+        console.log(idCardNoNum);
+        console.log(idCardNo);
         //订单号
         var orderIdName = 'orderId';
         var orderIdNum = window.sessionStorage.orderId;
@@ -89,38 +91,53 @@ $(function(){
         console.log(window.sessionStorage.mac);
     }
     $(".ysbPayBtn").click(function(){
-        if($(".personBankNum").val() == "" && $(".accountHolderName").val()=="" && $(".personIdCardNum").val() == "" && $(".accountHolderPhoneNum").val() == "" ){
-            $(this).
+        if($(".personBankNum").val() == ""){
+            $(".popup").show();
+            $(".popup").text("请输入开户卡号");
+            setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
+        }else if($(".accountHolderName").val()==""){
+            $(".popup").show();
+            $(".popup").text("请输入开户人姓名");
+            setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
+        }else if($(".personIdCardNum").val() == ""){
+            $(".popup").show();
+            $(".popup").text("请输入身份证号");
+            setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
+        }else if($(".accountHolderPhoneNum").val() == ""){
+            $(".popup").show();
+            $(".popup").text("请输入手机号");
+            setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
         }else{
             function countDown(){
+                //alert("111");
                 var timer=setTimeout(function(){//按验证按钮后60秒按钮禁用
                     clearInterval(timer2);
-                    $(".ysbVerifyCode").text("重新获取").css({
+                    $(".ysbPayBtn").val("重新获取").css({
                         //"border":"1px solid #DDD",
                         //"background":"#fff",
-                        "color":"#edeeee"
+                        "color":"#000"
                     }).removeAttr("disabled");
                 },60000);
                 var i = 60;
-                $(".getCode").text(i+'s').css({
+                $(".ysbPayBtn").text(i+'s').css({
                     //"border":"1px solid #DDD",
                     //"background":"#e1e1e1",
-                    "color":"#edeeee"
+                    "color":"#000"
                 }).attr("disabled","disabled");
                 var timer2=setInterval(function(){
                     i--;
-                    $(".ysbVerifyCode").text(i+'s');
+                    $(".ysbPayBtn").val(i+'s');
                 },1000);
             }
+            countDown();
             getMac();
             //银生宝预支付接口
-            $.ajax({
-                url:"http://114.80.54.75/authPay-front/authPay/pay",
-                type:"POST",
+            fetch("http://114.80.54.75/authPay-front/authPay/pay",{
+                method:"POST",
                 headers:{
                     'Content-Type':'application/json'
                 },
-                data:{
+                body:{
                     "accountId":"2120170306142335001",//商户编号
                     "customerId":window.localStorage.phoneNumber,//用户编号
                     "payType":"0",//支付类型
@@ -133,14 +150,42 @@ $(function(){
                     "amount":window.sessionStorage.amount,//金额
                     "responseUrl":"http://106.14.165.194:1111/payResult",//响应地址
                     "mac":window.sessionStorage.mac//数字签名
-                },
-                success:function(res){
-                    console.log(res);
-                },
-                error:function(res){
-                    console.log(res);
                 }
+            }).then(function(res){
+                console.log(res);
+            }).catch(function(res){
+               console.log(res);
             });
+
+            //$.ajax({
+            //    url:"http://114.80.54.75/authPay-front/authPay/pay",
+            //    type:"POST",
+            //    headers:{
+            //        'Content-Type':'application/json'
+            //    },
+            //    data:{
+            //        "accountId":"2120170306142335001",//商户编号
+            //        "customerId":window.localStorage.phoneNumber,//用户编号
+            //        "payType":"0",//支付类型
+            //        "name":$(".accountHolderName").val(),//用户姓名
+            //        "phoneNo":$(".accountHolderPhoneNum").val(),//手机号
+            //        "cardNo":$(".personBankNum").val(),//银行卡号
+            //        "idCardNo":$(".personIdCardNum").val(),//身份证号
+            //        "orderId":window.sessionStorage.orderId,//订单号
+            //        "purpose":window.sessionStorage.productsType,//目的
+            //        "amount":window.sessionStorage.amount,//金额
+            //        "responseUrl":"http://106.14.165.194:1111/payResult",//响应地址
+            //        "mac":window.sessionStorage.mac//数字签名
+            //    },
+            //    success:function(res){
+            //        console.log(res);
+            //        countDown();
+            //        $(".ysbPayBtn").addClass("ysbVerifyCode")
+            //    },
+            //    error:function(res){
+            //        console.log(res);
+            //    }
+            //});
             //买入接口
             if( window.sessionStorage.buyProductType == "buyHqjMark" ){
                 $.ajax({
@@ -166,6 +211,7 @@ $(function(){
             }
         }
     });
+    //获取验证码（银生宝）
     $(".ysbVerifyCode").click(function(){
         getMac();
         $.ajax({
@@ -183,6 +229,7 @@ $(function(){
                "mac":window.sessionStorage.mac//数字签名
            },
            success:function(res){
+               countDown()
                 console.log(res);
            },
            error:function(res){
