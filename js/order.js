@@ -78,7 +78,7 @@ $(function(){
     });
     //监听input的变化
     $(".buyMoney").on('input porpertychange',function(){
-        if($(".buyMoney").val() < 1){
+        if(parseFloat($(".buyMoney").val()) < 1){
             $(".buyMoney").val(1);
         }
         calculateExpectProfit();
@@ -130,8 +130,8 @@ $(function(){
             $(".popup").text("请输入购买金额");
             setTimeout('$(".popup").text(),$(".popup").hide()',1500);
         }else {
-            window.sessionStorage.amount = $(".buyMoney").val();
-            window.sessionStorage.orderId = window.localStorage.phoneNumber + new Date().getTime();
+            window.sessionStorage.amount = $(".buyMoney").val();//购买金额
+            window.sessionStorage.orderId = window.localStorage.phoneNumber + new Date().getTime();//订单号
             window.location.href = "certification.html";
         }
     });

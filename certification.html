@@ -47,7 +47,7 @@
             <div class="shiMingCard paddingLr12 flex">
                 <div class="kaiHuBankTitle">开户人</div>
                 <div class="shiMingCenter">
-                    <input type="text" placeholder="开户人姓名">
+                    <input type="text" class="accountHolderName" placeholder="开户人姓名">
                 </div>
                 <div class="shiMingRight chooseKaiHuBankWrap">
                 </div>
@@ -67,7 +67,7 @@
             <div class="shiMingCard paddingLr12 flex">
                 <div class="kaiHuBankTitle">手机号码</div>
                 <div class="shiMingCenter">
-                    <input type="tel" maxlength="11" placeholder="银行预留手机号码">
+                    <input type="tel" class="accountHolderPhoneNum" maxlength="11" placeholder="银行预留手机号码">
                 </div>
                 <div class="shiMingRight chooseKaiHuBankWrap">
                 </div>
@@ -75,11 +75,13 @@
         </div>
         <div class="shiMingCardWrap bgWhite borderBottom">
             <div class="shiMingCard paddingLr12 flex">
-                <div class="kaiHuBankTitle ysbPayBtn getVerifyCodeBtn">获取验证码</div>
+                <!--<div class="kaiHuBankTitle ysbPayBtn getVerifyCodeBtn">获取验证码</div>-->
+                <input type="button" class="kaiHuBankTitle getVerifyCodeBtn" value="验证码">
                 <div class="shiMingCenter">
-                    <input type="number" placeholder="请输入手机验证码">
+                    <input type="number" class="" placeholder="请输入手机验证码">
                 </div>
                 <div class="shiMingRight chooseKaiHuBankWrap">
+                    <input type="button" class="ysbVerifyCode ysbPayBtn" value="获取验证码">
                 </div>
             </div>
         </div>

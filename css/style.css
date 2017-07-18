@@ -1502,6 +1502,8 @@ input:focus{
     width: 100%;
 }
 .kaiHuBankTitle{
+    text-align: left;
+    background: none;
     font-size: 0.373333333rem;
     -webkit-box-flex:2;
     -webkit-flex:2;
@@ -1513,6 +1515,12 @@ input:focus{
     -webkit-flex:4;
     -ms-flex: 4;
     flex: 4;
+}
+.ysbVerifyCode{
+    height: 1.333333333rem;
+    line-height: 1.333333333rem;
+    background: none;
+    display: inline-block;
 }
 .shiMingCenter input{
     font-size: 0.32rem;

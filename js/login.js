@@ -95,8 +95,5 @@ $(function(){
                console.log(res);
            }
        })
-
     });
-
-
 });

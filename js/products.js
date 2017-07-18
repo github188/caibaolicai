@@ -89,6 +89,7 @@ $(function(){
     interestEndTime360(360);
     //点击购买活期金产品
     $(".buyHqjBtn").click(function(){
+        window.sessionStorage.productsType = "活期金购买";
         $.ajax({
             url:'http://106.14.165.194:1111/authQuery',
             type:"GET",
@@ -101,6 +102,7 @@ $(function(){
             success:function(res){
                 console.log(res);
                 if(res.code == -1){
+                    window.sessionStorage.buyProductType = "buyHqjMark";
                     window.location.href = "unbindbuyHQJ.html";
                 }else if(res.code == -2){
                     $(".popup").show();
@@ -125,6 +127,8 @@ $(function(){
         });
         //window.location.href = 'buyHqj.html';
     });
+    //购买稳赚金
+
     setTimeout('$(".loading").css("display","none")',1000);
     $(".productBtn ").on('click',function(){
         $(this).addClass("bottomColor footBtnOrange").siblings().removeClass("bottomColor footBtnOrange");
