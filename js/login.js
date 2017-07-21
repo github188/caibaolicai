@@ -61,6 +61,34 @@ $(function(){
             }
         });
     });
+    //语音验证
+    $(".voiceVerifyBtn").click(function(){
+        $.ajax({
+            url:"http://10.0.92.198:1111/voiceVeri",
+            type:"POST",
+            headers:{
+                "Content-Type":"application/x-www-form-urlencoded"
+            },
+            data:{
+                "phone":window.localStorage.phoneNumber,
+                "usage":"0"
+            },
+            success:function(res){
+                console.log(res);
+                $(".popup").show();
+                $(".popup").css({
+                    'top': '14rem',
+                    'width': '3rem',
+                    'left': '3.4rem'
+                });
+                $(".popup").text("请留意来电");
+                setTimeout('$(".popup").hide(),$(".popup").text("")',1500);
+            },
+            error:function(res){
+                console.log(res);
+            }
+        });
+    });
     $(".loginBtn").click(function(){
        $.ajax({
            url:"http://10.0.92.198:1111/login",

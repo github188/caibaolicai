@@ -14,16 +14,16 @@ a{
     text-decoration: none;
 }
 input{
-    outline: none;!important;
-    border:none;!important;
+    outline: none !important;
+    border:none !important;
     box-sizing: border-box;
     -moz-box-sizing:border-box; /* Firefox */
     -webkit-box-sizing:border-box; /* Safari */
     vertical-align: middle;
 }
 input:focus{
-    border:none;!important;
-    outline: none;!important;
+    border:none !important;
+    outline: none !important;
 }
 .relative{
     position: relative;
@@ -163,7 +163,7 @@ input:focus{
     margin-top: 5.6rem;
 }
 .footWrap{
-    margin-top: 6.2rem;!important;
+    margin-top: 6.2rem !important;
 }
 /*--------------------------------------------------------------------------*/
 .header{
@@ -251,9 +251,9 @@ input:focus{
     margin:0 auto;
     font-size: 0.32rem;
     color: #999;
-    display: none;
 }
 .voiceVerifyBtn{
+    display: inline-block;
     color: rgb(242,182,67);
 }
 /*---------------------------------------------------*/
@@ -416,7 +416,7 @@ input:focus{
     -ms-flex: 1;
     flex: 1;
     text-align: center;
-    height: 1.76rem;!important;
+    height: 1.76rem !important;
     /*line-height:1.386666667rem;*/
     color: #beb8b8;
     font-size: 0.266666667rem;
@@ -425,7 +425,7 @@ input:focus{
     font-size: 0.6rem;
 }
 .footBtnOrange{
-    color: orange;!important;
+    color: orange !important;
 }
 .fontBtnIcon{
     display: inline-block;
@@ -1062,7 +1062,7 @@ input:focus{
     text-align: right;
     height: 1.386666667rem;
     font-size:0.426666667rem;
-    border:none;!important;
+    border:none !important;
     background: none;
 }
 .productType{
@@ -1267,7 +1267,7 @@ input:focus{
     color: #cccccc;
 }
 .rechargeBankIcon{
-    line-height: 1.866666667rem;!important;
+    line-height: 1.866666667rem !important;
 }
 .confirmBtnWrap{
     padding-top:1.866666667rem;
@@ -1797,11 +1797,11 @@ input:focus{
 .sellBtn{
     background: rgb(181,181,181);
     font-size: 0.48rem;
-    height: 1.333333333rem;!important;
-    line-height: 1.333333333rem;!important;
-    width: 100%;!important;
+    height: 1.333333333rem !important;
+    line-height: 1.333333333rem !important;
+    width: 100% !important;
     color: #000;
-    opacity: 1;!important;
+    opacity: 1 !important;
 }
 .sellPopup{
     position: fixed;
@@ -1892,7 +1892,7 @@ input:focus{
 }
 .buyMoney{
     text-align: right;
-    border: none;!important;
+    border: none !important;
     font-size: 0.373333333rem;
      line-height:1.6rem;
      width: 100%;
@@ -1900,8 +1900,8 @@ input:focus{
      margin-bottom: 0;
      padding: 0;
      -webkit-user-select: text;
-     border: 0px solid rgba(0,0,0,.2);
-     border-radius: 0px;
+     /*border: 0px solid rgba(0,0,0,.2);*/
+     /*border-radius: 0px;*/
      outline: 0;
      background-color: #fff;
      -webkit-appearance: none;
@@ -2346,4 +2346,20 @@ input:focus{
     width: 9.2rem;
     background: #ff5855;
     color: #fff;
+}
+.goPwdLoginWrap{
+    margin-top:0.4rem;
+}
+.goPwdLoginWrapCenter{
+    width: 9.253333333rem;
+    margin: 0 auto;
+    text-align: right;
+}
+.goPwdLoginBtn{
+    background: none;
+    color: #f1973c;
+    font-size: 14px;
+}
+.setLoginPwdBtn{
+    background: rgb(181,181,181);
 }

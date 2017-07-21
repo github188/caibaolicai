@@ -132,7 +132,7 @@ $(function(){
             countDown();
             getMac();
             //银生宝预支付接口
-            fetch("http://114.80.54.75/authPay-front/authPay/pay",{
+    /*        fetch("http://114.80.54.75/authPay-front/authPay/pay",{
                 method:"POST",
                 headers:{
                     'Content-Type':'application/json'
@@ -156,36 +156,39 @@ $(function(){
             }).catch(function(res){
                console.log(res);
             });
+  */
+            $.ajax({
+                url:"http://114.80.54.75/authPay-front/authPay/pay",
+                type:"POST",
+                headers:{
+                    'Content-Type':'application/json'
+                },
+                data:{
+                    "accountId":"2120170306142335001",//商户编号
+                    "customerId":window.localStorage.phoneNumber,//用户编号
+                    "payType":"0",//支付类型
+                    "name":$(".accountHolderName").val(),//用户姓名
+                    "phoneNo":$(".accountHolderPhoneNum").val(),//手机号
+                    "cardNo":$(".personBankNum").val(),//银行卡号
+                    "idCardNo":$(".personIdCardNum").val(),//身份证号
+                    "orderId":window.sessionStorage.orderId,//订单号
+                    "purpose":window.sessionStorage.productsType,//目的
+                    "amount":window.sessionStorage.amount,//金额
+                    "responseUrl":"http://106.14.165.194:1111/payResult",//响应地址
+                    "mac":window.sessionStorage.mac//数字签名
+                },
+                success:function(res){
+                    console.log(res);
+                    countDown();
+                    $(".ysbPayBtn").addClass("ysbVerifyCode")
+                },
+                error:function(res){
+                    console.log(res);
+                }
+            });
 
-            //$.ajax({
-            //    url:"http://114.80.54.75/authPay-front/authPay/pay",
-            //    type:"POST",
-            //    headers:{
-            //        'Content-Type':'application/json'
-            //    },
-            //    data:{
-            //        "accountId":"2120170306142335001",//商户编号
-            //        "customerId":window.localStorage.phoneNumber,//用户编号
-            //        "payType":"0",//支付类型
-            //        "name":$(".accountHolderName").val(),//用户姓名
-            //        "phoneNo":$(".accountHolderPhoneNum").val(),//手机号
-            //        "cardNo":$(".personBankNum").val(),//银行卡号
-            //        "idCardNo":$(".personIdCardNum").val(),//身份证号
-            //        "orderId":window.sessionStorage.orderId,//订单号
-            //        "purpose":window.sessionStorage.productsType,//目的
-            //        "amount":window.sessionStorage.amount,//金额
-            //        "responseUrl":"http://106.14.165.194:1111/payResult",//响应地址
-            //        "mac":window.sessionStorage.mac//数字签名
-            //    },
-            //    success:function(res){
-            //        console.log(res);
-            //        countDown();
-            //        $(".ysbPayBtn").addClass("ysbVerifyCode")
-            //    },
-            //    error:function(res){
-            //        console.log(res);
-            //    }
-            //});
+            //$("body").appendChild("<form action=''">)
+
             //买入接口
             if( window.sessionStorage.buyProductType == "buyHqjMark" ){
                 $.ajax({
@@ -215,7 +218,7 @@ $(function(){
     $(".ysbVerifyCode").click(function(){
         getMac();
         $.ajax({
-           url:"http://114.80.54.75/authPay-front/authPay/sendVercode " ,
+           url:"http://114.80.54.75/authPay-front/authPay/sendVercode",
            type:'POST',
            headers:{
                'Content-Type': 'application/json'

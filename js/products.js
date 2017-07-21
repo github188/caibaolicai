@@ -191,10 +191,10 @@ $(function(){
     }
     interestEndTime360(360);
     //点击购买活期金产品
-    if(window.sessionStorage.buyProductMark === "buyHqjBtn"){
+    //if(window.sessionStorage.buyProductMark === "buyHqjBtn"){
         console.log("test");
         $(".buyHqjBtn").click(function(){
-            alert("buyHqjBtn");
+            //alert("buyHqjBtn");
             window.sessionStorage.productsType = "活期金购买";
             $.ajax({
                 url:'http://10.0.92.198:1111/authQuery',
@@ -233,9 +233,9 @@ $(function(){
             });
             //window.location.href = 'buyHqj.html';
         });
-    }else if($(".iWantbuyBtn").hasClass("buyWzj60Btn")){
-        alert("buyWzj60Btn")
-    }
+    //}else if($(".iWantbuyBtn").hasClass("buyWzj60Btn")){
+    //    alert("buyWzj60Btn")
+    //}
 
     //购买稳赚金
 

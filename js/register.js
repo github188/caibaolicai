@@ -61,6 +61,34 @@ $(function(){
             }
         });
     });
+    //语音验证
+    $(".voiceVerifyBtn").click(function(){
+        $.ajax({
+            url:"http://10.0.92.198:1111/voiceVeri",
+            type:"POST",
+            headers:{
+                "Content-Type":"application/x-www-form-urlencoded"
+            },
+            data:{
+                "phone":window.localStorage.phoneNumber,
+                "usage":"1"
+            },
+            success:function(res){
+                console.log(res);
+                $(".popup").show();
+                $(".popup").css({
+                    'top': '14rem',
+                    'width': '3rem',
+                    'left': '3.4rem'
+                });
+                $(".popup").text("请留意来电");
+                setTimeout('$(".popup").hide(),$(".popup").text("")',1500);
+            },
+            error:function(res){
+                console.log(res);
+            }
+        });
+    });
     $(".registerBtn").click(function(){
         $.ajax({
             url:"http://10.0.92.198:1111/regist",
@@ -76,7 +104,7 @@ $(function(){
                 console.log(res);
                 if(res.code == 0){
                     window.localStorage.token = res.token;
-                    window.location.href = "setpaypwd.html";
+                    window.location.href = "setpwdlogin.html";
                 }else{
                     $(".popup").show();
                     $(".popup").text(res.msg);

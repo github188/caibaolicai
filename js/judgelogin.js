@@ -21,6 +21,26 @@ $(function(){
     //}else {
     //    $(".nextOpt").attr("disabled","disabled").css("background","rgb(181,181,181)");
     //}
+
+    //判断登录密码是否发设置
+    function judgeSetLofinPwd(){
+        $.ajax({
+            url:"http://10.0.92.198:1111/loginpwd",
+            type:"GET",
+            data:{
+                "phone":window.localStorage.phoneNumber
+            },
+            success:function(res){
+                console.log(res);
+                if(res.code == 0){
+                    
+                }
+            },
+            error:function (res){
+                console.log(res);
+            }
+    });
+    }
     $(".nextOpt").click(function(){
         if(!(/^1[3|4|5|7|8][0-9]\d{8}$/.test($(".phoneNum").val()))){//判断是否为11位中国手机号码
             $(".popup").show();
@@ -35,8 +55,9 @@ $(function(){
                success:function(res){
                    //window.sessionStorage.code = res.code;
                    if(res.code == 0){
-                       window.sessionStorage.usage = "1";
-                       window.location.href = "login.html";
+                       judgeSetLofinPwd();
+                       //window.sessionStorage.usage = "1";
+                       //window.location.href = "login.html";
                    }else if(res.code == -1){
                        window.sessionStorage.usage = "0";
                        window.location.href = "register.html";
