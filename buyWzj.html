@@ -18,7 +18,7 @@
             <div class="headTop flex bgWhite">
                 <div class="headTopLeft"><span class="messageIcon" style="font-size:0.266666667rem;display: inline-block;"> <i class="iconfont icon-fanhui flex1" style="font-size: 0.693333333rem;"></i> </span></div>
                 <div class="headTopCenter"><span class="logo"></span>确认订单</div>
-                <div class="headTopRight"> <span>284.56</span>元/克</div>
+                <div class="headTopRight"> <span></span>元/克</div>
             </div>
             <div class="buyHqjTopWrap bgWhite borderBottom">
                 <div class="buyHqjTop flex">
@@ -35,7 +35,7 @@
             <div class="inputBuyMoneyWrap bgWhite">
                 <div class="inputBuyMoneyCenter flex">
                     <div class="inputBuyMethodTitle">金额</div>
-                    <input type="number" placeholder="请输入购买金额" class="inputBuyInt">
+                    <input type="tel" maxlength="9" placeholder="请输入购买金额" class="inputBuyInt">
                     <div class="changeBuyMethod">
                         <span class="changeBuyMethodBtn">切换为按克数购买</span>
                     </div>
@@ -48,14 +48,14 @@
             </div>
             <div class="convertIntoNumWrap bgWhite borderBottom">
                 <div class="convertIntoCenter flex">
-                    <div class="convertIntoName flex1">折合黄金克数</div>
-                    <div class="convertIntoNum flex1">0.12345克</div>
+                    <div class="convertIntoName flex1">折合黄金（克）</div>
+                    <div class="convertIntoNum flex1"></div>
                 </div>
             </div>
             <div class="expectProfitWrap bgWhite">
                 <div class="expectProfitCenter flex">
                     <div class="expectProfitTitle flex1">预期收益（元）</div>
-                    <div class="expectProfitNum flex1">0.00元</div>
+                    <div class="expectProfitNum flex1"></div>
                 </div>
             </div>
             <div class="rechargingBankWrap bgWhite">
@@ -70,7 +70,7 @@
                         </div>
                     </div>
                     <div class="goAuthentication waitPay">
-                        待支付：<span class="waitPayNum">13513.81元</span>
+                        待支付：<span class="waitPayNum"></span>
                     </div>
                 </div>
             </div>
@@ -80,4 +80,6 @@
         </div>
     </div>
 </body>
+<script src="js/zepto.min.js"></script>
+<script src="js/wzjorders.js"></script>
 </html>

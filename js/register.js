@@ -25,7 +25,7 @@ $(function(){
     }
     countDown();
     $.ajax({
-        url:"http://106.14.165.194:1111/smsVeri",
+        url:"http://10.0.92.198:1111/smsVeri",
         type:"POST",
         headers:{
             "Content-Type":"application/x-www-form-urlencoded"
@@ -43,7 +43,7 @@ $(function(){
     });
     $(".getVerifyCode").click(function(){
         $.ajax({
-            url:"http://106.14.165.194:1111/smsVeri",
+            url:"http://10.0.92.198:1111/smsVeri",
             type:"POST",
             headers:{
                 "Content-Type":"application/x-www-form-urlencoded"
@@ -63,7 +63,7 @@ $(function(){
     });
     $(".registerBtn").click(function(){
         $.ajax({
-            url:"http://106.14.165.194:1111/regist",
+            url:"http://10.0.92.198:1111/regist",
             type:"POST",
             headers:{
                 "Content-Type":"application/x-www-form-urlencoded"

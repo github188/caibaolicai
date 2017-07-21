@@ -189,7 +189,7 @@ $(function(){
             //买入接口
             if( window.sessionStorage.buyProductType == "buyHqjMark" ){
                 $.ajax({
-                    url:"http://106.14.165.194:1111/currentGold/buyIn",
+                    url:"http://10.0.92.198:1111/currentGold/buyIn",
                     type:"POST",
                     headers:{
                         "Content-Type":"application/x-www-form-urlencoded ",
@@ -229,7 +229,7 @@ $(function(){
                "mac":window.sessionStorage.mac//数字签名
            },
            success:function(res){
-               countDown()
+               countDown();
                 console.log(res);
            },
            error:function(res){

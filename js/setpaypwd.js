@@ -11,7 +11,7 @@ $(".setPwdBtn").click(function(){
         var payPwd = sha256_digest($(".confirmPwd").val());
         console.log(payPwd);
         $.ajax({
-            url:"http://106.14.165.194:1111/paypwd",
+            url:"http://10.0.92.198:1111/paypwd",
             type:"POST",
             headers:{
                 "Content-Type":"application/x-www-form-urlencoded",

@@ -12,7 +12,7 @@ $(function(){
     function productsAssets(){
         //活期金资产查询
         $.ajax({
-            url:"http://106.14.165.194:1111/cgQuery",
+            url:"http://10.0.92.198:1111/cgQuery",
             type:"GET",
             headers:{
                 "token":window.localStorage.token
@@ -21,10 +21,12 @@ $(function(){
                 "phone":window.localStorage.phoneNumber
             },
             success:function(res){
-                window.sessionStorage.hqjAllAsset =  res.asset.currentGoldSum;
-                $(".hqjYstProfit").text(res.asset.cgEarningsYtd);
-                $(".hqjAllAsset").text(res.asset.currentGoldSum);
-                $(".hqjEarningsSum").text(res.asset.cgEarningsSum);
+                //console.log(res);
+                //console.log(res.asset.currentGoldSum);
+                window.sessionStorage.hqjAllAsset =  res.asset.huoqiGoldSum;
+                $(".hqjYstProfit").text(res.asset.huoqiEarnYtd);//活期金昨日收益
+                $(".hqjAllAsset").text(res.asset.huoqiGoldSum);//活期金资产
+                $(".hqjEarningsSum").text(res.asset.huoqiEarnSum);//活期金累计收益
             },
             error:function(res){
                 console.log(res);
@@ -32,7 +34,7 @@ $(function(){
         });
         //稳赚金资产查询
         $.ajax({
-            url:"http://106.14.165.194:1111/wenzhuanGold",
+            url:"http://10.0.92.198:1111/wenzhuanGold",
             type:"GET",
             headers:{
                 "token":window.localStorage.token
@@ -51,7 +53,7 @@ $(function(){
         });
         //稳赚金预期总收益
         $.ajax({
-            url:"http://106.14.165.194:1111/wenzhuanGold/earnSum",
+            url:"http://10.0.92.198:1111/wenzhuanGold/earnSum",
             type:"GET",
             headers:{
                 "token":window.localStorage.token
@@ -60,8 +62,14 @@ $(function(){
                 "phone":window.localStorage.phoneNumber
             },
             success:function(res){
-                console.log(res);
-                $(".wenzhuanGoldSum").text(res.earnSum);
+                //console.log(res);
+                //console.log(res.earnSum);
+                //console.log(typeof (res.earnSum));
+                if(res.earnSum == null){
+                    $(".wenzhuanGoldSum").text("0");
+                }else{
+                    $(".wenzhuanGoldSum").text(res.earnSum);
+                }
             },
             error:function(res){
                 console.log(res);
@@ -76,7 +84,6 @@ $(function(){
         });
     });
     $('#ipt').on('input',function (e){
-
         var numLen = 6;
         var pw = $('#ipt').val();
         var list = $('li');
@@ -97,11 +104,11 @@ $(function(){
         if ($(".pleaseInputsSellMoney").val() >= $(".salableMoney").text()){
             $(".pleaseInputsSellMoney").val(window.sessionStorage.hqjAllAsset);
         }
-        if($(".pleaseInputsSellMoney").val() >0 && $(".pleaseInputsSellMoney").val()<=window.sessionStorage.hqjAllAsset){
-            $(".sellBtn").css("background","rgb(242,182,67)").removeAttr("disabled");
-        }else{
-            $(".sellBtn").css("background","rgb(181,181,181)").attr("disabled","disabled");
-        }
+        //if($(".pleaseInputsSellMoney").val() >0 && $(".pleaseInputsSellMoney").val()<=window.sessionStorage.hqjAllAsset){
+        //    $(".sellBtn").css("background","rgb(242,182,67)").removeAttr("disabled");
+        //}else{
+        //    $(".sellBtn").css("background","rgb(181,181,181)").attr("disabled","disabled");
+        //}
     });
     $(".sellBtn").click(function(){
         $(".sellTypeMoney").text("￥" + $(".pleaseInputsSellMoney").val());
@@ -122,5 +129,34 @@ $(function(){
         $(".sellPopup").css("display","none");
         $(".sellTypeMoney").text("");
     });
-
+    function checkedPwd(){
+        var checkedPayPwd = sha256_digest($("#ipt").val());
+        $.ajax({
+            url:"10.0.92.198:1111/paypwd-check",
+            type:"POST",
+            headers:{
+                "Content-Type":"application/x-www-form-urlencoded ",
+                "token":window.localStorage.token
+            },
+            data:{
+                "phone":window.localStorage.phoneNumber,
+                "paypwd":checkedPayPwd
+            },
+            success:function(res){
+                console.log(res);
+                $(".sellPopup ").hide();
+                $(".popupBg").hide();
+                //if(res.)
+            },
+            error:function(res){
+                console.log(res);
+            }
+        });
+    }
+   //监听密码输入框的变化
+    $("#ipt").on('input onpropertychange',function(){
+        if($("#ipt").val().length == 6){
+            checkedPwd();
+        }
+    });
 });

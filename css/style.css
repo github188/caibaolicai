@@ -1988,6 +1988,12 @@ input:focus{
     text-align: center;
     padding-top:0.24rem;
 }
+.changeBuyGramsBtn{
+    display: block;
+    margin-left:0.5rem;
+    text-align: center;
+    padding-top:0.24rem;
+}
 .convertIntoTitle{
     padding: 0 0.32rem;
     height: 1.333333333rem;
@@ -2324,14 +2330,12 @@ input:focus{
 .goChooseBank{
     text-align: center;
 }
-.icon-jinru:before{
-    transform:rotate(180deg);-ms-transform:rotate(180deg); /* Internet Explorer */-moz-transform:rotate(180deg); /* Firefox */-webkit-transform:rotate(180deg); /* Safari 和 Chrome */-o-transform:rotate(180deg); /* Opera */"
-}
 .saveInfoWrap{
-    position: fixed;
-    left:0;
-    right:0;
-    bottom:0.426666667rem;
+    /*position: relative;*/
+    /*left:0;*/
+    /*right:0;*/
+    /*bottom:0.426666667rem;*/
+    margin-top:3.5rem;
     text-align: center;
 }
 .saveInfoBtn{

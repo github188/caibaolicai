@@ -40,19 +40,19 @@
         <div class="chongZhiWrap bgWhite borderBottom">
             <div class="chongZhiWrapCenter flex">
                 <div class="jinETile">金额(元)</div>
-                <input type="number" class="czMoney" placeholder="最低充值金额100元">
-                <div class="reset">x</div>
+                <input type="number" class="czMoney bindCzMoney" placeholder="最低充值金额100元">
+                <div class="reset"><i class="iconfont icon-guanbi" style="font-size: 12px;"></i></div>
             </div>
         </div>
         <div class="confirmBtnWrap">
-            <input type="button" class="confirmBtn" value="确认">
+            <input type="button" class="confirmBtn" value="确认" disabled>
         </div>
     </div>
     <div class="popupBg"></div>
     <div class="popupWrap bgGray">
         <div class="popupTop flex borderBottom">
-            <div class="popupTopLeft"> X </div>
-            <div class="popupTopCenter">充值金额 <span class="userRechargeNum">￥100000.00</span></div>
+            <div class="popupTopLeft clossPopup"> <i class="iconfont icon-guanbi" style="font-size: 12px;"></i> </div>
+            <div class="popupTopCenter">充值金额 <span class="userRechargeNum">&nbsp;</span></div>
             <div class="popupTopRight"></div>
         </div>
         <div class="yourPhone"></div>
@@ -69,4 +69,6 @@
     </div>
 </div>
 </body>
+<script src="js/zepto.min.js"></script>
+<script src="js/recharge.js"></script>
 </html>

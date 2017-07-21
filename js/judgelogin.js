@@ -2,6 +2,9 @@
  * Created by hzc on 2017-7-3.
  */
 $(function(){
+    $(".close").click(function(){
+        window.location.href = "index.html";
+    });
     $(".phoneNum").focus();
     //只能入11位数字，输入完成、下一步按钮高亮
     $('.phoneNum').on('input onpropertychange', function() {
@@ -26,7 +29,7 @@ $(function(){
         }else{
             console.log($(".phoneNum").val());
            $.ajax({
-               url:"http://106.14.165.194:1111/registQuery",
+               url:"http://10.0.92.198:1111/registQuery",
                method:"GET",
                data:{"phone": $.trim($(".phoneNum").val())},
                success:function(res){

@@ -37,7 +37,7 @@ $(function(){
         //alert(typeof (month));
         //时间选择
         var start_time_picker = new mui.DtPicker({"type":"date","beginYear":year,"beginMonth":month,"beginDay":day, "endYear":2050});
-        $("#useData").on("tap", function(){
+        $("#useData").on("click", function(){
             if($(".buyMoney").val() == ""){
                 $(".popup").show();
                 $(".popup").text("请输入购买金额");

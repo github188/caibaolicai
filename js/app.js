@@ -20,12 +20,14 @@ $(function(){
     });
 
     //var checkedLoginCode;
-    //$(".ziChan").click(function(){
-    //    if(window.localStorage.token == undefined){
-    //        checkedLoginCode = "ziChan";
-    //        window.location.href = "ready.html";
-    //    }
-    //});
+    $(".ziChan").click(function(){
+        if(window.localStorage.token == undefined){
+            window.sessionStorage.checkedLoginCode = "ziChan";
+            window.location.href = "ready.html";
+        }else{
+            window.location.href = "asset.html";
+        }
+    });
     $(".faXian").click(function(){
         if(window.localStorage.token == undefined){
             window.sessionStorage.checkedLoginCode = "faXian";
@@ -45,15 +47,22 @@ $(function(){
         }
     });
     $(".goBuyHqj").click(function(){
-        window.location.href = "productCollection.html";
-        window.sessionStorage.pageMark = "hqj";
+        if(window.localStorage.token == undefined){
+            window.sessionStorage.pageMark = "hqj";
+            window.location.href = "ready.html";
+        }else {
+            window.sessionStorage.pageMark = "hqj";
+            window.location.href = "productCollection.html";
+        }
+
+
     });
     if(window.localStorage.token == undefined){
         $(".dataLeftTop").text("昨日注册(人)");
         $(".dataRightTop").text("累计交易(吨)");
         //获取未登录首页的注册人数
         $.ajax({
-            url:"http://106.14.165.194:1111/count",
+            url:"http://10.0.92.198:1111/count",
             type:"GET",
             success:function(res){
                 $(".dataLeftBottom").text(res.result.usersCountYtd);
@@ -69,7 +78,7 @@ $(function(){
             type:"GET",
             success:function(res){
                 var goldPrice = JSON.parse(res);
-                $(".goldPrice").text(goldPrice.week[6].every_day_price + "元/克");
+                $(".goldPrice").text(goldPrice.week[0].price + "元/克");
             },
             error:function(res){
                 console.log(res);
@@ -80,7 +89,7 @@ $(function(){
         $(".dataRightTop").text("昨日收益克数(克)");
         //资产查询接口
         $.ajax({
-            url:"http://106.14.165.194:1111/assetQuery",
+            url:"http://10.0.92.198:1111/assetQuery",
             type:"GET",
             headers:{
                 "token":window.localStorage.token
@@ -90,13 +99,15 @@ $(function(){
             },
             success:function(res){
                 console.log(res);
+                console.log(res.asset);
                 var goldPrice = window.sessionStorage.goldPrice;
-                var assetNum = res.asset.balance + res.asset.currentGoldSum + (res.asset.qiandaiGoldSum * goldPrice) + (res.asset.jinshengGoldSum * goldPrice) + res.asset.wenzhuanGoldSum;
+                var assetNum = res.asset.balance + res.asset.huoqiGoldSum + (res.asset.qiandaiGoldSum * goldPrice) + (res.asset.jinshengGoldSum * goldPrice) + res.asset.wenzhuanGoldSum;
+                console.log(assetNum);
                 $(".asset").text(assetNum);
                 $(".balance").text(res.asset.balance);
                 $(".dataLeftBottom").text(res.asset.earnYtdSum);
                 $(".dataRightBottom").text(res.asset.goldEarnYtdSum);
-                $(".hqjNum").text(res.asset.currentGoldSum);
+                $(".hqjNum").text(res.asset.huoqiGoldSum);
                 $(".jsjNum").text(res.asset.jinshengGoldSum);
                 $(".wzjNum").text(res.asset.wenzhuanGoldSum);
                 $(".qdjNum").text(res.asset.qiandaiGoldSum);
@@ -111,8 +122,8 @@ $(function(){
             type:"GET",
             success:function(res){
                 var goldPrice = JSON.parse(res);
-                $(".goldPrice").text(goldPrice.week[6].every_day_price + "元/克");
-                window.sessionStorage.goldPrice = goldPrice.week[6].every_day_price;
+                $(".goldPrice").text(goldPrice.week[0].price + "元/克");
+                window.sessionStorage.goldPrice = goldPrice.week[0].price;
             },
             error:function(res){
                 console.log(res);
@@ -128,8 +139,78 @@ $(function(){
     //});
 
     //资产
-    $(".messageIcon").click(function(){
+    $(".goMyInfoBTn").click(function(){
        window.location.href = "personalInfo.html"
+    });
+    $(".goRechargeBtn").click(function(){
+        $.ajax({
+            url:'http://10.0.92.198:1111/authQuery',
+            type:"GET",
+            headers:{
+                "token":window.localStorage.token
+            },
+            data:{
+                "phone":window.localStorage.phoneNumber
+            },
+            success:function(res){
+                console.log(res);
+                if(res.code == -1){
+                    window.location.href = "unbindrecharge.html";
+                }else if(res.code == -2){
+                    $(".popup").show();
+                    $(".popup").text(res.msg);
+                    setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
+                }else if(res.code == -3){
+                    $(".popup").show();
+                    $(".popup").text(res.msg);
+                    setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
+                }else if(res.code == -4){
+                    $(".popup").show();
+                    $(".popup").text(res.msg);
+                    setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
+                }else{
+                    window.location.href = "recharge.html";
+                }
+            },
+            error:function(res){
+                console.log(res);
+            }
+        });
+    });
+    $(".goWithdrawBtn").click(function(){
+        //$.ajax({
+        //    url:'http://10.0.92.198:1111/authQuery',
+        //    type:"GET",
+        //    headers:{
+        //        "token":window.localStorage.token
+        //    },
+        //    data:{
+        //        "phone":window.localStorage.phoneNumber
+        //    },
+        //    success:function(res){
+        //        console.log(res);
+        //        if(res.code == -1){
+        //            window.location.href = "unbindwithdrawal.html";
+        //        }else if(res.code == -2){
+        //            $(".popup").show();
+        //            $(".popup").text(res.msg);
+        //            setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
+        //        }else if(res.code == -3){
+        //            $(".popup").show();
+        //            $(".popup").text(res.msg);
+        //            setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
+        //        }else if(res.code == -4){
+        //            $(".popup").show();
+        //            $(".popup").text(res.msg);
+        //            setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
+        //        }else{
+        //            window.location.href = "withdrawCash.html";
+        //        }
+        //    },
+        //    error:function(res){
+        //        console.log(res);
+        //    }
+        //});
     });
     //    退出登录
     $(".quitLoginBtn").click(function(){
