@@ -78,7 +78,7 @@ $(function(){
             type:"GET",
             success:function(res){
                 var goldPrice = JSON.parse(res);
-                $(".goldPrice").text(goldPrice.week[0].price + "元/克");
+                $(".goldPrice").text(goldPrice.week[0].price+"元/克");
             },
             error:function(res){
                 console.log(res);

@@ -2,6 +2,7 @@
  * Created by hzc on 2017-7-21.
  */
 $(function(){
+    $(".inputPwd").focus();
     $(".confirmPwd").on('input porpertychange',function() {
         if ($(".confirmPwd").val().length >= 6) {
             $(".setLoginPwdBtn").css("background", "rgb(242,182,67)").removeAttr("disabled");

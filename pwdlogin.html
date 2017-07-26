@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <title>密码登录</title>
+    <script src="js/flexible.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" href="css/iconfont.css">
+</head>
+<body>
+    <div id="wrap">
+        <div class="wrapCenter">
+            <header class="header bgWhite flex">
+                <div class="headLeft"><a href="javascript:history.back(-1);" style="color: #000;"><i class="iconfont icon-fanhui" style="font-size: 0.693333333rem;"></i> </a></div>
+                <div class="headCenter">密码登录</div>
+                <div class="headRight"></div>
+            </header>
+            <div>
+                <div class="phoneNumber" style="padding:0;height: 1.28rem;line-height: 1.28rem;font-size: 0.48rem;"></div>
+            </div>
+            <div class="phoneNumWrap bgWhite">
+                <div class="verifyCodeWrap flex">
+                    <input type="tel" maxlength="18" placeholder="请输入登录密码" class="pwdNum">
+                </div>
+            </div>
+            <div class="loginBtnWrap" style="margin-top: 0.8rem;">
+                <input type="button" class="loginBtn" value="登录" disabled="disabled">
+            </div>
+            <div class="goPwdLoginWrap">
+                <div class="goPwdLoginWrapCenter">
+                    <input type="button" value="验证码登录" class="goCodeLoginBtn">
+                </div>
+            </div>
+            <div class="footerWrap footWrap" style="margin-top:6.8rem !important;">
+                <div class="safeIcon">
+                    <span class="safeFont"><i class="iconfont icon-anquan" style="font-size: 1.333333333rem;color:#ddd"></i></span>
+                </div>
+                <div class="footer">用户信息加密存储保障您的隐私安全</div>
+            </div>
+        </div>
+    </div>
+<div class="Popup-bg"></div>
+<div class="popup"></div>
+<script src="js/zepto.min.js"></script>
+<script src="js/sha256.js"></script>
+<script src="js/pwdlogin.js"></script>
+</body>
+</html>

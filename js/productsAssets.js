@@ -2,6 +2,7 @@
  * Created by hzc on 2017-7-5.
  */
 $(function(){
+    $(".pleaseInputsSellMoney").focus();
     $(".goSellHqjBtn").click(function(){
        window.location.href = "sellHqj.html";
     });

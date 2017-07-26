@@ -2,6 +2,7 @@
  * Created by guojing on 2017-7-4.
  */
 $(function(){
+    $(".verifyCode").focus();
     $(".phoneNumber").text(window.localStorage.phoneNumber);
     function countDown(){
         var timer=setTimeout(function(){//按验证按钮后60秒按钮禁用
@@ -42,6 +43,7 @@ $(function(){
         }
     });
     $(".getVerifyCode").click(function(){
+        $(".verifyCode").val("");
         $.ajax({
             url:"http://10.0.92.198:1111/smsVeri",
             type:"POST",

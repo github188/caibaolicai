@@ -2,6 +2,7 @@
  * Created by hzc on 2017-7-4.
  */
 $(function(){
+    $(".verifyCode").focus();
     $(".phoneNumber").text(window.localStorage.phoneNumber);
     function countDown(){
         var timer=setTimeout(function(){//按验证按钮后60秒按钮禁用
@@ -123,5 +124,8 @@ $(function(){
                console.log(res);
            }
        })
+    });
+    $(".goPwdLoginBtn").click(function(){
+        window.location.href = "pwdlogin.html";
     });
 });

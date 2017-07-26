@@ -33,7 +33,9 @@ $(function(){
             success:function(res){
                 console.log(res);
                 if(res.code == 0){
-                    
+                    window.location.href = "pwdlogin.html";
+                }else if(res.code == -1){
+                    window.location.href = "setpwdlogin.html";
                 }
             },
             error:function (res){
@@ -53,16 +55,16 @@ $(function(){
                method:"GET",
                data:{"phone": $.trim($(".phoneNum").val())},
                success:function(res){
+                   console.log(res);
                    //window.sessionStorage.code = res.code;
                    if(res.code == 0){
                        judgeSetLofinPwd();
                        //window.sessionStorage.usage = "1";
-                       //window.location.href = "login.html";
+                       //window.location.href = "codelogin.html";
                    }else if(res.code == -1){
                        window.sessionStorage.usage = "0";
                        window.location.href = "register.html";
                    }
-                   console.log(res);
                },
                error:function(res){
                    console.log(res);

@@ -2,6 +2,7 @@
  * Created by hzc on 2017-7-6.
  */
 $(function(){
+    $(".buyMoney").focus();
     //计息起始日
     function interestDay(day){
         var dayTime=day*24*60*60*1000; //参数天数的时间戳

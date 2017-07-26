@@ -163,7 +163,7 @@ input:focus{
     margin-top: 5.6rem;
 }
 .footWrap{
-    margin-top: 6.2rem !important;
+    margin-top: 5.2rem !important;
 }
 /*--------------------------------------------------------------------------*/
 .header{
@@ -216,6 +216,15 @@ input:focus{
     flex: 247;
     font-size: 0.426666667rem;
 }
+.pwdNum{
+    height: 1.333333333rem;
+    line-height: 1.333333333rem;
+    -webkit-box-flex:247;
+    -webkit-flex:247;
+    -ms-flex: 247;
+    flex: 247;
+    font-size: 0.426666667rem;
+}
 .getVerifyCode{
     -webkit-box-flex:100;
     -webkit-flex:100;
@@ -233,7 +242,7 @@ input:focus{
 }
 .loginBtn{
     display: block;
-    background: rgb(242,182,67);
+    background: rgb(181,181,181);
     width: 9.253333333rem;
     margin: 0 auto;
     height: 1.333333333rem;
@@ -406,6 +415,8 @@ input:focus{
     transform: translate3d(0px, 0px, 0px);
     height: 1.76rem;
     z-index: 200;
+    -moz-box-shadow: 0 -1px 1px #ccc;
+    box-shadow: 0 -1px 1px #ccc;
 }
 .footCover{
     height: 1.333333333rem;
@@ -425,7 +436,7 @@ input:focus{
     font-size: 0.6rem;
 }
 .footBtnOrange{
-    color: orange !important;
+    color:#f2b643 !important;
 }
 .fontBtnIcon{
     display: inline-block;
@@ -555,7 +566,7 @@ input:focus{
     margin-top: 0.4rem;
 }
 .productCard:last-child{
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.8rem;
 }
 .productCardCenter{
     padding-bottom: 0.16rem;
@@ -1115,11 +1126,11 @@ input:focus{
 }
 .rateNum{
     font-size: 1.28rem;
-    color: orange;
+    color:#f2b643;
 }
 .rateSymbol{
     font-size:0.373333333rem;
-    color: orange;
+    color:#f2b643;
 }
 .withdrawRecord{
     font-size: 0.426666667rem;
@@ -1254,6 +1265,15 @@ input:focus{
     -webkit-flex:8;
     -ms-flex: 8;
     flex: 8;
+
+}
+.payType{
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    border-radius:100%;
+    border: 1px solid #000;
+    margin-top: 0.65rem;
 }
 .userCardInfo{
     font-size: 0.426666667rem;
@@ -1484,6 +1504,22 @@ input:focus{
     line-height: 1.866666667rem;
     text-align: right;
 }
+.authentication{
+    -webkit-box-flex:3;
+    -webkit-flex:3;
+    -ms-flex: 3;
+    flex: 3;
+    line-height: 1.866666667rem;
+    text-align: right;
+}
+.choosePayType{
+    -webkit-box-flex:1;
+    -webkit-flex:1;
+    -ms-flex: 1;
+    flex: 1;
+    text-align: right;
+    /*line-height: 1.866666667rem;*/
+}
 .authenticationFont{
     font-size: 0.426666667rem;
     color: #007aff;
@@ -1639,7 +1675,7 @@ input:focus{
     flex: 1;
     font-size: 0.373333333rem;
     text-align: right;
-    color: #cccccc;
+    /*color: #cccccc;*/
 }
 .assetDataWrap{
     background: #bc1717;
@@ -2217,7 +2253,7 @@ input:focus{
 }
 .productTitleCenter{
     text-align: center;
-    color: orange;
+    color:#f2b643;
 }
 .productTitleRight{
     text-align: right;
@@ -2360,6 +2396,106 @@ input:focus{
     color: #f1973c;
     font-size: 14px;
 }
+.goCodeLoginBtn{
+    background: none;
+    color: #f1973c;
+    font-size: 14px;
+}
 .setLoginPwdBtn{
     background: rgb(181,181,181);
+}
+.indexCenter{
+    margin:0 0.48rem;
+    padding:0.5rem 0;
+}
+.productTopLeft{
+    -webkit-box-flex: 1.5;
+    -webkit-flex: 1.5;
+    -ms-flex: 1.5;
+    flex:1.5;
+}
+.productTopCenter{
+    -webkit-box-flex: 8;
+    -webkit-flex: 8;
+    -ms-flex: 8;
+    flex:8;
+    color: #999;
+    font-size: 0.373333333rem;
+}
+.productTopRight{
+    -webkit-box-flex: 2;
+    -webkit-flex: 2;
+    -ms-flex: 2;
+    flex:2;
+    text-align: right;
+}
+.productRemind{
+    padding:0.266666667rem 0 0.16rem 0;
+}
+.productRemindFont{
+    font-weight: 600;
+    color: #000;
+    font-size: 0.533333333rem;
+}
+.productExpireProfit,.productExpireMoney{
+    font-size: 14px;
+    padding:0;
+    color: #000;
+}
+.productExpireProfit{
+    margin-left:1.173333333rem;
+}
+.productExpireMoney{
+    padding:0.106666667rem 0;
+    margin-left:1.173333333rem;
+}
+.readNow{
+    width: 100%;
+    height: 1.066666667rem;
+    line-height: 1.066666667rem;
+    font-size: 14px;
+    color:orange;
+    /*background: #e6e6e6;*/
+}
+.productMiddle{
+    text-align: center;
+    padding-top:0.48rem;
+    font-size: 14px;
+}
+.dealMoney,.expireMoney{
+    font-size: 0.533333333rem;
+}
+.productTopCenterBottom{
+    color:#d6d6d6;
+}
+.articleTile{
+    font-size: 14px;
+    padding:0.266666667rem 0;
+}
+.articleContent{
+    font-size:14px;
+}
+.newArticleBottomCenter{
+    padding: 0.106666667rem 0;
+    height: 0.8rem;
+    line-height:0.8rem;
+}
+.articleRead{
+    text-align:center;
+}
+.articleComment{
+    text-align:center;
+}
+.articleFont{
+    font-size: 0.373333333rem;
+}
+.articleCommentNum{
+    font-size:0.373333333rem;
+}
+.articleReadNum{
+    font-size:0.373333333rem;
+}
+.activeWrap img{
+    width: 100%;
+    height: 4.106666667rem;
 }

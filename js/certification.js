@@ -2,6 +2,7 @@
  * Created by hzc on 2017-7-13.
  */
 $(function(){
+    $(".personBankNum").focus();
     $(".goChooseBank").click(function(){
         window.location.href = "choosebank.html";
     });
@@ -87,7 +88,8 @@ $(function(){
         var macArr = [];
         macArr.push(accountId,customerId,payType,name,phoneNo,cardNo,idCardNo,orderId,purpose,amount,key);
         var mac=macArr.join("$");
-        window.sessionStorage.mac = mac.toUpperCase();
+        //console.log(mac);
+        window.sessionStorage.mac = md5(mac);
         console.log(window.sessionStorage.mac);
     }
     $(".ysbPayBtn").click(function(){
@@ -158,29 +160,37 @@ $(function(){
             });
   */
             $.ajax({
-                url:"http://114.80.54.75/authPay-front/authPay/pay",
+                url:"http://106.14.165.194:3333/authPay-front/authPay/pay",
                 type:"POST",
                 headers:{
                     'Content-Type':'application/json'
                 },
-                data:{
+                data:JSON.stringify({
                     "accountId":"2120170306142335001",//商户编号
                     "customerId":window.localStorage.phoneNumber,//用户编号
                     "payType":"0",//支付类型
                     "name":$(".accountHolderName").val(),//用户姓名
                     "phoneNo":$(".accountHolderPhoneNum").val(),//手机号
-                    "cardNo":$(".personBankNum").val(),//银行卡号
-                    "idCardNo":$(".personIdCardNum").val(),//身份证号
+                    "cardNo":$(".personBankNum").val().replace(/\s/g, ""),//银行卡号
+                    "idCardNo":$(".personIdCardNum").val().replace(/\s/g, ""),//身份证号
                     "orderId":window.sessionStorage.orderId,//订单号
                     "purpose":window.sessionStorage.productsType,//目的
                     "amount":window.sessionStorage.amount,//金额
                     "responseUrl":"http://106.14.165.194:1111/payResult",//响应地址
                     "mac":window.sessionStorage.mac//数字签名
-                },
+                }),
+                dataType: "json",
                 success:function(res){
                     console.log(res);
-                    countDown();
-                    $(".ysbPayBtn").addClass("ysbVerifyCode")
+                    if(res.result_code == '0000'){
+                        countDown();
+                        $(".ysbPayBtn").addClass("ysbVerifyCode");
+                    }else{
+                        //$(".ysbPayBtn").addClass("ysbVerifyCode");
+                        $(".popup").show();
+                        $(".popup").text(res.result_msg);
+                        setTimeout('$(".popup").hide(),$(".popup").text("")',1500);
+                    }
                 },
                 error:function(res){
                     console.log(res);
@@ -218,7 +228,7 @@ $(function(){
     $(".ysbVerifyCode").click(function(){
         getMac();
         $.ajax({
-           url:"http://114.80.54.75/authPay-front/authPay/sendVercode",
+           url:"http://106.14.165.194:3333/authPay-front/authPay/sendVercode",
            type:'POST',
            headers:{
                'Content-Type': 'application/json'

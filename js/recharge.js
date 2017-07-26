@@ -2,6 +2,7 @@
  * Created by hzc on 2017-7-20.
  */
 $(function(){
+    $(".czMoney ").focus();
     $(".goAuthentication").click(function(){
         window.location.href = "certification.html";
     });

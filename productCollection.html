@@ -40,7 +40,7 @@
         </div>
         <!--我要买-->
         <div class="buyBtnWrap bgWhite">
-            <input type="button" class="iWantbuyBtn buyHqjBtn" value="我要购买">
+            <input type="button" class="iWantbuyBtn" value="我要购买">
         </div>
 
         <div class="swiper-container swiper-container-horizontal bgWhite" id="swiper-container3" style="width:100%;margin-top:2.86rem;">
@@ -787,12 +787,16 @@
 //            alert(swiper.activeIndex+'');
             $("body").scrollTop(0);
             if(swiper.activeIndex == 0){
+                $(".iWantbuyBtn").removeClass('class'," ").addClass("iWantbuyBtn buyWzj60Btn");
                 $(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyWzj60Btn");
             }else if(swiper.activeIndex == 1){
+                window.sessionStorage.buyProductMark = "buyWzj90Btn";
                 $(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyWzj90Btn");
             }else if(swiper.activeIndex == 2){
+                window.sessionStorage.buyProductMark = "buyWzj180Btn";
                 $(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyWzj180Btn");
             }else if(swiper.activeIndex == 3){
+                window.sessionStorage.buyProductMark = "buyWzj360Btn";
                 $(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyWzj360Btn");
             }
             // swiper.activeIndex 这个就是索引， 从 0 开始！ 可看一共有多少元素！
@@ -821,25 +825,26 @@
 //        },
 
         onSlideChangeEnd:function(swiper){
+//            alert(swiper.activeIndex+'');
             $("body").scrollTop(0);
             if(swiper.activeIndex == 0){
+//                alert("hqj");
                 window.sessionStorage.buyProductMark = "buyHqjBtn";
                 $(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyHqjBtn");
                 $(".productBtn0").addClass("bottomColor footBtnOrange").siblings().removeClass("bottomColor footBtnOrange");
             }else if(swiper.activeIndex == 1){
                 if($(".WZJWrap").find(".swiper-slide-active").find(".productTitleCenter").text()  == "稳赚金60天"){
                     window.sessionStorage.buyProductMark = "buyWzj60Btn";
-                    $(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyWzj60Btn").removeClass('buyWzj90Btn buyWzj180Btn buyWzj360Btn buyHqjBtn');
-
+                    $(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyWzj60Btn");
                 }else if($(".WZJWrap").find(".swiper-slide-active").find(".productTitleCenter").text()  == "稳赚金90天"){
-                    window.sessionStorage.buyProductMark = "buyWzj90Btn";
-                    $(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyWzj90Btn").removeClass('buyWzj60Btn buyWzj180Btn buyWzj360Btn buyHqjBtn');
+//                    window.sessionStorage.buyProductMark = "buyWzj90Btn";
+                    $(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyWzj90Btn");
                 }else if($(".WZJWrap").find(".swiper-slide-active").find(".productTitleCenter").text()  == "稳赚金180天"){
-                    window.sessionStorage.buyProductMark = "buyWzj180Btn";
-                    $(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyWzj180Btn").removeClass('buyWzj90Btn buyWzj60Btn buyWzj360Btn buyHqjBtn');
+//                    window.sessionStorage.buyProductMark = "buyWzj180Btn";
+                    $(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyWzj180Btn");
                 }else if($(".WZJWrap").find(".swiper-slide-active").find(".productTitleCenter").text()  == "稳赚金360天"){
-                    window.sessionStorage.buyProductMark = "buyWzj360Btn";
-                    $(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyWzj360Btn").removeClass('buyWzj90Btn buyWzj180Btn buyWzj60Btn buyHqjBtn');
+//                    window.sessionStorage.buyProductMark = "buyWzj360Btn";
+                    $(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyWzj360Btn");
 
                 }
                 $(".productBtn1").addClass("bottomColor footBtnOrange").siblings().removeClass("bottomColor footBtnOrange");
