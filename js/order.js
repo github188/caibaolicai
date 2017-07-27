@@ -2,7 +2,57 @@
  * Created by hzc on 2017-7-6.
  */
 $(function(){
-    $(".buyMoney").focus();
+    //    认证查询
+    //function authenticationQuery(){
+    //    $.ajax({
+    //        url: 'http://10.0.92.198:1111/authQuery',
+    //        type: "GET",
+    //        headers: {
+    //            "token": window.localStorage.token
+    //        },
+    //        data: {
+    //            "phone": window.localStorage.phoneNumber
+    //        },
+    //        success: function (res) {
+    //            console.log(res);
+    //            if(res.code == -1 ){
+    //                $(".placeOrderBtn").css("background","rgb(181,181,181)").attr("disabled","disabled");
+    //            }
+    //        },
+    //        error: function (res) {
+    //            console.log(res);
+    //        }
+    //    });
+    //}
+    //authenticationQuery();
+    $(".buyMoney").focus().val(window.sessionStorage.amount);
+    $(".waitPayNum").text(window.sessionStorage.amount);
+    if($(".buyMoney").val().length > 0){
+        $(".submitOrder").css("background","rgb(242,182,67)").removeAttr("disabled");
+    }
+    //$(".buyMoney");
+    $(".buyMoney").on('input porpertychange',function(){
+        if(parseFloat(window.sessionStorage.accountBalance) < $(".buyMoney").val()){
+            $(".noFinds").text("余额不足");
+            $(".choosePayBalance").off("click");
+        }
+        if(parseFloat($(".buyMoney").val()) < 5){
+            $(".buyMoney").val(5);
+        }
+        if($(".buyMoney").val().length > 0){
+            $(".submitOrder").css("background","rgb(242,182,67)").removeAttr("disabled");
+        }else{
+            $(".submitOrder").css("background","rgb(181,181,181)").attr("disabled","disabled");
+        }
+    });
+    $(".choosePayBank").click(function(){
+        $(".choosePayBalance").removeClass("payActive");
+        $(".choosePayBank").addClass("payActive");
+    });
+    $(".choosePayBalance").click(function(){
+        $(".choosePayBank").removeClass("payActive");
+        $(".choosePayBalance").addClass("payActive");
+    });
     //计息起始日
     function interestDay(day){
         var dayTime=day*24*60*60*1000; //参数天数的时间戳
@@ -70,13 +120,15 @@ $(function(){
         url:"http://106.14.165.194:8000/history-price",
         type:"GET",
         success:function(res){
+            console.log(JSON.parse(res));
             var goldPrice = JSON.parse(res);
-            $(".headTopRight span").text(goldPrice.week[6].every_day_price);
+            $(".headTopRight span").text(goldPrice.week[0].price);
         },
         error:function(res){
             console.log(res);
         }
     });
+    $(".headTopRight span").text(window.sessionStorage.goldPrice);
     //监听input的变化
     $(".buyMoney").on('input porpertychange',function(){
         if(parseFloat($(".buyMoney").val()) < 1){
@@ -94,9 +146,13 @@ $(function(){
         var expectedReturnMoney =(parseFloat(principal * Math.pow(rateIncrease,powerNum)) - principal).toFixed(2);
         //console.log(principal);
         //console.log(rateIncrease);
-        //console.log(powerNum);
+        console.log(expectedReturnMoney);
         //console.log(Math.pow(rateIncrease,powerNum));
-        $(".expectedReturnMoney").text(expectedReturnMoney + "元");
+        if($(".expectedReturnMoney").text() == "NaN"){
+            $(".expectedReturnMoney").text("0.00");
+        }else {
+            $(".expectedReturnMoney").text(expectedReturnMoney);
+        }
     }
     function  btnCount_Click(){
         newDay  =  $(".interestDay").text();
@@ -124,6 +180,12 @@ $(function(){
         btnCount_Click();
         calculateExpectProfit();
     });
+    //监听expectedReturnMoney内容变化
+    $(".expectedReturnMoney").on('DOMNodeInserted',function(){
+       if($(".expectedReturnMoney").text() == "NaN"){
+           $(".expectedReturnMoney").text("0.00");
+       }
+    });
     //    去认证
     $(".goAuthentication").click(function(){
         if($(".buyMoney").val() < 1){
@@ -135,5 +197,178 @@ $(function(){
             window.sessionStorage.orderId = window.localStorage.phoneNumber + new Date().getTime();//订单号
             window.location.href = "certification.html";
         }
+    });
+//    实名绑卡信息查询
+    function bindInfoQuery(){
+        $.ajax({
+            url:'http://10.0.92.198:1111/bindInfo',
+            type:"GET",
+            headers:{
+                "token":window.localStorage.token
+            },
+            data:{
+                "phone":window.localStorage.phoneNumber
+            },
+            success:function(res){
+                console.log(res);
+                $(".banksName").text(res.result.bank);
+                var bankCard = res.result.bankCard.substr(0,4) + "****" + res.result.bankCard.substr(res.result.bankCard.length-3,3);
+                console.log(bankCard);
+                $(".banksNum").text(bankCard);
+                window.sessionStorage.bankName = res.result.bank;
+                window.sessionStorage.bankPhone = res.result.bankPhone.substr(0,3) + "****" + res.result.bankPhone.substr(res.result.bankPhone.length-4,4);
+                window.sessionStorage.BankCardTailNumber = res.result.bankCard.substr(res.result.bankCard.length-4,4);
+                $(".accountBalance").text(window.sessionStorage.accountBalance);
+                if(res.result.bank == "交通银行"){
+
+                    $(".bankImgWrap").find("img").attr('src','images/jiaotongbank.png');
+
+                }else if(res.result.bank == "中国银行"){
+
+                    $(".bankImgWrap").find("img").attr('src','images/zhongguobank.png');
+
+                }else if(res.result.bank == "工商银行"){
+
+                    $(".bankImgWrap").find("img").attr('src','images/gongshangbank.png');
+
+                }else if(res.result.bank == "建设银行"){
+
+                    $(".bankImgWrap").find("img").attr('src','images/jianshebank.png');
+
+                }else if(res.result.bank == "平安银行"){
+
+                    $(".bankImgWrap").find("img").attr('src','images/pinganbank.png');
+
+                }else if(res.result.bank == "中信银行"){
+
+                    $(".bankImgWrap").find("img").attr('src','images/zhongxinbank.png');
+
+                }else if(res.result.bank == "广大银行"){
+
+                    $(".bankImgWrap").find("img").attr('src','images/guangdabank.png');
+
+                }else if(res.result.bank == "浦发银行"){
+
+                    $(".bankImgWrap").find("img").attr('src','images/pufabank.png');
+
+                }else if(res.result.bank == "兴业银行"){
+
+                    $(".bankImgWrap").find("img").attr('src','images/xingyebank.png');
+
+                }else if(res.result.bank == "农业银行"){
+
+                    $(".bankImgWrap").find("img").attr('src','images/nongyebank.png');
+
+                }else if(res.result.bank == "邮政银行"){
+
+                    $(".bankImgWrap").find("img").attr('src','images/youzhengbank.png');
+
+                }else if(res.result.bank == "招商银行"){
+
+                    $(".bankImgWrap").find("img").attr('src','images/zhaoshangbank.png');
+
+                }else if(res.result.bank == "华夏银行"){
+
+                    $(".bankImgWrap").find("img").attr('src','images/huaxiabank.png');
+
+                }else if(res.result.bank == "广发银行"){
+
+                    $(".bankImgWrap").find("img").attr('src','images/guangfabank.png');
+
+                }else if(res.result.bank == "民生银行"){
+
+                    $(".bankImgWrap").find("img").attr('src','images/minshengbank.png');
+
+                }
+            },
+            error:function(res){
+                console.log(res);
+            }
+        })
+    }
+    bindInfoQuery();
+
+    //预支付接口（再次）
+    function prePaymentAgain(){
+        $.ajax({
+            url:"http://106.14.165.194:3333/authPay-front/authPay/pay",
+            type:"POST",
+            headers:{
+                'Content-Type':'application/json'
+            },
+            data:JSON.stringify({
+                "accountId":"2120170306142335001",//商户编号
+                "customerId":window.localStorage.phoneNumber,//用户编号
+                "payType":"0",                                                  //支付类型
+                "name":$(".accountHolderName").val(),                        //用户姓名
+                "phoneNo":$(".accountHolderPhoneNum").val(),                //手机号
+                "cardNo":$(".personBankNum").val().replace(/\s/g, ""),       //银行卡号
+                "idCardNo":$(".personIdCardNum").val().replace(/\s/g, ""),  //身份证号
+                "orderId":window.sessionStorage.orderId,                   //订单号
+                "purpose":window.sessionStorage.productsType,             //目的
+                "amount":window.sessionStorage.amount,                     //金额
+                "responseUrl":"http://106.14.165.194:1111/payResult",   //响应地址
+                "mac":window.sessionStorage.mac                             //数字签名
+            }),
+            success:function(res){
+                console.log(res)
+            },
+            error:function(res){
+                console.log(res)
+            }
+        });
+    }
+
+    //倒计时
+    function countDown(){
+        //alert("111");
+        var timer=setTimeout(function(){//按验证按钮后60秒按钮禁用
+            clearInterval(timer2);
+            $(".sendAgin").val("重发").css({
+                //"border":"1px solid #DDD",
+                //"background":"#fff",
+                "color":"#000"
+            }).removeAttr("disabled");
+            //$(".sendAgin").val("重新发").css({
+            //    //"border":"1px solid #DDD",
+            //    //"background":"#fff",
+            //    "color":"#000"
+            //}).removeAttr("disabled");
+        },60000);
+        var i = 60;
+        $(".sendAgin").text(i+'s').css({
+            //"border":"1px solid #DDD",
+            //"background":"#e1e1e1",
+            "color":"#000"
+        }).attr("disabled","disabled");
+        var timer2=setInterval(function(){
+            i--;
+            $(".sendAgin").val(i+'s');
+            //$(".sendAgin").val(i+'s');
+        },1000);
+    }
+    if(parseFloat(window.sessionStorage.accountBalance) < $(".buyMoney").val()){
+        $(".noFinds").text("余额不足");
+        $(".choosePayBalance").off("click");
+    }
+    $(".submitOrder").click(function(){
+        if($(".choosePayBank ").hasClass("payActive")){
+            $(".popupBg").show();
+            $(".popupWrap").show();
+            $(".userRechargeNum").text("￥" + $('.buyMoney').val());
+            $(".phoneName").text(window.sessionStorage.bankPhone);
+            $(".rechargeBankName").text(window.sessionStorage.bankName);
+            $(".BankCardTailNumber").text( '('+ window.sessionStorage.BankCardTailNumber + ')');
+            countDown();
+
+        }else{
+            alert("余额支付");
+        }
+    });
+    $(".closePopupWrap").click(function(){
+        $(".userRechargeNum").text("");
+        $(".phoneName").text("");
+        $(".popupBg").hide();
+        $(".popupWrap").hide();
     });
 });

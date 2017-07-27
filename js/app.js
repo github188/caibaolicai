@@ -98,19 +98,20 @@ $(function(){
                 "phone":window.localStorage.phoneNumber
             },
             success:function(res){
-                console.log(res);
-                console.log(res.asset);
+                //console.log(res);
+                //console.log(res.asset);
                 var goldPrice = window.sessionStorage.goldPrice;
                 var assetNum = res.asset.balance + res.asset.huoqiGoldSum + (res.asset.qiandaiGoldSum * goldPrice) + (res.asset.jinshengGoldSum * goldPrice) + res.asset.wenzhuanGoldSum;
-                console.log(assetNum);
-                $(".asset").text(assetNum);
-                $(".balance").text(res.asset.balance);
-                $(".dataLeftBottom").text(res.asset.earnYtdSum);
-                $(".dataRightBottom").text(res.asset.goldEarnYtdSum);
-                $(".hqjNum").text(res.asset.huoqiGoldSum);
-                $(".jsjNum").text(res.asset.jinshengGoldSum);
-                $(".wzjNum").text(res.asset.wenzhuanGoldSum);
-                $(".qdjNum").text(res.asset.qiandaiGoldSum);
+                //console.log(assetNum);
+                $(".asset").text(assetNum.toFixed(2));
+                $(".balance").text(parseFloat(res.asset.balance).toFixed(2));                      //账户余额
+                window.sessionStorage.accountBalance = parseFloat(res.asset.balance).toFixed(2);
+                $(".dataLeftBottom").text(parseFloat(res.asset.earnYtdSum).toFixed(2));          //昨日收益金额
+                $(".dataRightBottom").text(parseFloat(res.asset.goldEarnYtdSum).toFixed(2));    //昨日收益黄金克数
+                $(".hqjNum").text(parseFloat(res.asset.huoqiGoldSum).toFixed(2));                //活期金余额（元）
+                $(".jsjNum").text(parseFloat(res.asset.jinshengGoldSum).toFixed(2));            //金生金余额（克）
+                $(".wzjNum").text(parseFloat(res.asset.wenzhuanGoldSum).toFixed(2));            //稳赚金余额（元）
+                $(".qdjNum").text(parseFloat(res.asset.qiandaiGoldSum).toFixed(2));             //钱袋金余额（克）
             },
             error:function(res){
                 console.log(res);

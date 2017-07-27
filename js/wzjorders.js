@@ -21,8 +21,8 @@ $(function(){
              if($(".convertIntoNum ").text() == 'NaN'){
                  $(".convertIntoNum ").text("");
              }
-             if($(".inputBuyInt").val()<50){
-                 $(".inputBuyInt").val("50");
+             if(parseFloat($(".inputBuyInt").val())<50){
+                 $(".inputBuyInt").val(50);
              }
              var expectedRevenue = (parseFloat($(".inputBuyInt").val()) * 360 * 0.14)/360;
              $(".expectProfitNum").text(expectedRevenue.toFixed(2));
@@ -52,7 +52,7 @@ $(function(){
             $(".changeBuyMethodBtn").text("切换为按金额购买");
         }else{
             $(".inputBuyMethodTitle").text("金额");
-            $(".inputBuyInt").attr('placeholder','请输入购买金额');
+            $(".inputBuyInt").attr('placeholder','50元起够');
             $(".convertIntoName ").text("折合黄金克数");
             $(".changeBuyMethodBtn").text("切换为按克数购买")
         }

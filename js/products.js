@@ -231,8 +231,18 @@ $(function(){
                 }
 
             });
-        }else if(window.sessionStorage.buyProductMark == "buyHqjBtn"){
-
+        }else if(window.sessionStorage.buyProductMark == "buyWzj60Btn"){
+            alert("稳赚金60天");
+        }else if(window.sessionStorage.buyProductMark == "buyWzj90Btn"){
+            alert("稳赚金90天");
+        }else if(window.sessionStorage.buyProductMark == "buyWzj180Btn"){
+            alert("稳赚金180天");
+        }else if(window.sessionStorage.buyProductMark == "buyWzj360Btn"){
+            alert("稳赚金360天");
+        }else if(window.sessionStorage.buyProductMark == "buyJsj"){
+            alert("金生金");
+        }else if(window.sessionStorage.buyProductMark == "buyQdj"){
+            alert("钱袋金");
         }
     });
 /*$(".buyHqjBtn").click(function () {
@@ -290,16 +300,16 @@ $(function(){
             onSlideChangeStart:function(swiper){
                 $("body").scrollTop(0);
                 if(swiper.activeIndex == 0){
-                    window.sessionStorage.buyProductMark = "buyWzj60Btn";
+                    //window.sessionStorage.buyProductMark = "buyWzj60Btn";
                     $(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyWzj60Btn");
                 }else if(swiper.activeIndex == 1){
-                    window.sessionStorage.buyProductMark = "buyWzj90Btn";
+                    //window.sessionStorage.buyProductMark = "buyWzj90Btn";
                     $(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyWzj90Btn");
                 }else if(swiper.activeIndex == 2){
-                    window.sessionStorage.buyProductMark = "buyWzj180Btn";
+                    //window.sessionStorage.buyProductMark = "buyWzj180Btn";
                     $(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyWzj180Btn");
                 }else if(swiper.activeIndex == 3){
-                    window.sessionStorage.buyProductMark = "buyWzj360Btn";
+                    //window.sessionStorage.buyProductMark = "buyWzj360Btn";
                     $(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyWzj360Btn");
                 }
                 // swiper.activeIndex 这个就是索引， 从 0 开始！ 可看一共有多少元素！
@@ -373,7 +383,7 @@ $(function(){
             onSlideChangeEnd:function(swiper){
                 $("body").scrollTop(0);
                 if(swiper.activeIndex == 0){
-                    window.sessionStorage.buyProductMark = "buyHqjBtn";
+                    //window.sessionStorage.buyProductMark = "buyHqjBtn";
                     $(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyHqjBtn");
                     $(".productBtn0").addClass("bottomColor footBtnOrange").siblings().removeClass("bottomColor footBtnOrange");
                 }else if(swiper.activeIndex == 1){

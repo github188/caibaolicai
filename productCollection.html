@@ -787,6 +787,7 @@
 //            alert(swiper.activeIndex+'');
             $("body").scrollTop(0);
             if(swiper.activeIndex == 0){
+                window.sessionStorage.buyProductMark = "buyWzj60Btn";
                 $(".iWantbuyBtn").removeClass('class'," ").addClass("iWantbuyBtn buyWzj60Btn");
                 $(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyWzj60Btn");
             }else if(swiper.activeIndex == 1){
@@ -837,22 +838,24 @@
                     window.sessionStorage.buyProductMark = "buyWzj60Btn";
                     $(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyWzj60Btn");
                 }else if($(".WZJWrap").find(".swiper-slide-active").find(".productTitleCenter").text()  == "稳赚金90天"){
-//                    window.sessionStorage.buyProductMark = "buyWzj90Btn";
+                    window.sessionStorage.buyProductMark = "buyWzj90Btn";
                     $(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyWzj90Btn");
                 }else if($(".WZJWrap").find(".swiper-slide-active").find(".productTitleCenter").text()  == "稳赚金180天"){
-//                    window.sessionStorage.buyProductMark = "buyWzj180Btn";
+                    window.sessionStorage.buyProductMark = "buyWzj180Btn";
                     $(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyWzj180Btn");
                 }else if($(".WZJWrap").find(".swiper-slide-active").find(".productTitleCenter").text()  == "稳赚金360天"){
-//                    window.sessionStorage.buyProductMark = "buyWzj360Btn";
+                    window.sessionStorage.buyProductMark = "buyWzj360Btn";
                     $(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyWzj360Btn");
 
                 }
                 $(".productBtn1").addClass("bottomColor footBtnOrange").siblings().removeClass("bottomColor footBtnOrange");
             }
             else if(swiper.activeIndex == 2){
+                window.sessionStorage.buyProductMark = "buyJsj";
                 $(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyJsj60Btn");
                 $(".productBtn2").addClass("bottomColor footBtnOrange").siblings().removeClass("bottomColor footBtnOrange");
             }else if(swiper.activeIndex == 3){
+                window.sessionStorage.buyProductMark = "buyQdj";
                 $(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyQdj60Btn");
                 $(".productBtn3").addClass("bottomColor footBtnOrange").siblings().removeClass("bottomColor footBtnOrange");
             }// swiper.activeIndex 这个就是索引， 从 0 开始！ 可看一共有多少元素！
