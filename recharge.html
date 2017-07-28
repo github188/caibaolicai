@@ -17,22 +17,22 @@
 <div id="wrap">
     <div class="wrapCenter">
         <div class="headTop flex bgWhite">
-            <div class="headTopLeft"><a class="messageIcon" style="font-size:0.266666667rem;display: inline-block;width: 1.4rem;text-align: left;">  <i class="iconfont icon-fanhui" style="font-size: 0.693333333rem;"></i></a></div>
+            <div class="headTopLeft"><a class="messageIcon" href="javascript:history.back(-1);" style="font-size:0.266666667rem;display: inline-block;width: 1.4rem;text-align: left;">  <i class="iconfont icon-fanhui" style="color: #000; font-size: 0.693333333rem;"></i></a></div>
             <div class="headTopCenter"><span class="logo"></span>充值</div>
             <div class="headTopRight withdrawRecord">记录</div>
         </div>
         <div class="rechargingBankWrap bgWhite borderTop">
             <div class="rechargeBankWrapCenter flex">
-                <div class="bankIcon rechargeBankIcon"><img src="images/jianshebank.png" alt=""></div>
+                <div class="bankIcon rechargeBankIcon bankImgWrap"><img src="images/iconWhite.png" alt=""></div>
                 <div class="bankRight">
                     <div class="userCardInfo">
-                        <span class="bankTitle">建设银行</span>
-                        <span class="bankCardNumber">6227****397</span>
+                        <span class="bankTitle banksName"></span>
+                        <span class="bankCardNumber banksNum"></span>
                     </div>
                     <div class="rechargeExplain">
-                        <span class="danBi">单笔5万</span>
-                        <span class="danRi">单日100万</span>
-                        <span class="danYue">单月一万</span>
+                        单笔5万单日100万
+                        <!--<span class="danBi">单笔5万</span>-->
+                        <!--<span class="danRi">单日100万</span>-->
                     </div>
                 </div>
             </div>
@@ -61,7 +61,7 @@
             <input type="number" class="verificationCodeNum" placeholder="请输入验证码">
         </div>
         <div class="rechargeBankWrap">
-            使用<span class="rechargeBank">中国建设银行</span><span>(0397)</span>付款
+            使用<span class="rechargeBank"></span><span class="BankCardTailNumber"></span>付款
         </div>
         <div class="rechargeConfirmBtnWrap">
             <input type="button" class="rechargeConfirmBtn" value="确认">

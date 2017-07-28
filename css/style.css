@@ -1298,7 +1298,7 @@ input:focus{
     height: 1.333333333rem;
     line-height: 1.333333333rem;
     width: 8rem;
-    background: #cccccc;
+    background: rgb(181,181,181);
     color: #000000;
     font-size: 0.426666667rem;
     margin:0 auto;
@@ -1365,6 +1365,14 @@ input:focus{
     display: none;
 }
 .popupWrap{
+    width: 100%;
+    position: absolute;
+    top:1.866666667rem;
+    z-index: 10;
+    display: none;
+    padding-bottom: 0.32rem;
+}
+.popupWrapBalance{
     width: 100%;
     position: absolute;
     top:1.866666667rem;
@@ -1656,7 +1664,7 @@ input:focus{
     flex: 1;
     font-size: 0.373333333rem;
     text-align: right;
-    color: #cccccc;
+    /*color: #cccccc;*/
 }
 .kaiHuname{
     padding: 0 0.4rem;
@@ -1971,8 +1979,8 @@ input:focus{
     color: #f6a34e;
 }
 .placeOrderWrap{
-    position: fixed;
-    bottom:0;
+    position: relative;
+    top:0.533333rem;
     left: 0;
     right: 0;
 }

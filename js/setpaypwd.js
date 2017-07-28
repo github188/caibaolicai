@@ -3,6 +3,7 @@
  */
 $(function(){
     $(".inputPwd").focus();
+
     //设置支付密码
     $(".setPwdBtn").click(function(){
         if($(".inputPwd").val() !== $(".confirmPwd").val()){
@@ -26,7 +27,15 @@ $(function(){
                 success:function(res){
                     console.log(res);
                     if(res.code == 0){
-                        window.location.href = "index.html"
+                        if(window.sessionStorage.checkedLoginCode == "ziChan"){
+                            window.location.href = "asset.html";
+                        }else if(window.sessionStorage.checkedLoginCode == "faXian"){
+                            window.location.href = "find.html";
+                        }else if(window.sessionStorage.pageMark ==  "wzj360"){
+                            window.location.href = "productCollection.html";
+                        }else{
+                            window.location.href = "index.html";
+                        }
                     }else{
                         $(".popup").show();
                         $(".popup").text(res.msg);

@@ -159,10 +159,12 @@ $(function(){
         var amountArr = [];
         amountArr.push(amountName,amountNum);
         var amount = amountArr.join("=");
-
+        //商户编号
         var accountId = "accountId=2120170306142335001";
         //var customerId = "customerId=window.localStorage.phoneNumber";
+        //支付类型
         var payType = "payType=0";
+        //响应地址
         var responseUrl = "responseUrl=http://106.14.165.194:1111/payResult";
         //var name = 'name=$(".accountHolderName").val()';
         //var phoneNo = 'phoneNo=$(".accountHolderPhoneNum").val()';
@@ -171,6 +173,8 @@ $(function(){
         //var orderId = 'orderId=window.sessionStorage.orderId';
         //var purpose = 'purpose=window.sessionStorage.productsType';
         //var amount = 'amount=window.sessionStorage.amount';
+
+        //key
         var key = 'key=caibao1314';
         var macArr = [];
         macArr.push(accountId,customerId,payType,name,phoneNo,cardNo,idCardNo,orderId,purpose,amount,responseUrl,key);
@@ -179,6 +183,44 @@ $(function(){
         window.sessionStorage.mac = md5(mac).toUpperCase();
         console.log(window.sessionStorage.mac);
     }
+    //短信数字签名
+    function messageMac(){
+        //用户编号
+        var customerIdName = 'customerId';
+        var customerIdNum = window.localStorage.phoneNumber;
+        var customerIdArr = [];
+        customerIdArr.push(customerIdName,customerIdNum);
+        var customerId = customerIdArr.join("=");
+        //商户编号
+        var accountId = "accountId=2120170306142335001";
+        //key
+        var key = 'key=caibao1314';
+        //手机号
+        var phoneNoName = 'phoneNo';
+        var phoneNoNum = $(".accountHolderPhoneNum").val();
+        var phoneNoArr = [];
+        phoneNoArr.push(phoneNoName,phoneNoNum);
+        var phoneNo = phoneNoArr.join("=");
+        //订单号
+        var orderIdName = 'orderId';
+        var orderIdNum = window.sessionStorage.orderId;
+        var orderIdArr = [];
+        orderIdArr.push(orderIdName,orderIdNum);
+        var orderId = orderIdArr.join("=");
+        //授权码
+        var tokenName = 'token';
+        var tokenNum = window.sessionStorage.payToken;
+        var tokenArr = [];
+        tokenArr.push(tokenName,tokenNum);
+        var token = tokenArr.join("=");
+
+        var messageMacArr = [];
+        messageMacArr.push(accountId,customerId,token,orderId,phoneNo,key);
+        var messagemac=messageMacArr.join("&");
+        console.log(messagemac);
+        window.sessionStorage.messagemac = md5(messagemac).toUpperCase();
+    }
+
     //实名绑卡唯一性查询
     function uniquenessQuery(){
         $.ajax({
@@ -309,21 +351,21 @@ $(function(){
     }
     //获取验证码（银生宝）
     $(".ysbVerifyCode").click(function(){
-        getMac();
+        messageMac();
         $.ajax({
            url:"http://106.14.165.194:3333/authPay-front/authPay/sendVercode",
            type:'POST',
            headers:{
                'Content-Type': 'application/json'
            },
-           data:{
+           data:JSON.stringify({
                "accountId":"2120170306142335001",//商户编号
                "customerId":window.localStorage.phoneNumber,//用户编号
                "orderId":window.sessionStorage.orderId,//订单号
                "phoneNo":$(".accountHolderPhoneNum").val(),//手机号
-               "token":"",
-               "mac":window.sessionStorage.mac//数字签名
-           },
+               "token":window.sessionStorage.payToken,
+               "mac":window.sessionStorage.messagemac//数字签名
+           }),
            success:function(res){
                countDown();
                 console.log(res);

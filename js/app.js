@@ -179,39 +179,39 @@ $(function(){
         });
     });
     $(".goWithdrawBtn").click(function(){
-        //$.ajax({
-        //    url:'http://10.0.92.198:1111/authQuery',
-        //    type:"GET",
-        //    headers:{
-        //        "token":window.localStorage.token
-        //    },
-        //    data:{
-        //        "phone":window.localStorage.phoneNumber
-        //    },
-        //    success:function(res){
-        //        console.log(res);
-        //        if(res.code == -1){
-        //            window.location.href = "unbindwithdrawal.html";
-        //        }else if(res.code == -2){
-        //            $(".popup").show();
-        //            $(".popup").text(res.msg);
-        //            setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
-        //        }else if(res.code == -3){
-        //            $(".popup").show();
-        //            $(".popup").text(res.msg);
-        //            setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
-        //        }else if(res.code == -4){
-        //            $(".popup").show();
-        //            $(".popup").text(res.msg);
-        //            setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
-        //        }else{
-        //            window.location.href = "withdrawCash.html";
-        //        }
-        //    },
-        //    error:function(res){
-        //        console.log(res);
-        //    }
-        //});
+        $.ajax({
+            url:'http://10.0.92.198:1111/authQuery',
+            type:"GET",
+            headers:{
+                "token":window.localStorage.token
+            },
+            data:{
+                "phone":window.localStorage.phoneNumber
+            },
+            success:function(res){
+                console.log(res);
+                if(res.code == -1){
+                    window.location.href = "unbindwithdrawal.html";
+                }else if(res.code == -2){
+                    $(".popup").show();
+                    $(".popup").text(res.msg);
+                    setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
+                }else if(res.code == -3){
+                    $(".popup").show();
+                    $(".popup").text(res.msg);
+                    setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
+                }else if(res.code == -4){
+                    $(".popup").show();
+                    $(".popup").text(res.msg);
+                    setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
+                }else{
+                    window.location.href = "withdrawCash.html";
+                }
+            },
+            error:function(res){
+                console.log(res);
+            }
+        });
     });
     //    退出登录
     $(".quitLoginBtn").click(function(){

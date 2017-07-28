@@ -4,6 +4,13 @@
 $(function(){
     $(".verifyCode").focus();
     $(".phoneNumber").text(window.localStorage.phoneNumber);
+    $(".verifyCode").on('input porpertychange',function(){
+        if($(".verifyCode").val().length == 6){
+            $(".loginBtn").css("background","rgb(242, 182, 67)").removeAttr("disabled");
+        }else {
+            $(".loginBtn").css("background","rgb(181,181,181)").attr("disabled","disabled");
+        }
+    });
     function countDown(){
         var timer=setTimeout(function(){//按验证按钮后60秒按钮禁用
             clearInterval(timer2);
@@ -90,6 +97,39 @@ $(function(){
             }
         });
     });
+    //判断是否设置支付密码
+    function judgeSetPayPwd(){
+        $.ajax({
+            url:"http://10.0.92.198:1111/paypwd",
+            type:"GET",
+            headers:{
+                "token":window.localStorage.token
+            },
+            data:{
+                "phone":window.localStorage.phoneNumber
+            },
+            success:function(res){
+                console.log(res);
+                if(res.code == -1){
+                    window.location.href = "setpaypwd.html";
+                }else if(res.code == 0){
+                    if(window.sessionStorage.checkedLoginCode == "ziChan"){
+                        window.location.href = "asset.html";
+                    }else if(window.sessionStorage.checkedLoginCode == "faXian"){
+                        window.location.href = "find.html";
+                    }else if(window.sessionStorage.pageMark ==  "wzj360"){
+                        window.location.href = "productCollection.html";
+                    }else{
+                        window.location.href = "index.html";
+                    }
+                }
+            },
+            error:function(res){
+                console.log(res);
+            }
+        });
+    }
+    //点击登录
     $(".loginBtn").click(function(){
        $.ajax({
            url:"http://10.0.92.198:1111/login",
@@ -109,15 +149,7 @@ $(function(){
                    setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
                }else if(res.code == 0){
                    window.localStorage.token = res.token;
-                   if(window.sessionStorage.checkedLoginCode == "ziChan"){
-                        window.location.href = "asset.html";
-                   }else if(window.sessionStorage.checkedLoginCode == "faXian"){
-                       window.location.href = "find.html";
-                   }else if(window.sessionStorage.pageMark ==  "wzj360"){
-                       window.location.href = "productCollection.html";
-                   }else{
-                       window.location.href = "index.html";
-                   }
+                   judgeSetPayPwd();
                }
            },
            error:function(res){
