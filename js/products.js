@@ -7,6 +7,8 @@ $(function(){
             window.location.href = "index.html";
         }else if(window.sessionStorage.pageMark == undefined){
             window.location.href = "index.html";
+        }else {
+            window.history.back(-1);
         }
     });
 
@@ -372,6 +374,52 @@ $(function(){
     }
     //默认显示活期金
     if(window.sessionStorage.pageMark == "hqj"){
+        window.sessionStorage.buyProductMark = "buyHqjBtn";
+        var mySwiper3 = new Swiper('#swiper-container3',{
+            initialSlide :0,
+            autoHeight: true,
+            onSlideChangeStart: function(){
+                updateNavPosition();
+                $("body").scrollTop(0);
+            },
+            onSlideChangeEnd:function(swiper){
+                $("body").scrollTop(0);
+                if(swiper.activeIndex == 0){
+                    //window.sessionStorage.buyProductMark = "buyHqjBtn";
+                    $(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyHqjBtn");
+                    $(".productBtn0").addClass("bottomColor footBtnOrange").siblings().removeClass("bottomColor footBtnOrange");
+                }else if(swiper.activeIndex == 1){
+                    if($(".WZJWrap").find(".swiper-slide-active").find(".productTitleCenter").text()  == "稳赚金60天"){
+                        //window.sessionStorage.buyProductMark = "buyWzj60Btn";
+                        $(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyWzj60Btn");
+
+                    }else if($(".WZJWrap").find(".swiper-slide-active").find(".productTitleCenter").text()  == "稳赚金90天"){
+                        //window.sessionStorage.buyProductMark = "buyWzj90Btn";
+                        $(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyWzj90Btn");
+
+                    }else if($(".WZJWrap").find(".swiper-slide-active").find(".productTitleCenter").text()  == "稳赚金180天"){
+                        //window.sessionStorage.buyProductMark = "buyWzj180Btn";
+                        $(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyWzj180Btn");
+
+                    }else if($(".WZJWrap").find(".swiper-slide-active").find(".productTitleCenter").text()  == "稳赚金360天"){
+                        //window.sessionStorage.buyProductMark = "buyWzj360Btn";
+                        $(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyWzj360Btn");
+
+                    }
+                    $(".productBtn1").addClass("bottomColor footBtnOrange").siblings().removeClass("bottomColor footBtnOrange");
+                }
+                else if(swiper.activeIndex == 2){
+                    $(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyJsj60Btn");
+                    $(".productBtn2").addClass("bottomColor footBtnOrange").siblings().removeClass("bottomColor footBtnOrange");
+                }else if(swiper.activeIndex == 3){
+                    $(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyQdj60Btn");
+                    $(".productBtn3").addClass("bottomColor footBtnOrange").siblings().removeClass("bottomColor footBtnOrange");
+                }// swiper.activeIndex 这个就是索引， 从 0 开始！ 可看一共有多少元素！
+            }
+        });
+    }
+   //    默认显示活期金
+    if(window.sessionStorage.pageMark == "assetsHqj"){
         window.sessionStorage.buyProductMark = "buyHqjBtn";
         var mySwiper3 = new Swiper('#swiper-container3',{
             initialSlide :0,

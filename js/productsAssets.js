@@ -2,12 +2,12 @@
  * Created by hzc on 2017-7-5.
  */
 $(function(){
-    $(".pleaseInputsSellMoney").focus();
+    $(".pleaseInputsSellMoney").focus().attr('placeholder','最多可卖出'+parseFloat(window.sessionStorage.hqjAllAsset).toFixed(2)+'元');
     $(".goSellHqjBtn").click(function(){
        window.location.href = "sellHqj.html";
     });
     $(".goBuyHqjBtn").click(function(){
-        window.sessionStorage.pageMark  = "hqj";
+        window.sessionStorage.pageMark  = "assetsHqj";
         window.location.href = "productCollection.html";
     });
     function productsAssets(){
@@ -24,10 +24,13 @@ $(function(){
             success:function(res){
                 //console.log(res);
                 //console.log(res.asset.currentGoldSum);
+                var huoqiEarnYtd = parseFloat(res.asset.huoqiEarnYtd).toFixed(2);
+                var huoqiGoldSum = parseFloat(res.asset.huoqiGoldSum).toFixed(2);
+                var huoqiEarnSum = parseFloat(res.asset.huoqiEarnSum).toFixed(2);
                 window.sessionStorage.hqjAllAsset =  res.asset.huoqiGoldSum;
-                $(".hqjYstProfit").text(res.asset.huoqiEarnYtd);//活期金昨日收益
-                $(".hqjAllAsset").text(res.asset.huoqiGoldSum);//活期金资产
-                $(".hqjEarningsSum").text(res.asset.huoqiEarnSum);//活期金累计收益
+                $(".hqjYstProfit").text(huoqiEarnYtd);//活期金昨日收益
+                $(".hqjAllAsset").text(huoqiGoldSum);//活期金资产
+                $(".hqjEarningsSum").text(huoqiEarnSum);//活期金累计收益
             },
             error:function(res){
                 console.log(res);
@@ -81,7 +84,7 @@ $(function(){
     //支付密码
     $('#ipt').focus(function(){
         $(".sellPopup").css({
-            'top':'0.266666667rem'
+            'top':'1.366666667rem'
         });
     });
     $('#ipt').on('input',function (e){
@@ -95,26 +98,46 @@ $(function(){
                 $(list[i]).text('');
             }
         }
+        if(pw.length == 6){
+            checkedPwd();
+        }
     });
-    $(".salableMoney").text(window.sessionStorage.hqjAllAsset);
+    $(".salableMoney").text(parseFloat(window.sessionStorage.hqjAllAsset).toFixed(2));
     $(".sellAllHqj").click(function(){
-       $(".pleaseInputsSellMoney").val(parseFloat($(".salableMoney").text()));
+        if(parseFloat($(".salableMoney").text()).toFixed(2) == 0.00){
+            $(".sellBtn").css("background","rgb(181,181,181)").attr("disabled","disabled");
+            $(".popup").show();
+            $(".popup").text("您暂无可卖出金额");
+            setTimeout('$(".popup").text(),$(".popup").hide()',2000);
+        }else {
+            $(".pleaseInputsSellMoney").val(parseFloat($(".salableMoney").text()));
+            $(".sellBtn").css("background","rgb(242,182,67)").removeAttr("disabled");
+        }
     });
-    $(".pleaseInputsSellMoney").on('input onpropertychange',function(){
-        $(".sellBtn").css("background","rgb(242,182,67)").removeAttr("disabled");
-        if ($(".pleaseInputsSellMoney").val() >= $(".salableMoney").text()){
-            $(".pleaseInputsSellMoney").val(window.sessionStorage.hqjAllAsset);
+    $(".pleaseInputsSellMoney").on('input propertychange',function(){
+        if(parseFloat($(".pleaseInputsSellMoney").val()) == 0.00){
+            $(".pleaseInputsSellMoney").val("");
+            $(".sellBtn").css("background","rgb(181,181,181)").attr("disabled","disabled");
+            return;
+        }else if($(".pleaseInputsSellMoney").val().length > 0){
+            $(".sellBtn").css("background","rgb(242,182,67)").removeAttr("disabled");
+            if (parseFloat($(".pleaseInputsSellMoney").val()) >= parseFloat($(".salableMoney").text())){
+                $(".pleaseInputsSellMoney").val($(".salableMoney").text());
+            }
+        } else{
+            $(".sellBtn").css("background","rgb(181,181,181)").attr("disabled","disabled");
         }
         //if($(".pleaseInputsSellMoney").val() >0 && $(".pleaseInputsSellMoney").val()<=window.sessionStorage.hqjAllAsset){
         //    $(".sellBtn").css("background","rgb(242,182,67)").removeAttr("disabled");
         //}else{
-        //    $(".sellBtn").css("background","rgb(181,181,181)").attr("disabled","disabled");
+        //
         //}
     });
     $(".sellBtn").click(function(){
         $(".sellTypeMoney").text("￥" + $(".pleaseInputsSellMoney").val());
         $(".popupBg").css("display","block");
         $(".sellPopup").css("display","block");
+        $("#ipt").focus();
     });
     $(".popupBg").click(function(){
         $('#ipt').val("");
@@ -130,10 +153,11 @@ $(function(){
         $(".sellPopup").css("display","none");
         $(".sellTypeMoney").text("");
     });
+    //支付密码验证
     function checkedPwd(){
         var checkedPayPwd = sha256_digest($("#ipt").val());
         $.ajax({
-            url:"10.0.92.198:1111/paypwd-check",
+            url:"http://10.0.92.198:1111/paypwd-check",
             type:"POST",
             headers:{
                 "Content-Type":"application/x-www-form-urlencoded ",
@@ -145,9 +169,46 @@ $(function(){
             },
             success:function(res){
                 console.log(res);
-                $(".sellPopup ").hide();
-                $(".popupBg").hide();
-                //if(res.)
+                if(res.code == 0){
+                    sellHqj();
+                }else {
+                    $(".popup").show();
+                    $(".popup").text(res.msg);
+                    setTimeout('$(".popup").hide(),$(".popup").text(""),$("#ipt").val("")',2000);
+                }
+            },
+            error:function(res){
+                console.log(res);
+            }
+        });
+    }
+   // 活期金卖出
+    function sellHqj(){
+        var orderId = window.localStorage.phoneNumber + Date.parse(new Date());
+        $.ajax({
+            url:"http://10.0.92.198:1111/currentGold/sellOut",
+            type:"POST",
+            headers:{
+                "Content-Type":"application/x-www-form-urlencoded ",
+                "token":window.localStorage.token
+            },
+            data:{
+                "phone":window.localStorage.phoneNumber,
+                "orderId":orderId,
+                "amount":$(".pleaseInputsSellMoney").text()
+            },
+            success:function(res){
+                console.log(res);
+                if(res.code == 0){
+                    $(".popup").show();
+                    $(".popup").text(res.msg);
+                    setTimeout('$(".popup").hide(),$(".popup").text(""),$("#ipt").val("")',2000);
+                    setTimeout('$(".sellPopup ").hide(),$(".popupBg").hide(),window.location.href = "hqjAsset.html" ',2500);
+                }else {
+                    $(".popup").show();
+                    $(".popup").text(res.msg);
+                    setTimeout('$(".popup").hide(),$(".popup").text(""),$(".sellPopup ").hide(),$(".popupBg").hide()',2000);
+                }
             },
             error:function(res){
                 console.log(res);
@@ -155,9 +216,9 @@ $(function(){
         });
     }
    //监听密码输入框的变化
-    $("#ipt").on('input onpropertychange',function(){
-        if($("#ipt").val().length == 6){
-            checkedPwd();
-        }
-    });
+   // $("#ipt").on('input onpropertychange',function(){
+   //     if($("#ipt").val().length == 6){
+   //         checkedPwd();
+   //     }
+   // });
 });

@@ -115,22 +115,340 @@ $(function(){
     $(".goAuthentication").click(function(){
         window.location.href = "certification.html";
     });
-    $(".czMoney").on('input onpropertychange',function(){
-       if($(".czMoney").val() <= 100){
-           $(".czMoney").val("100");
-       }
+    //$(".czMoney").on('input onpropertychange',function(){
+    //   if($(".czMoney").val() <= 100){
+    //       $(".czMoney").val("100");
+    //   }
+    //});
+
+    //后台获取授权码
+    function getAuthToken(){
+        $.ajax({
+            url:"http://10.0.92.198:1111/authToken",
+            "type":"GET",
+            headers:{
+                "token":window.localStorage.token
+            },
+            data:{
+                "phone":window.localStorage.phoneNumber
+            },
+            success:function(res){
+                console.log(res);
+                if(res.code == 0){
+                    window.sessionStorage.payToken = res.authToken.authToken;
+                    console.log(res.authToken.authToken);
+                    recharge();//后端充值接口
+                }else {
+                    $(".popup").show();
+                    $(".popup").text(res.msg);
+                    setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
+                }
+            },
+            error:function(res){
+                console.log(res);
+            }
+        });
+    }
+    //获取数字签名
+    function getMac(){
+        //用户编号
+        var customerIdName = 'customerId';
+        var customerIdNum = window.localStorage.phoneNumber;
+        var customerIdArr = [];
+        customerIdArr.push(customerIdName,customerIdNum);
+        var customerId = customerIdArr.join("=");
+        //授权码
+        var tokenName = 'token';
+        var tokenNum = window.sessionStorage.payToken;
+        var tokenArr = [];
+        tokenArr.push(tokenName,tokenNum);
+        var token = tokenArr.join("=");
+        //订单号
+        var orderIdName = 'orderId';
+        var orderIdNum = window.sessionStorage.orderId;
+        var orderIdArr = [];
+        orderIdArr.push(orderIdName,orderIdNum);
+        var orderId = orderIdArr.join("=");
+        //目的
+        var purposeName = 'purpose';
+        var purposeNum = "充值";
+        var purposeArr = [];
+        purposeArr.push(purposeName,purposeNum);
+        var purpose = purposeArr.join("=");
+        //金额
+        var amountName = 'amount';
+        var amountNum = parseFloat($(".bindCzMoney").val());
+        var amountArr = [];
+        amountArr.push(amountName,amountNum);
+        var amount = amountArr.join("=");
+
+        var accountId = "accountId=2120170306142335001";
+        //var customerId = "customerId=window.localStorage.phoneNumber";
+        var payType = "payType=1";
+        var responseUrl = "responseUrl=http://106.14.165.194:1111/payResult";
+        //var name = 'name=$(".accountHolderName").val()';
+        //var phoneNo = 'phoneNo=$(".accountHolderPhoneNum").val()';
+        //var cardNo ='cardNo=$(".personBankNum").val()';
+        //var idCardNo = 'idCardNo=$("personIdCardNum").val()';
+        //var orderId = 'orderId=window.sessionStorage.orderId';
+        //var purpose = 'purpose=window.sessionStorage.productsType';
+        //var amount = 'amount=window.sessionStorage.amount';
+        var key = 'key=caibao1314';
+        var macArr = [];
+        macArr.push(accountId,customerId,payType,token,orderId,purpose,amount,responseUrl,key);
+        var mac=macArr.join("&");
+        console.log(mac);
+        window.sessionStorage.mac = md5(mac).toUpperCase();
+        console.log(window.sessionStorage.mac);
+    }
+    //倒计时
+    function countDown(){
+        //alert("111");
+        var timer=setTimeout(function(){//按验证按钮后60秒按钮禁用
+            clearInterval(timer2);
+            $(".sendAgin").val("重发").css({
+                //"border":"1px solid #DDD",
+                //"background":"#fff",
+                "color":"#000"
+            }).removeAttr("disabled");
+            //$(".sendAgin").val("重新发").css({
+            //    //"border":"1px solid #DDD",
+            //    //"background":"#fff",
+            //    "color":"#000"
+            //}).removeAttr("disabled");
+        },60000);
+        var i = 60;
+        $(".sendAgin").text(i+'s').css({
+            //"border":"1px solid #DDD",
+            //"background":"#e1e1e1",
+            "color":"#000"
+        }).attr("disabled","disabled");
+        timer2=setInterval(function(){
+            i--;
+            $(".sendAgin").val(i+'s');
+            //$(".sendAgin").val(i+'s');
+        },1000);
+    }
+    //预支付接口（再次）.(银生宝)
+    function paymentAgain(){
+        getMac();
+        $.ajax({
+            url:"http://106.14.165.194:3333/authPay-front/authPay/pay",
+            type:"POST",
+            headers:{
+                'Content-Type':'application/json'
+            },
+            data:JSON.stringify({
+                "accountId":"2120170306142335001",                           //商户编号
+                "customerId":window.localStorage.phoneNumber,              //用户编号
+                "orderId":window.sessionStorage.orderId,                   //订单号
+                "payType":"1",                                                 //支付类型
+                "purpose":"充值",                                             //目的
+                "amount":$(".bindCzMoney").val(),                           //金额
+                "responseUrl":"http://106.14.165.194:1111/payResult",   //响应地址
+                "token":window.sessionStorage.payToken,                  //授权码
+                "mac":window.sessionStorage.mac                             //数字签名
+            }),
+            success:function(res){
+                console.log(res);
+                if(res.result_code == "0000"){
+                    countDown();
+                }else{
+                    $(".popup").show();
+                    $(".popup").text(res.result_msg);
+                    setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
+                }
+            },
+            error:function(res){
+                console.log(res);
+            }
+        });
+    }
+
+    //后端充值接口
+    function recharge(){
+        $.ajax({
+            url:"http://10.0.92.198:1111/recharge",
+            "type":"POST",
+            headers:{
+                "Content-Type":"application/x-www-form-urlencoded ",
+                "token":window.localStorage.token
+            },
+            data:{
+                "phone":window.localStorage.phoneNumber,
+                "orderId":window.sessionStorage.orderId,
+                "amount":$(".bindCzMoney").val()
+            },
+            success:function(res){
+                console.log(res);
+                if(res.code == 0){
+                    paymentAgain();
+                }else {
+                    $(".popup").show();
+                    $(".popup").text(res.msg);
+                    setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
+                }
+            },
+            error:function(res){
+                console.log(res);
+            }
+        });
+    }
+    //短信数字签名
+    function messageMac(){
+        //用户编号
+        var customerIdName = 'customerId';
+        var customerIdNum = window.localStorage.phoneNumber;
+        var customerIdArr = [];
+        customerIdArr.push(customerIdName,customerIdNum);
+        var customerId = customerIdArr.join("=");
+        //商户编号
+        var accountId = "accountId=2120170306142335001";
+        //key
+        var key = 'key=caibao1314';
+        //手机号
+        var phoneNoName = 'phoneNo';
+        var phoneNoNum = window.sessionStorage.bindBankPhone;
+        var phoneNoArr = [];
+        phoneNoArr.push(phoneNoName,phoneNoNum);
+        var phoneNo = phoneNoArr.join("=");
+        //订单号
+        var orderIdName = 'orderId';
+        var orderIdNum = window.sessionStorage.orderId;
+        var orderIdArr = [];
+        orderIdArr.push(orderIdName,orderIdNum);
+        var orderId = orderIdArr.join("=");
+        //授权码
+        var tokenName = 'token';
+        var tokenNum = window.sessionStorage.payToken;
+        var tokenArr = [];
+        tokenArr.push(tokenName,tokenNum);
+        var token = tokenArr.join("=");
+
+        var messageMacArr = [];
+        messageMacArr.push(accountId,customerId,token,orderId,phoneNo,key);
+        var messagemac=messageMacArr.join("&");
+        console.log(messagemac);
+        window.sessionStorage.messagemac = md5(messagemac).toUpperCase();
+    }
+    //重发验证码
+    $(".sendAgin").click(function(){
+        messageMac();
+        $.ajax({
+            url:"http://106.14.165.194:3333/authPay-front/authPay/sendVercode",
+            type:'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            data:JSON.stringify({
+                "accountId":"2120170306142335001",                 //商户编号
+                "customerId":window.localStorage.phoneNumber,    //用户编号
+                "orderId":window.sessionStorage.orderId,         //订单号
+                "phoneNo":window.sessionStorage.bindBankPhone,  //绑定的手机号
+                "token":window.sessionStorage.payToken,          //授权码
+                "mac":window.sessionStorage.messagemac          //数字签名
+            }),
+            success:function(res){
+                countDown();
+                console.log(res);
+            },
+            error:function(res){
+                console.log(res);
+            }
+        });
     });
+
     $(".bindCzMoney").on('input onpropertychange',function(){
-       if($(".bindCzMoney").val().length > 0){
+       if(parseFloat($(".bindCzMoney").val()) >=1){//测试用
            $(".confirmBtn").css("background","rgb(242, 182, 67)").removeAttr("disabled");
        }else{
            $(".confirmBtn").css("background","#cccccc").attr("disabled",true);
        }
     });
+    //确认支付数字签名
+    function payMac(){
+        //用户编号
+        var customerIdName = 'customerId';
+        var customerIdNum = window.localStorage.phoneNumber;
+        var customerIdArr = [];
+        customerIdArr.push(customerIdName,customerIdNum);
+        var customerId = customerIdArr.join("=");
+        //商户编号
+        var accountId = "accountId=2120170306142335001";
+        //key
+        var key = 'key=caibao1314';
+        //验证码
+        var vericodeName = 'vericode';
+        var vericodeNum = $(".verificationCodeNum").val();
+        var vericodeArr = [];
+        vericodeArr.push(vericodeName,vericodeNum);
+        var vericode = vericodeArr.join("=");
+        //订单号
+        var orderIdName = 'orderId';
+        var orderIdNum = window.sessionStorage.orderId;
+        var orderIdArr = [];
+        orderIdArr.push(orderIdName,orderIdNum);
+        var orderId = orderIdArr.join("=");
+        //授权码
+        var tokenName = 'token';
+        var tokenNum = window.sessionStorage.payToken;
+        var tokenArr = [];
+        tokenArr.push(tokenName,tokenNum);
+        var token = tokenArr.join("=");
+
+        var payMacArr = [];
+        payMacArr.push(accountId,customerId,token,orderId,vericode,key);
+        var paymac=payMacArr.join("&");
+        console.log(paymac);
+        window.sessionStorage.paymac = md5(paymac).toUpperCase();
+    }
+    //确认支付
+    $(".rechargeConfirmBtn").click(function(){
+        payMac();
+        $.ajax({
+            url:"http://106.14.165.194:3333/authPay-front/authPay/confirm",
+            type:"POST",
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            data:JSON.stringify({
+                "accountId":"2120170306142335001",                 //商户编号
+                "customerId":window.localStorage.phoneNumber,    //用户编号
+                "orderId":window.sessionStorage.orderId,         //订单号
+                "vericode":$(".verificationCodeNum").val(),      //验证码
+                "token":window.sessionStorage.authToken,        //授权码
+                "mac":window.sessionStorage.paymac              //数字签名
+            }),
+            success:function(res){
+                console.log(res);
+                if(res.result_code == "0000"){
+                    if(res.desc == "卡上的余额不足[1000051]"){
+                        $(".popup").show();
+                        $(".popup").text("卡上余额不足");
+                        setTimeout('$(".popup").hide(),$(".popup").text("")',3000);
+                        setTimeout('$(".userRechargeNum").text(""),$(".verificationCodeNum").val(""),$(".BankCardTailNumber").text( ""),clearInterval(timer2), $(".sendAgin").val(""),$(".popupBg").hide(),$(".popupWrap").hide()',3500);
+                    }else{
+                        //alert("成功");
+                        $(".popup").show();
+                        $(".popup").text("交易成功");
+                        setTimeout('$(".popup").hide(),$(".popup").text("")',3000);
+                        setTimeout('$(".userRechargeNum").text(""),$(".verificationCodeNum").val(""),$(".BankCardTailNumber").text( ""),clearInterval(timer2), $(".sendAgin").val(""),$(".popupBg").hide(),$(".popupWrap").hide(),window.location.href = "asset.html"',3500);
+                    }
+                }
+            },
+            error:function(res){
+                console.log(res);
+            }
+        })
+    });
+
     $(".confirmBtn").click(function(){
+        window.sessionStorage.orderId = window.localStorage.phoneNumber + new Date().getTime();//订单号
+        getAuthToken();//获取授权码
         $(".popupBg").show();
         $(".popupWrap").show();
         $(".userRechargeNum").text("￥" + $(".bindCzMoney").val());
+        $(".verificationCodeNum").focus();
         $(".rechargeBank").text(window.sessionStorage.bankName);
         $(".BankCardTailNumber").text( "(" + window.sessionStorage.BankCardTailNumber + ")");
     });

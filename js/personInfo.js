@@ -53,6 +53,15 @@ $(function(){
                 },
                 success:function(res){
                     console.log(res);
+                    if(res.code == 0){
+                        $(".popup").show();
+                        $(".popup").text(res.msg);
+                        setTimeout('$(".popup").hide(),$(".popup").text(""),window.location.href = "asset.html"',2000);
+                    }else {
+                        $(".popup").show();
+                        $(".popup").text(res.msg);
+                        setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
+                    }
                 },
                 error:function(res){
                     console.log(res);

@@ -27,7 +27,9 @@ $(function(){
                 success:function(res){
                     console.log(res);
                     if(res.code == 0){
-                        if(window.sessionStorage.checkedLoginCode == "ziChan"){
+                        if(window.sessionStorage.pageMark == "hqj"){
+                            window.location.href = "productCollection.html";
+                        }else if(window.sessionStorage.checkedLoginCode == "ziChan"){
                             window.location.href = "asset.html";
                         }else if(window.sessionStorage.checkedLoginCode == "faXian"){
                             window.location.href = "find.html";

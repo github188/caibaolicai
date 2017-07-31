@@ -2,6 +2,36 @@
  * Created by hzc on 2017-7-28.
  */
 $(function(){
+    $(".balanceNum").text(window.sessionStorage.userBalance);
+    //开户银行是否录入
+    function bankInfoWhetherInput(){
+        $.ajax({
+            url:'http://10.0.92.198:1111/bankInfo',
+            type:"GET",
+            headers:{
+                "token":window.localStorage.token
+            },
+            data:{
+                "phone":window.localStorage.phoneNumber
+            },
+            success:function(res){
+                console.log(res);
+                if(res.code == 0){
+                    $(".kaiHuLocationWrap").hide();
+                    $(".inputWithDrawNum").focus();
+                }else if(res.code == -1){
+                    window.sessionStorage.bankInput = "no";
+                    $(".inputKaiHuName").focus();
+                }else{
+                    $(".submit").addClass("inputBank");
+                }
+            },
+            error:function(res){
+                console.log(res);
+            }
+        });
+    }
+    bankInfoWhetherInput();
     //    实名绑卡信息查询
     function bindInfoQuery(){
         $.ajax({
@@ -111,4 +141,167 @@ $(function(){
         })
     }
     bindInfoQuery();
+    $(".withdrawAllBtn").click(function(){
+        $(".inputWithDrawNum").val($(".balanceNum").text());
+    });
+    $(".inputWithDrawNum").on('input propertychange',function(){
+
+        if($(".inputWithDrawNum").val().length > 0 && parseFloat($(".inputWithDrawNum").val()) <= parseFloat($(".balanceNum").text())){
+            $(".submit").css("background","rgb(242,182,67)").removeAttr("disabled");
+        }else {
+            $(".submit").css("background","rgb(181,181,181)").attr("disabled","disabled");
+        }
+    });
+    //银行信息录入
+    function inputBank(){
+        $.ajax({
+            url:'http://10.0.92.198:1111/bankInfo',
+            type:"POST",
+            headers:{
+                "Content-Type":"application/x-www-form-urlencoded",
+                "token":window.localStorage.token
+            },
+            data:{
+                "phone":window.localStorage.phoneNumber,
+                "bankArea":$("#sel_city").text().replace(/(^\s+)|(\s+$)/g, ""),
+                "bankName":$(".inputKaiHuName").val()
+            },
+            success:function(res){
+                console.log(res);
+                if(res.code == 0){
+
+                }else{
+                    $(".popup").show();
+                    $(".popup").text(res.msg);
+                    setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
+                }
+            },
+            error:function(res){
+                console.log(res);
+            }
+        });
+    }
+    $(".submit").click(function(){
+        if( $("#sel_city").text().replace(/(^\s+)|(\s+$)/g, "") == "请选择" ){
+            $(".popup").show();
+            $(".popup").text("请选择开户行地区");
+            setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
+        }else if($(".inputKaiHuName").val().length == 0){
+            $(".popup").show();
+            $(".popup").text("开户支行名称");
+            setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
+        }else if(parseFloat($(".inputWithDrawNum").val()) < 50){
+            $(".popup").show();
+            $(".popup").text("您提现的金额小于50元");
+            setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
+        } else{
+            if(window.sessionStorage.bankInput == "no"){
+                inputBank();
+                $(".sellTypeMoney").text("￥" + $(".inputWithDrawNum").val());
+                $(".popupBg").css("display","block");
+                $(".sellPopup").css("display","block");
+                $("#ipt").focus();
+            }else {
+                $(".sellTypeMoney").text("￥" + $(".inputWithDrawNum").val());
+                $(".popupBg").css("display","block");
+                $(".sellPopup").css("display","block");
+                $("#ipt").focus();
+            }
+        }
+    });
+    $(".closePopup").click(function(){
+        $('#ipt').val("");
+        $(".inputPwdWrap").find("li").text("");
+        $(".popupBg").hide();
+        $(".sellPopup").hide();
+        $(".sellTypeMoney").text("");
+    });
+
+    //提现接口
+    function withdraw(){
+        var orderId = window.localStorage.phoneNumber + Date.parse(new Date());
+        $.ajax({
+            url:"http://10.0.92.198:1111/withdraw",
+            type:"POST",
+            headers:{
+                "Content-Type":"application/x-www-form-urlencoded ",
+                "token":window.localStorage.token
+            },
+            data:{
+                "phone":window.localStorage.phoneNumber,
+                "orderId":orderId,
+                "amount":$(".inputWithDrawNum").val()
+            },
+            success:function(res){
+                console.log(res);
+                if(res.code == 0){
+                    $(".popup").show();
+                    $(".popup").text(res.msg);
+                    setTimeout('$(".popup").hide(),$(".popup").text(""),$("#ipt").val(""),window.location.href = "asset.html"',2000);
+                }else {
+                    $(".popup").show();
+                    $(".popup").text(res.msg);
+                    setTimeout('$(".popup").hide(),$(".popup").text(""),$("#ipt").val("")',2000);
+                }
+            },
+            error:function(res){
+                console.log(res);
+            }
+        });
+    }
+    //支付密码验证
+    function checkedPwd(){
+        var checkedPayPwd = sha256_digest($("#ipt").val());
+        $.ajax({
+            url:"http://10.0.92.198:1111/paypwd-check",
+            type:"POST",
+            headers:{
+                "Content-Type":"application/x-www-form-urlencoded ",
+                "token":window.localStorage.token
+            },
+            data:{
+                "phone":window.localStorage.phoneNumber,
+                "paypwd":checkedPayPwd
+            },
+            success:function(res){
+                console.log(res);
+                if(res.code == 0){
+                    withdraw();
+                }else {
+                    $(".popup").show();
+                    $(".popup").text(res.msg);
+                    setTimeout('$(".popup").hide(),$(".popup").text(""),$("#ipt").val("")',2000);
+                }
+            },
+            error:function(res){
+                console.log(res);
+            }
+        });
+    }
+    //支付密码
+    $('#ipt').focus(function(){
+        $(".sellPopup").css({
+            'top':'1.366666667rem'
+        });
+    });
+    $('#ipt').on('input',function (e){
+        var numLen = 6;
+        var pw = $('#ipt').val();
+        var list = $('.pwdContainer span');
+        for(var i=0; i<=numLen; i++){
+            if(pw[i]){
+                $(list[i]).text('*');
+            }else{
+                $(list[i]).text('');
+            }
+        }
+        if(pw.length == 6){
+            checkedPwd();
+        }
+    });
+    //$("#ipt").on('input porpertychange',function(){
+    //    if($("#ipt").val().length == 6){
+    //        checkedPwd();
+    //    }
+    //});
 });

@@ -11,6 +11,40 @@
     <script src="js/flexible.js"></script>
     <link rel="stylesheet" href="css/iconfont.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <style>
+        label{
+            display: block;
+            text-align: center;
+        }
+        .pwdContainer{
+            box-sizing: border-box;
+            -moz-box-sizing:border-box; /* Firefox */
+            -webkit-box-sizing:border-box; /* Safari */
+            border: 1px solid #c8c8c8;
+            font-size: 0;
+            display: inline-block;
+            position: relative;
+            font-size: 0;
+        }
+        .pwdContainer span{
+            display: inline-block;
+            width: 1.3rem;
+            height: 1.3rem;
+            font-size: 24px;
+            font-weight: 700;
+            text-align: center;
+            line-height:1.53333333rem;
+            box-sizing: border-box;
+            -moz-box-sizing:border-box; /* Firefox */
+            -webkit-box-sizing:border-box; /* Safari */
+            border-left: 1px solid #e6e6e6;
+            vertical-align: middle;
+            overflow: hidden;
+        }
+        .pwdContainer span:first-child {
+            border-left: none;
+        }
+    </style>
 </head>
 <body>
     <div id="wrap">
@@ -34,19 +68,20 @@
                     <div class="kaiHuLocation flex">
                         <div class="kaiHuLocationTitle">开户行地区</div>
                         <a class="chooseKaiHu btn btn-info btn-lg active" role="button" id="sel_city">
-                            请选择 <span> <i class="iconfont icon-fanhui-copy"></i> </span>
+                            请选择
                         </a>
+                        <span> <i class="iconfont icon-jinru"></i> </span>
                     </div>
                 </div>
                 <div class="kaiHuLocationWrap bgWhite borderBottom">
                     <div class="kaiHuname flex">
-                        <div class="kaiHuNameTitle">开户行名称</div>
-                        <input type="text" class="inputKaiHuName" placeholder="请输入开户行名称">
+                        <div class="kaiHuNameTitle">开户支行名称</div>
+                        <input type="text" class="inputKaiHuName" placeholder="请输入开户支行名称">
                     </div>
                 </div>
                 <div class="withdrawBalance">
                     <div class="withdrawBalanceCenter">
-                        您的可提现余额为 <span class="balanceNum">1.00</span>元
+                        您的可提现余额为 <span class="balanceNum"></span>元
                     </div>
                 </div>
                 <div class="withdrawBtnWrap bgWhite">
@@ -55,7 +90,7 @@
                         <input type="button" value="全部提现" class="withdrawAllBtn">
                     </div>
                 </div>
-                <div class="submitWrap"><input type="button" class="submit" value="提交"></div>
+                <div class="submitWrap"><input type="button" class="submit" value="提交" disabled="disabled"></div>
                 <div class="WithdrawalsInstruction">
                     <div class="WithdrawalsInstructionCenter">
                         <div class="instructionTitleWrap">
@@ -75,188 +110,129 @@
             </div>
         </div>
     </div>
-<script src="js/zepto.min.js"></script>
-<script src="js/withdrawCash.js"></script>
-<script src="js/picker.min.js"></script>
-<script src="js/city.js"></script>
-<script>
-    var nameEl = document.getElementById('sel_city');
-    var first = []; /* 省，直辖市 */
-    var second = []; /* 市 */
-    var third = []; /* 镇 */
-    var selectedIndex = [0, 0, 0]; /* 默认选中的地区 */
-    var checked = [0, 0, 0]; /* 已选选项 */
-    function creatList(obj, list){
-        obj.forEach(function(item, index, arr){
-            var temp = new Object();
-            temp.text = item.name;
-            temp.value = index;
-            list.push(temp);
-        })
-    }
-    creatList(city, first);
-    if (city[selectedIndex[0]].hasOwnProperty('sub')) {
-        creatList(city[selectedIndex[0]].sub, second);
-    } else {
-        second = [{text: '', value: 0}];
-    }
-    if (city[selectedIndex[0]].sub[selectedIndex[1]].hasOwnProperty('sub')) {
-        creatList(city[selectedIndex[0]].sub[selectedIndex[1]].sub, third);
-    } else {
-        third = [{text: '', value: 0}];
-    }
-    var picker = new Picker({
-        data: [first, second, third],
-        selectedIndex: selectedIndex,
-        title: '地址选择'
-    });
-    picker.on('picker.select', function (selectedVal, selectedIndex) {
-        var text1 = first[selectedIndex[0]].text;
-        var text2 = second[selectedIndex[1]].text;
-        var text3 = third[selectedIndex[2]] ? third[selectedIndex[2]].text : '';
-        nameEl.innerText = text1 + ' ' + text2 + ' ' + text3;
-    });
-    picker.on('picker.change', function (index, selectedIndex) {
-        if (index === 0){
-            firstChange();
-        } else if (index === 1) {
-            secondChange();
+    <div class="popupBg"></div>
+    <div class="sellPopup bgWhite">
+        <div class="sellPopupCenter">
+            <div class="sellPopupCue flex borderBottom">
+                <div class="flex1"></div>
+                <div class="sellPopupTitle">请输入6位数字支付密码</div>
+                <div class="flex1 closePopup"><i class="iconfont icon-guanbi" style="font-size: 14px;"></i></div>
+            </div>
+            <div class="sellTypeTitle">提现</div>
+            <div class="sellTypeMoney"></div>
+            <div class="inputPwdWrap">
+                <label for="ipt">
+                    <div class="pwdContainer">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </label>
+                <input type="tel" id="ipt" maxlength="6" style="width: 1px; opacity: 0;height: 1px;border: none;">
+            </div>
+        </div>
+    </div>
+    <div class="popup"></div>
+    <script src="js/zepto.min.js"></script>
+    <script src="js/picker.min.js"></script>
+    <script src="js/city.js"></script>
+    <script>
+        var nameEl = document.getElementById('sel_city');
+        var first = []; /* 省，直辖市 */
+        var second = []; /* 市 */
+        var third = []; /* 镇 */
+        var selectedIndex = [0, 0, 0]; /* 默认选中的地区 */
+        var checked = [0, 0, 0]; /* 已选选项 */
+        function creatList(obj, list){
+            obj.forEach(function(item, index, arr){
+                var temp = new Object();
+                temp.text = item.name;
+                temp.value = index;
+                list.push(temp);
+            })
         }
-        function firstChange() {
-            second = [];
-            third = [];
-            checked[0] = selectedIndex;
-            var firstCity = city[selectedIndex];
-            if (firstCity.hasOwnProperty('sub')) {
-                creatList(firstCity.sub, second);
-                var secondCity = city[selectedIndex].sub[0]
-                if (secondCity.hasOwnProperty('sub')) {
+        creatList(city, first);
+        if (city[selectedIndex[0]].hasOwnProperty('sub')) {
+            creatList(city[selectedIndex[0]].sub, second);
+        } else {
+            second = [{text: '', value: 0}];
+        }
+        if (city[selectedIndex[0]].sub[selectedIndex[1]].hasOwnProperty('sub')) {
+            creatList(city[selectedIndex[0]].sub[selectedIndex[1]].sub, third);
+        } else {
+            third = [{text: '', value: 0}];
+        }
+        var picker = new Picker({
+            data: [first, second, third],
+            selectedIndex: selectedIndex,
+            title: '地址选择'
+        });
+        picker.on('picker.select', function (selectedVal, selectedIndex) {
+            var text1 = first[selectedIndex[0]].text;
+            var text2 = second[selectedIndex[1]].text;
+            var text3 = third[selectedIndex[2]] ? third[selectedIndex[2]].text : '';
+            nameEl.innerText = text1 + ' ' + text2 + ' ' + text3;
+        });
+        picker.on('picker.change', function (index, selectedIndex) {
+            if (index === 0){
+                firstChange();
+            } else if (index === 1) {
+                secondChange();
+            }
+            function firstChange() {
+                second = [];
+                third = [];
+                checked[0] = selectedIndex;
+                var firstCity = city[selectedIndex];
+                if (firstCity.hasOwnProperty('sub')) {
+                    creatList(firstCity.sub, second);
+                    var secondCity = city[selectedIndex].sub[0]
+                    if (secondCity.hasOwnProperty('sub')) {
+                        creatList(secondCity.sub, third);
+                    } else {
+                        third = [{text: '', value: 0}];
+                        checked[2] = 0;
+                    }
+                } else {
+                    second = [{text: '', value: 0}];
+                    third = [{text: '', value: 0}];
+                    checked[1] = 0;
+                    checked[2] = 0;
+                }
+                picker.refillColumn(1, second);
+                picker.refillColumn(2, third);
+                picker.scrollColumn(1, 0)
+                picker.scrollColumn(2, 0)
+            }
+            function secondChange() {
+                third = [];
+                checked[1] = selectedIndex;
+                var first_index = checked[0];
+                if (city[first_index].sub[selectedIndex].hasOwnProperty('sub')) {
+                    var secondCity = city[first_index].sub[selectedIndex];
                     creatList(secondCity.sub, third);
+                    picker.refillColumn(2, third);
+                    picker.scrollColumn(2, 0)
                 } else {
                     third = [{text: '', value: 0}];
                     checked[2] = 0;
+                    picker.refillColumn(2, third);
+                    picker.scrollColumn(2, 0)
                 }
-            } else {
-                second = [{text: '', value: 0}];
-                third = [{text: '', value: 0}];
-                checked[1] = 0;
-                checked[2] = 0;
             }
-            picker.refillColumn(1, second);
-            picker.refillColumn(2, third);
-            picker.scrollColumn(1, 0)
-            picker.scrollColumn(2, 0)
-        }
-        function secondChange() {
-            third = [];
-            checked[1] = selectedIndex;
-            var first_index = checked[0];
-            if (city[first_index].sub[selectedIndex].hasOwnProperty('sub')) {
-                var secondCity = city[first_index].sub[selectedIndex];
-                creatList(secondCity.sub, third);
-                picker.refillColumn(2, third);
-                picker.scrollColumn(2, 0)
-            } else {
-                third = [{text: '', value: 0}];
-                checked[2] = 0;
-                picker.refillColumn(2, third);
-                picker.scrollColumn(2, 0)
-            }
-        }
-    });
-    picker.on('picker.valuechange', function (selectedVal, selectedIndex) {
-//        console.log(selectedVal);
-//        console.log(selectedIndex);
-    });
-    nameEl.addEventListener('click', function () {
-        picker.show();
-    });
-</script>
-
-<!--<div class="picker" style="display: none;">-->
-    <!--<div class="picker-mask mask-hook  "></div>-->
-    <!--<div class="picker-panel panel-hook  ">-->
-        <!--<div class="picker-choose choose-hook">-->
-            <!--<span class="cancel cancel-hook">取消</span>-->
-            <!--<span class="confirm confirm-hook">确定</span>-->
-            <!--<h1 class="picker-title">地址选择</h1>-->
-        <!--</div>-->
-        <!--<div class="picker-content">-->
-            <!--<div class="mask-top border-1px"></div>-->
-            <!--<div class="mask-bottom border-1px"></div>-->
-            <!--<div class="wheel-wrapper wheel-wrapper-hook">-->
-                <!--<div class="wheel wheel-hook">-->
-                    <!--<ul class="wheel-scroll wheel-scroll-hook" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: translate(0px, 0px) translateZ(0px);">-->
-                        <!--<li class="wheel-item" data-val="0" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(0deg);">北京</li>-->
-                        <!--<li class="wheel-item" data-val="1" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(25deg);">广东</li>-->
-                        <!--<li class="wheel-item" data-val="2" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(50deg);">上海</li>-->
-                        <!--<li class="wheel-item" data-val="3" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(75deg);">天津</li>-->
-                        <!--<li class="wheel-item" data-val="4" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(100deg);">重庆</li>-->
-                        <!--<li class="wheel-item" data-val="5" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(125deg);">辽宁</li>-->
-                        <!--<li class="wheel-item" data-val="6" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(150deg);">江苏</li>-->
-                        <!--<li class="wheel-item" data-val="7" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(175deg);">湖北</li>-->
-                        <!--<li class="wheel-item" data-val="8" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(200deg);">四川</li>-->
-                        <!--<li class="wheel-item" data-val="9" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(225deg);">陕西</li>-->
-                        <!--<li class="wheel-item" data-val="10" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(250deg);">河北</li>-->
-                        <!--<li class="wheel-item" data-val="11" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(275deg);">山西</li>-->
-                        <!--<li class="wheel-item" data-val="12" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(300deg);">河南</li>-->
-                        <!--<li class="wheel-item" data-val="13" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(325deg);">吉林</li>-->
-                        <!--<li class="wheel-item" data-val="14" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(350deg);">黑龙江</li>-->
-                        <!--<li class="wheel-item" data-val="15" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(375deg);">内蒙古</li>-->
-                        <!--<li class="wheel-item" data-val="16" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(400deg);">山东</li>-->
-                        <!--<li class="wheel-item" data-val="17" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(425deg);">安徽</li>-->
-                        <!--<li class="wheel-item" data-val="18" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(450deg);">浙江</li>-->
-                        <!--<li class="wheel-item" data-val="19" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(475deg);">福建</li>-->
-                        <!--<li class="wheel-item" data-val="20" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(500deg);">湖南</li>-->
-                        <!--<li class="wheel-item" data-val="21" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(525deg);">广西</li>-->
-                        <!--<li class="wheel-item" data-val="22" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(550deg);">江西</li>-->
-                        <!--<li class="wheel-item" data-val="23" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(575deg);">贵州</li>-->
-                        <!--<li class="wheel-item" data-val="24" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(600deg);">云南</li>-->
-                        <!--<li class="wheel-item" data-val="25" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(625deg);">西藏</li>-->
-                        <!--<li class="wheel-item" data-val="26" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(650deg);">海南</li>-->
-                        <!--<li class="wheel-item" data-val="27" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(675deg);">甘肃</li>-->
-                        <!--<li class="wheel-item" data-val="28" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(700deg);">宁夏</li>-->
-                        <!--<li class="wheel-item" data-val="29" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(725deg);">青海</li>-->
-                        <!--<li class="wheel-item" data-val="30" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(750deg);">新疆</li>-->
-                        <!--<li class="wheel-item" data-val="31" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(775deg);">香港</li>-->
-                        <!--<li class="wheel-item" data-val="32" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(800deg);">澳门</li>-->
-                        <!--<li class="wheel-item" data-val="33" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(825deg);">台湾</li>-->
-                        <!--<li class="wheel-item" data-val="34" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(850deg);">海外</li>-->
-                        <!--<li class="wheel-item" data-val="35" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(875deg);">其他</li>-->
-                    <!--</ul>-->
-                <!--</div>-->
-                <!--<div class="wheel wheel-hook">-->
-                    <!--<ul class="wheel-scroll wheel-scroll-hook" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: translate(0px, 0px) translateZ(0px);">-->
-                        <!--<li class="wheel-item" data-val="0" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(0deg);">东城区</li>-->
-                        <!--<li class="wheel-item" data-val="1" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(25deg);">西城区</li>-->
-                        <!--<li class="wheel-item" data-val="2" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(50deg);">崇文区</li>-->
-                        <!--<li class="wheel-item" data-val="3" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(75deg);">宣武区</li>-->
-                        <!--<li class="wheel-item" data-val="4" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(100deg);">朝阳区</li>-->
-                        <!--<li class="wheel-item" data-val="5" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(125deg);">海淀区</li>-->
-                        <!--<li class="wheel-item" data-val="6" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(150deg);">丰台区</li>-->
-                        <!--<li class="wheel-item" data-val="7" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(175deg);">石景山区</li>-->
-                        <!--<li class="wheel-item" data-val="8" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(200deg);">房山区</li>-->
-                        <!--<li class="wheel-item" data-val="9" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(225deg);">通州区</li>-->
-                        <!--<li class="wheel-item" data-val="10" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(250deg);">顺义区</li>-->
-                        <!--<li class="wheel-item" data-val="11" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(275deg);">昌平区</li>-->
-                        <!--<li class="wheel-item" data-val="12" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(300deg);">大兴区</li>-->
-                        <!--<li class="wheel-item" data-val="13" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(325deg);">怀柔区</li>-->
-                        <!--<li class="wheel-item" data-val="14" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(350deg);">平谷区</li>-->
-                        <!--<li class="wheel-item" data-val="15" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(375deg);">门头沟区</li>-->
-                        <!--<li class="wheel-item" data-val="16" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(400deg);">密云县</li>-->
-                        <!--<li class="wheel-item" data-val="17" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(425deg);">延庆县</li>-->
-                        <!--<li class="wheel-item" data-val="18" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(450deg);">其他</li>-->
-                    <!--</ul>-->
-                <!--</div>-->
-                <!--<div class="wheel wheel-hook">-->
-                    <!--<ul class="wheel-scroll wheel-scroll-hook" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: translate(0px, 0px) translateZ(0px);">-->
-                        <!--<li class="wheel-item" data-val="0" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(0deg);"></li>-->
-                    <!--</ul>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="picker-footer footer-hook"></div>-->
-    <!--</div>-->
-<!--</div>-->
+        });
+        picker.on('picker.valuechange', function (selectedVal, selectedIndex) {
+    //        console.log(selectedVal);
+    //        console.log(selectedIndex);
+        });
+        nameEl.addEventListener('click', function () {
+            picker.show();
+        });
+    </script>
+    <script src="js/sha256.js"></script>
+    <script src="js/withdrawCash.js"></script>
 </body>
 </html>

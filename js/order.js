@@ -567,9 +567,9 @@ $(function(){
                 "accountId":"2120170306142335001",                 //商户编号
                 "customerId":window.localStorage.phoneNumber,    //用户编号
                 "orderId":window.sessionStorage.orderId,         //订单号
-                "vericode":$(".verificationCodeNum").val(), //绑定的手机号
-                "token":window.sessionStorage.authToken,          //授权码
-                "mac":window.sessionStorage.paymac          //数字签名
+                "vericode":$(".verificationCodeNum").val(),      //验证码
+                "token":window.sessionStorage.authToken,        //授权码
+                "mac":window.sessionStorage.paymac               //数字签名
             }),
             success:function(res){
                 console.log(res);
@@ -580,17 +580,21 @@ $(function(){
                         setTimeout('$(".popup").hide(),$(".popup").text("")',3000);
                         setTimeout('$(".userRechargeNum").text(""),$(".phoneName").text(""),$(".rechargeBankName").text(""),$(".verificationCodeNum").val(""),$(".BankCardTailNumber").text( ""),clearInterval(timer2), $(".sendAgin").val(""),$(".popupBg").hide(),$(".popupWrap").hide()',3500);
                     }else{
-                        alert("成功");
+                        //alert("成功");
+                        $(".popup").show();
+                        $(".popup").text("交易成功");
+                        setTimeout('$(".popup").hide(),$(".popup").text("")',3000);
+                        setTimeout('$(".userRechargeNum").text(""),$(".phoneName").text(""),$(".rechargeBankName").text(""),$(".verificationCodeNum").val(""),$(".BankCardTailNumber").text( ""),clearInterval(timer2), $(".sendAgin").val(""),$(".popupBg").hide(),$(".popupWrap").hide()',3500);
                     }
                 }
-
             },
             error:function(res){
                 console.log(res);
             }
         });
     });
-    function buyHqjBalance(){
+    //活期金买入接口（银行卡支付）
+    function buyHqjBalanceYuE(){
         $.ajax({
             url:"http://10.0.92.198:1111/currentGold/buyIn",
             type:"POST",
@@ -613,7 +617,6 @@ $(function(){
                     $(".popup").text(res.msg);
                     setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
                 }
-
             },
             error:function(res){
                 console.log(res);
@@ -627,6 +630,39 @@ $(function(){
             $(".rechargeConfirmBalanceBtn").css("background","rgb(181,181,181)").attr("disabled","disabled");
         }
     });
+    //活期金买入（余额支付）
+    function buyHqjBalance(){
+        $.ajax({
+            url:"http://10.0.92.198:1111/currentGold/buyIn",
+            type:"POST",
+            headers:{
+                "Content-Type":"application/x-www-form-urlencoded ",
+                "token":window.localStorage.token
+            },
+            data:{
+                "phone":window.localStorage.phoneNumber,
+                "orderId":window.sessionStorage.orderId,
+                "amount":window.sessionStorage.amount,
+                "payWay":"0"
+            },
+            success:function(res){
+                console.log(res);
+                if(res.code == 0){
+                    $(".popup").show();
+                    $(".popup").text(res.msg);
+                    setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
+                    setTimeout('$(".userRechargeNum").text(""),$(".payPwdVal").val(""),$(".popupBg").hide(),$(".popupWrap").hide(),$(".buyMoney").text(""),window.location.href = "hqjAsset.html"',2500);
+                }else{
+                    $(".popup").show();
+                    $(".popup").text(res.msg);
+                    setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
+                }
+            },
+            error:function(res){
+                console.log(res);
+            }
+        });
+    }
     //确认支付（余额）
     $(".rechargeConfirmBalanceBtn").click(function(){
         var paypwd = sha256_digest($(".payPwdVal").val());

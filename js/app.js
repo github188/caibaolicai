@@ -46,13 +46,52 @@ $(function(){
             window.location.href = "productCollection.html";
         }
     });
+    //判断是否设置支付密码
+    function judgeSetPayPwd(){
+        $.ajax({
+            url:"http://10.0.92.198:1111/paypwd",
+            type:"GET",
+            headers:{
+                "token":window.localStorage.token
+            },
+            data:{
+                "phone":window.localStorage.phoneNumber
+            },
+            success:function(res){
+                console.log(res);
+                if(res.code == 0){
+                    window.sessionStorage.pageMark = "hqj";
+                    window.location.href = "productCollection.html";
+                }else if(res.code == -1){
+                    window.sessionStorage.pageMark = "hqj";
+                    window.location.href = "setpaypwd.html"
+                    //if(window.sessionStorage.checkedLoginCode == "ziChan"){
+                    //    window.location.href = "asset.html";
+                    //}else if(window.sessionStorage.checkedLoginCode == "faXian"){
+                    //    window.location.href = "find.html";
+                    //}else if(window.sessionStorage.pageMark ==  "wzj360"){
+                    //    window.location.href = "productCollection.html";
+                    //}else{
+                    //    //window.location.href = "index.html";
+                    //}
+                }else{
+                    window.sessionStorage.pageMark = "hqj";
+                    window.location.href = "ready.html";
+                }
+            },
+            error:function(res){
+                console.log(res);
+            }
+        });
+    }
     $(".goBuyHqj").click(function(){
         if(window.localStorage.token == undefined){
             window.sessionStorage.pageMark = "hqj";
             window.location.href = "ready.html";
         }else {
-            window.sessionStorage.pageMark = "hqj";
-            window.location.href = "productCollection.html";
+            //window.sessionStorage.pageMark = "hqj";
+            //window.location.href = "productCollection.html";
+            judgeSetPayPwd();
         }
 
 
@@ -104,6 +143,7 @@ $(function(){
                 var assetNum = res.asset.balance + res.asset.huoqiGoldSum + (res.asset.qiandaiGoldSum * goldPrice) + (res.asset.jinshengGoldSum * goldPrice) + res.asset.wenzhuanGoldSum;
                 //console.log(assetNum);
                 $(".asset").text(assetNum.toFixed(2));
+                window.sessionStorage.userBalance = parseFloat(res.asset.balance).toFixed(2);   //账户余额
                 $(".balance").text(parseFloat(res.asset.balance).toFixed(2));                      //账户余额
                 window.sessionStorage.accountBalance = parseFloat(res.asset.balance).toFixed(2);
                 $(".dataLeftBottom").text(parseFloat(res.asset.earnYtdSum).toFixed(2));          //昨日收益金额
@@ -145,7 +185,7 @@ $(function(){
     });
     $(".goRechargeBtn").click(function(){
         $.ajax({
-            url:'http://10.0.92.198:1111/authQuery',
+            url:'http://10.0.92.198:1111/authQuery',//认证查询
             type:"GET",
             headers:{
                 "token":window.localStorage.token

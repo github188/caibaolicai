@@ -1209,7 +1209,7 @@ input:focus{
     -ms-flex: 8;
     flex: 8;
     background: #fff;
-    color: #ccc;
+    /*color: #ccc;*/
 }
 .withdrawAllBtn{
     -webkit-box-flex:3;
@@ -1311,7 +1311,8 @@ input:focus{
     text-align: center;
 }
 .submit{
-    background: rgb(242,182,67);
+    background: rgb(181,181,181);
+    /*background: rgb(242,182,67);*/
     display: block;
     width: 9.2rem;
     height: 1.333333333rem;
@@ -1679,10 +1680,10 @@ input:focus{
     flex: 1;
 }
 .inputKaiHuName{
-    -webkit-box-flex:1;
-    -webkit-flex:1;
-    -ms-flex: 1;
-    flex: 1;
+    -webkit-box-flex:2;
+    -webkit-flex:2;
+    -ms-flex: 2;
+    flex: 2;
     font-size: 0.373333333rem;
     text-align: right;
     /*color: #cccccc;*/
@@ -1701,7 +1702,8 @@ input:focus{
 }
 .yesterdayProfitData{
     text-align: center;
-    font-size: 1.466666667rem;
+    font-size: 0.7rem;
+    padding-top: 0.8rem;
 }
 .accumulativeProfitTitle{
     text-align: center;
@@ -1710,7 +1712,8 @@ input:focus{
 }
 .accumulativeProfitDta{
     text-align: center;
-    font-size: 1.466666667rem;
+    font-size: 0.7rem;
+    padding-top: 0.8rem;
 }
 .nianHua{
     box-sizing: border-box;
@@ -2363,6 +2366,7 @@ input:focus{
     z-index: 10;
     color: #fff;
     font-size: 14px;
+    z-index: 20;
     display: none;
 }
 .loading{
@@ -2522,6 +2526,7 @@ input:focus{
     border-radius: 0 !important;
     /*padding: 0 !important;*/
     background: #cccccc !important;
+    padding:0 5px;
 }
 .shuLine{
     display: inline-block;
