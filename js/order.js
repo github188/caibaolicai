@@ -412,7 +412,7 @@ $(function(){
     $(".submitOrder").click(function(){
         window.sessionStorage.amount = parseFloat($(".buyMoney").val()).toFixed(2);//购买金额
         window.sessionStorage.orderId = window.localStorage.phoneNumber + new Date().getTime();//订单号
-        if($(".choosePayBank ").hasClass("payActive")){
+        if($(".choosePayBank").hasClass("payActive")){
             $.ajax({
                 url:"http://10.0.92.198:1111/currentGold/buyIn",
                 type:"POST",
@@ -594,7 +594,7 @@ $(function(){
         });
     });
     //活期金买入接口（银行卡支付）
-    function buyHqjBalanceYuE(){
+    /*function buyHqjBalanceYuE(){
         $.ajax({
             url:"http://10.0.92.198:1111/currentGold/buyIn",
             type:"POST",
@@ -622,7 +622,7 @@ $(function(){
                 console.log(res);
             }
         });
-    }
+    }*/
     $(".payPwdVal").on('input porpertychange',function(){
         if($(".payPwdVal").val().length >= 6){
             $(".rechargeConfirmBalanceBtn").css("background","rgb(242, 182, 67)").removeAttr("disabled");

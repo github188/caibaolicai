@@ -2,7 +2,11 @@
  * Created by hzc on 2017-7-20.
  */
 $(function(){
-    $(".czMoney ").focus();
+    if(window.sessionStorage.amount == undefined){
+        $(".czMoney ").focus();
+    }else{
+        $(".czMoney ").val(window.sessionStorage.amount);
+    }
     //    实名绑卡信息查询
     function bindInfoQuery(){
         $.ajax({
@@ -113,7 +117,21 @@ $(function(){
     }
     bindInfoQuery();
     $(".goAuthentication").click(function(){
-        window.location.href = "certification.html";
+        window.sessionStorage.orderId = window.localStorage.phoneNumber + Date.parse(new Date());
+        window.sessionStorage.certificationSign = "rechargeCertification";
+        window.sessionStorage.productsType = "充值";
+        window.sessionStorage.amount = $(".czMoney").val();
+        if($(".czMoney").val().length == 0){
+            $(".popup").show();
+            $(".popup").text("请输入充值金额");
+            setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
+        }else if(parseFloat($(".czMoney").val()) < 100){
+            $(".popup").show();
+            $(".popup").text("充值金额不得低于100元");
+            setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
+        }else{
+            window.location.href = "certification.html";
+        }
     });
     //$(".czMoney").on('input onpropertychange',function(){
     //   if($(".czMoney").val() <= 100){

@@ -39,10 +39,10 @@ $(function(){
 
     $(".goBuyWzj360").click(function(){
         if(window.localStorage.token == undefined){
-            window.sessionStorage.pageMark = "wzj360";
+            window.sessionStorage.buyProductMark = "wzj360";
             window.location.href = "ready.html";
         }else {
-            window.sessionStorage.pageMark = "wzj360";
+            window.sessionStorage.buyProductMark = "wzj360";
             window.location.href = "productCollection.html";
         }
     });
@@ -60,11 +60,11 @@ $(function(){
             success:function(res){
                 console.log(res);
                 if(res.code == 0){
-                    window.sessionStorage.pageMark = "hqj";
+                    window.sessionStorage.buyProductMark = "hqj";
                     window.location.href = "productCollection.html";
                 }else if(res.code == -1){
-                    window.sessionStorage.pageMark = "hqj";
-                    window.location.href = "setpaypwd.html"
+                    window.sessionStorage.buyProductMark = "hqj";
+                    window.location.href = "setpaypwd.html";
                     //if(window.sessionStorage.checkedLoginCode == "ziChan"){
                     //    window.location.href = "asset.html";
                     //}else if(window.sessionStorage.checkedLoginCode == "faXian"){
@@ -75,7 +75,7 @@ $(function(){
                     //    //window.location.href = "index.html";
                     //}
                 }else{
-                    window.sessionStorage.pageMark = "hqj";
+                    window.sessionStorage.buyProductMark = "hqj";
                     window.location.href = "ready.html";
                 }
             },
@@ -86,7 +86,7 @@ $(function(){
     }
     $(".goBuyHqj").click(function(){
         if(window.localStorage.token == undefined){
-            window.sessionStorage.pageMark = "hqj";
+            window.sessionStorage.buyProductMark = "hqj";
             window.location.href = "ready.html";
         }else {
             //window.sessionStorage.pageMark = "hqj";

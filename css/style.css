@@ -1991,7 +1991,8 @@ input:focus{
     width: 100%;
     height:1.333333333rem;
     line-height:1.333333333rem;
-    background: rgb(242,182,67);
+    /*background: rgb(242,182,67);*/
+    background: rgb(181,181,181);
     font-size:0.373333333rem;
 }
 .inputBuyMoneyWrap{
@@ -2526,7 +2527,7 @@ input:focus{
     border-radius: 0 !important;
     /*padding: 0 !important;*/
     background: #cccccc !important;
-    padding:0 5px;
+    padding:0 12px;
 }
 .shuLine{
     display: inline-block;

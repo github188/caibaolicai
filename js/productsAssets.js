@@ -7,7 +7,11 @@ $(function(){
        window.location.href = "sellHqj.html";
     });
     $(".goBuyHqjBtn").click(function(){
-        window.sessionStorage.pageMark  = "assetsHqj";
+        window.sessionStorage.buyProductMark  = "assetsHqj";
+        window.location.href = "productCollection.html";
+    });
+    $(".goBuyWZJBtn").click(function(){
+        window.sessionStorage.buyProductMark  = "assetsWzj60Btn";
         window.location.href = "productCollection.html";
     });
     function productsAssets(){
@@ -47,9 +51,9 @@ $(function(){
                 "phone":window.localStorage.phoneNumber
             },
             success:function(res){
-                $(".wenzhuanEarnSum").text(res.asset.wenzhuanGoldSum);
-                $(".wenzhuanBuySum").text(res.asset.wenzhuanBuySum);
-                $(".wenZhuanEarnProfit").text(res.asset.wenzhuanEarnSum);
+                $(".wenzhuanEarnSum").text(parseFloat(res.asset.wenzhuanGoldSum).toFixed(2));
+                $(".wenzhuanBuySum").text(parseFloat(res.asset.wenzhuanBuySum).toFixed(2));
+                $(".wenZhuanEarnProfit").text(parseFloat(res.asset.wenzhuanEarnSum).toFixed(2));
             },
             error:function(res){
                 console.log(res);
@@ -70,9 +74,9 @@ $(function(){
                 //console.log(res.earnSum);
                 //console.log(typeof (res.earnSum));
                 if(res.earnSum == null){
-                    $(".wenzhuanGoldSum").text("0");
+                    $(".wenzhuanGoldSum").text("0.00");
                 }else{
-                    $(".wenzhuanGoldSum").text(res.earnSum);
+                    $(".wenzhuanGoldSum").text(parseFloat(res.earnSum).toFixed(2));
                 }
             },
             error:function(res){
@@ -115,13 +119,18 @@ $(function(){
         }
     });
     $(".pleaseInputsSellMoney").on('input propertychange',function(){
-        if(parseFloat($(".pleaseInputsSellMoney").val()) == 0.00){
+        if($(".salableMoney").text() == "0.00"){
             $(".pleaseInputsSellMoney").val("");
             $(".sellBtn").css("background","rgb(181,181,181)").attr("disabled","disabled");
-            return;
-        }else if($(".pleaseInputsSellMoney").val().length > 0){
+        }
+        //if(parseFloat($(".pleaseInputsSellMoney").val()) == 0.00){
+        //    $(".pleaseInputsSellMoney").val("");
+        //
+        //    return;
+        //}
+        else if($(".pleaseInputsSellMoney").val().length > 0){
             $(".sellBtn").css("background","rgb(242,182,67)").removeAttr("disabled");
-            if (parseFloat($(".pleaseInputsSellMoney").val()) >= parseFloat($(".salableMoney").text())){
+            if (parseFloat($(".pleaseInputsSellMoney").val()) > parseFloat($(".salableMoney").text())){
                 $(".pleaseInputsSellMoney").val($(".salableMoney").text());
             }
         } else{

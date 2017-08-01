@@ -236,7 +236,11 @@ $(function(){
             success:function(res){
                 console.log(res);
                 if(res.code == 0){
-                    buyHQJ();
+                    if(window.sessionStorage.certificationSign = "rechargeCertification"){
+                        recharge();
+                    }else{
+                        buyProducts();
+                    }
                 }else {
                     $(".popup").show();
                     $(".popup").text("身份证号已被绑定");
@@ -248,8 +252,37 @@ $(function(){
             }
         });
     }
+    //后端充值接口
+    function recharge(){
+        $.ajax({
+            url:"http://10.0.92.198:1111/recharge",
+            "type":"POST",
+            headers:{
+                "Content-Type":"application/x-www-form-urlencoded ",
+                "token":window.localStorage.token
+            },
+            data:{
+                "phone":window.localStorage.phoneNumber,
+                "orderId":window.sessionStorage.orderId,
+                "amount":window.sessionStorage.amount
+            },
+            success:function(res){
+                console.log(res);
+                if(res.code == 0){
+                    prePayment();
+                }else {
+                    $(".popup").show();
+                    $(".popup").text(res.msg);
+                    setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
+                }
+            },
+            error:function(res){
+                console.log(res);
+            }
+        });
+    }
     //买入接口
-    function buyHQJ(){
+    function buyProducts(){
         if( window.sessionStorage.buyProductType == "buyHqjMark" ){
             $.ajax({
                 url:"http://10.0.92.198:1111/currentGold/buyIn",
@@ -262,6 +295,37 @@ $(function(){
                     "phone":window.localStorage.phoneNumber,
                     "orderId":window.sessionStorage.orderId,
                     "amount":window.sessionStorage.amount,
+                    "payWay":"1"
+                },
+                success:function(res){
+                    if(res.code == 0){
+                        prePayment();
+                    }else{
+                        $(".popup").show();
+                        $(".popup").text(res.msg);
+                        setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
+                    }
+                    console.log(res);
+                },
+                error:function(res){
+                    console.log(res);
+                }
+            });
+        }else if(window.sessionStorage.buyProductType == "buyWzj60Mark" || window.sessionStorage.buyProductType == "buyWzj90Mark" || window.sessionStorage.buyProductType == "buyWzj180Mark" || window.sessionStorage.buyProductType == "buyWzj360Mark"){
+            $.ajax({
+                url:"http://10.0.92.198:1111/wenzhuanGold/buyIn",
+                type:"POST",
+                headers:{
+                    "Content-Type":"application/x-www-form-urlencoded ",
+                    "token":window.localStorage.token
+                },
+                data:{
+                    "phone":window.localStorage.phoneNumber,
+                    "orderId":window.sessionStorage.orderId,
+                    "amount":window.sessionStorage.amount,
+                    "period":window.sessionStorage.period,
+                    "rate":window.sessionStorage.rate,
+                    "goldPriceBuy":window.sessionStorage.goldPriceBuy,
                     "payWay":"1"
                 },
                 success:function(res){
@@ -382,6 +446,12 @@ $(function(){
     });
     //    下一步
     $(".nextBtn").click(function(){
-        window.location.href = "buyhqj.html";
+        if(window.sessionStorage.certificationSign = "rechargeCertification"){
+            window.location.href = "recharge.html";
+        }else if(window.sessionStorage.certificationSign = "buyHqjCertification"){
+            window.location.href = "buyhqj.html";
+        }else{
+            window.location.href = "buyWzj.html";
+        }
     });
 });
