@@ -2,22 +2,31 @@
  * Created by hzc on 2017-7-5.
  */
 $(function(){
+    //$(".goBack").click(function(){
+    //    if(window.sessionStorage.indexMark == "index"){
+    //        window.location.href = "index.html";
+    //    }else{
+    //        window.location.href = "asset.html";
+    //    }
+    //});
     $(".pleaseInputsSellMoney").focus().attr('placeholder','最多可卖出'+parseFloat(window.sessionStorage.hqjAllAsset).toFixed(2)+'元');
     $(".goSellHqjBtn").click(function(){
        window.location.href = "sellHqj.html";
     });
     $(".goBuyHqjBtn").click(function(){
+        window.sessionStorage.backMark = "hqj";
         window.sessionStorage.buyProductMark  = "assetsHqj";
         window.location.href = "productCollection.html";
     });
     $(".goBuyWZJBtn").click(function(){
+        window.sessionStorage.backMark = "wzj";
         window.sessionStorage.buyProductMark  = "assetsWzj60Btn";
         window.location.href = "productCollection.html";
     });
     function productsAssets(){
         //活期金资产查询
         $.ajax({
-            url:"http://10.0.92.198:1111/cgQuery",
+            url:"http://106.14.165.194:1111/cgQuery",
             type:"GET",
             headers:{
                 "token":window.localStorage.token
@@ -42,7 +51,7 @@ $(function(){
         });
         //稳赚金资产查询
         $.ajax({
-            url:"http://10.0.92.198:1111/wenzhuanGold",
+            url:"http://106.14.165.194:1111/wenzhuanGold",
             type:"GET",
             headers:{
                 "token":window.localStorage.token
@@ -61,7 +70,7 @@ $(function(){
         });
         //稳赚金预期总收益
         $.ajax({
-            url:"http://10.0.92.198:1111/wenzhuanGold/earnSum",
+            url:"http://106.14.165.194:1111/wenzhuanGold/earnSum",
             type:"GET",
             headers:{
                 "token":window.localStorage.token
@@ -166,7 +175,7 @@ $(function(){
     function checkedPwd(){
         var checkedPayPwd = sha256_digest($("#ipt").val());
         $.ajax({
-            url:"http://10.0.92.198:1111/paypwd-check",
+            url:"http://106.14.165.194:1111/paypwd-check",
             type:"POST",
             headers:{
                 "Content-Type":"application/x-www-form-urlencoded ",
@@ -195,7 +204,7 @@ $(function(){
     function sellHqj(){
         var orderId = window.localStorage.phoneNumber + Date.parse(new Date());
         $.ajax({
-            url:"http://10.0.92.198:1111/currentGold/sellOut",
+            url:"http://106.14.165.194:1111/currentGold/sellOut",
             type:"POST",
             headers:{
                 "Content-Type":"application/x-www-form-urlencoded ",
@@ -204,7 +213,7 @@ $(function(){
             data:{
                 "phone":window.localStorage.phoneNumber,
                 "orderId":orderId,
-                "amount":$(".pleaseInputsSellMoney").text()
+                "amount":$(".pleaseInputsSellMoney").val()
             },
             success:function(res){
                 console.log(res);

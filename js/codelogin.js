@@ -33,7 +33,7 @@ $(function(){
     }
     countDown();
     $.ajax({
-        url:"http://10.0.92.198:1111/smsVeri",
+        url:"http://106.14.165.194:1111/smsVeri",
         type:"POST",
         headers:{
             "Content-Type":"application/x-www-form-urlencoded"
@@ -51,7 +51,7 @@ $(function(){
     });
     $(".getVerifyCode").click(function(){
         $.ajax({
-            url:"http://10.0.92.198:1111/smsVeri",
+            url:"http://106.14.165.194:1111/smsVeri",
             type:"POST",
             headers:{
                 "Content-Type":"application/x-www-form-urlencoded"
@@ -72,7 +72,7 @@ $(function(){
     //语音验证
     $(".voiceVerifyBtn").click(function(){
         $.ajax({
-            url:"http://10.0.92.198:1111/voiceVeri",
+            url:"http://106.14.165.194:1111/voiceVeri",
             type:"POST",
             headers:{
                 "Content-Type":"application/x-www-form-urlencoded"
@@ -100,7 +100,7 @@ $(function(){
     //判断是否设置支付密码
     function judgeSetPayPwd(){
         $.ajax({
-            url:"http://10.0.92.198:1111/paypwd",
+            url:"http://106.14.165.194:1111/paypwd",
             type:"GET",
             headers:{
                 "token":window.localStorage.token
@@ -134,7 +134,7 @@ $(function(){
     //点击登录
     $(".loginBtn").click(function(){
        $.ajax({
-           url:"http://10.0.92.198:1111/login",
+           url:"http://106.14.165.194:1111/login",
            type:"POST",
            headers:{
                "Content-Type":"application/x-www-form-urlencoded"

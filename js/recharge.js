@@ -10,7 +10,7 @@ $(function(){
     //    实名绑卡信息查询
     function bindInfoQuery(){
         $.ajax({
-            url:'http://10.0.92.198:1111/bindInfo',
+            url:'http://106.14.165.194:1111/bindInfo',
             type:"GET",
             headers:{
                 "token":window.localStorage.token
@@ -33,77 +33,78 @@ $(function(){
                 window.sessionStorage.bankPhone = res.result.bankPhone.substr(0,3) + "****" + res.result.bankPhone.substr(res.result.bankPhone.length-4,4);
                 window.sessionStorage.BankCardTailNumber = res.result.bankCard.substr(res.result.bankCard.length-4,4);
                 $(".accountBalance").text(window.sessionStorage.accountBalance);
-                if(res.result.bank == "交通银行"){
+                console.log($.trim(res.result.bank) == "交通银行")
+                if($.trim(res.result.bank) == "交通银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/jiaotongbank.png');
                     $(".rechargeExplain").text("单笔5万" + " " + "单日5万");
 
-                }else if(res.result.bank == "中国银行"){
+                }else if($.trim(res.result.bank) == "中国银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/zhongguobank.png');
                     $(".rechargeExplain").text("单笔1万" + " " + "单日2万");
 
-                }else if(res.result.bank == "工商银行"){
+                }else if($.trim(res.result.bank) == "工商银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/gongshangbank.png');
                     $(".rechargeExplain").text("单笔1万" + " " + "单日2万");
 
-                }else if(res.result.bank == "建设银行"){
+                }else if($.trim(res.result.bank) == "建设银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/jianshebank.png');
                     $(".rechargeExplain").text("单笔5万" + " " + "单日5万");
 
-                }else if(res.result.bank == "平安银行"){
+                }else if($.trim(res.result.bank) == "平安银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/pinganbank.png');
                     $(".rechargeExplain").text("单笔0.5万" + " " + "单日0.5万");
 
-                }else if(res.result.bank == "中信银行"){
+                }else if($.trim(res.result.bank) == "中信银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/zhongxinbank.png');
                     $(".rechargeExplain").text("单笔0.5万" + " " + "单日1万");
 
-                }else if(res.result.bank == "广大银行"){
+                }else if($.trim(res.result.bank) == "广大银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/guangdabank.png');
                     $(".rechargeExplain").text("单笔5万" + " " + "单日5万");
 
-                }else if(res.result.bank == "浦发银行"){
+                }else if($.trim(res.result.bank) == "浦发银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/pufabank.png');
                     $(".rechargeExplain").text("单笔5万" + " " + "单日5万");
 
-                }else if(res.result.bank == "兴业银行"){
+                }else if($.trim(res.result.bank) == "兴业银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/xingyebank.png');
                     $(".rechargeExplain").text("单笔5万" + " " + "单日5万");
 
-                }else if(res.result.bank == "农业银行"){
+                }else if($.trim(res.result.bank) == "农业银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/nongyebank.png');
                     $(".rechargeExplain").text("单笔5万" + " " + "单日5万");
 
-                }else if(res.result.bank == "邮政银行"){
+                }else if($.trim(res.result.bank) == "邮政银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/youzhengbank.png');
                     $(".rechargeExplain").text("单笔5万" + " " + "单日20万");
 
-                }else if(res.result.bank == "招商银行"){
+                }else if($.trim(res.result.bank) == "招商银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/zhaoshangbank.png');
                     $(".rechargeExplain").text("单笔万" + " " + "单日万");
 
-                }else if(res.result.bank == "华夏银行"){
+                }else if($.trim(res.result.bank) == "华夏银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/huaxiabank.png');
                     $(".rechargeExplain").text("单笔万" + " " + "单日万");
 
-                }else if(res.result.bank == "广发银行"){
+                }else if($.trim(res.result.bank) == "广发银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/guangfabank.png');
                     $(".rechargeExplain").text("单笔万" + " " + "单日万");
 
-                }else if(res.result.bank == "民生银行"){
+                }else if($.trim(res.result.bank) == "民生银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/minshengbank.png');
                     $(".rechargeExplain").text("单笔万" + " " + "单日万");
@@ -142,7 +143,7 @@ $(function(){
     //后台获取授权码
     function getAuthToken(){
         $.ajax({
-            url:"http://10.0.92.198:1111/authToken",
+            url:"http://106.14.165.194:1111/authToken",
             "type":"GET",
             headers:{
                 "token":window.localStorage.token
@@ -286,7 +287,7 @@ $(function(){
     //后端充值接口
     function recharge(){
         $.ajax({
-            url:"http://10.0.92.198:1111/recharge",
+            url:"http://106.14.165.194:1111/recharge",
             "type":"POST",
             headers:{
                 "Content-Type":"application/x-www-form-urlencoded ",

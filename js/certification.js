@@ -6,8 +6,8 @@ $(function(){
     $(".goChooseBank").click(function(){
         window.location.href = "choosebank.html";
     });
-    if(window.sessionStorage.bankName !== undefined){
-        $(".goChooseBank").text(window.sessionStorage.bankName);
+    if(window.sessionStorage.chooseBankName !== undefined){
+        $(".chooseKaiHuBank").text(window.sessionStorage.chooseBankName);
         $(".bankExplain").text(window.sessionStorage.bankExplain);
     }
     //每隔4个数字空1格
@@ -224,7 +224,7 @@ $(function(){
     //实名绑卡唯一性查询
     function uniquenessQuery(){
         $.ajax({
-            url:"http://10.0.92.198:1111/bindInfo/unique",
+            url:"http://106.14.165.194:1111/bindInfo/unique",
             type:"GET",
             headers:{
                 "token":window.localStorage.token
@@ -255,7 +255,7 @@ $(function(){
     //后端充值接口
     function recharge(){
         $.ajax({
-            url:"http://10.0.92.198:1111/recharge",
+            url:"http://106.14.165.194:1111/recharge",
             "type":"POST",
             headers:{
                 "Content-Type":"application/x-www-form-urlencoded ",
@@ -285,7 +285,7 @@ $(function(){
     function buyProducts(){
         if( window.sessionStorage.buyProductType == "buyHqjMark" ){
             $.ajax({
-                url:"http://10.0.92.198:1111/currentGold/buyIn",
+                url:"http://106.14.165.194:1111/currentGold/buyIn",
                 type:"POST",
                 headers:{
                     "Content-Type":"application/x-www-form-urlencoded ",
@@ -313,7 +313,7 @@ $(function(){
             });
         }else if(window.sessionStorage.buyProductType == "buyWzj60Mark" || window.sessionStorage.buyProductType == "buyWzj90Mark" || window.sessionStorage.buyProductType == "buyWzj180Mark" || window.sessionStorage.buyProductType == "buyWzj360Mark"){
             $.ajax({
-                url:"http://10.0.92.198:1111/wenzhuanGold/buyIn",
+                url:"http://106.14.165.194:1111/wenzhuanGold/buyIn",
                 type:"POST",
                 headers:{
                     "Content-Type":"application/x-www-form-urlencoded ",
@@ -347,7 +347,7 @@ $(function(){
     //实名绑卡
     function bindCard(){
         $.ajax({
-            url:"http://10.0.92.198:1111/bindInfo",
+            url:"http://106.14.165.194:1111/bindInfo",
             type:"POST",
             headers:{
                 "Content-Type":"application/x-www-form-urlencoded ",
@@ -405,7 +405,7 @@ $(function(){
                     //$(".ysbPayBtn").addClass("ysbVerifyCode");
                     $(".popup").show();
                     $(".popup").text(res.result_msg);
-                    setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
+                    setTimeout('$(".popup").hide(),$(".popup").text("")',3000);
                 }
             },
             error:function(res){

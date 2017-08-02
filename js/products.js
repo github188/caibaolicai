@@ -4,15 +4,17 @@
 $(function(){
 
     $(".goBackBtn").click(function(){
-        if( window.sessionStorage.buyProductMark == "wzj360" || window.sessionStorage.buyProductMark == "hqj"){
+       if(window.sessionStorage.buyProductMark == undefined ){
             window.location.href = "index.html";
-        }else if(window.sessionStorage.buyProductMark == undefined){
-            window.location.href = "index.html";
-        }else if(window.sessionStorage.buyProductMark == "assetsHqj" || window.sessionStorage.buyProductMark == "assetswzj60"){
-            window.history.back(-1);
-        } else {
-            window.history.back(-1);
-        }
+            return;
+        }else if(window.sessionStorage.backMark == "hqj"){
+            window.location.href = "hqjAsset.html";
+            return;
+        }else if(window.sessionStorage.backMark == "wzj"){
+            window.location.href = "wzjAsset.html";
+        }else{
+           window.location.href = "index.html";
+       }
     });
 
     /*function swiperInit(){
@@ -121,8 +123,8 @@ $(function(){
         var arr=timeStr.split("/");
         var year = arr[0];
         var month = arr[1];
-        var day = arr[2];
-        var interestTime = year + "年" + month + "月" + day + "日" + "00:00:00";
+        var day2 = arr[2];
+        var interestTime = year + "年" + month + "月" + day2 + "日" + "00:00:00";
         $(".profitGiveDay").text(interestTime);
     }
     profitGiveDay(2);
@@ -136,8 +138,8 @@ $(function(){
         var arr=timeStr.split("/");  
         var year = arr[0];
         var month = arr[1];
-        var day = arr[2];
-        var interestTime = year + "年" + month + "月" + day + "日";
+        var day2 = arr[2];
+        var interestTime = year + "年" + month + "月" + day2 + "日";
         $(".jiXiDay").text(interestTime);
     }
     showTime(1); //当前时间添加1天
@@ -150,8 +152,8 @@ $(function(){
         var arr=timeStr.split("/");  
         var year = arr[0];
         var month = arr[1];
-        var day = arr[2];
-        var interestTime = year + "年" + month + "月" + day + "日";
+        var day2 = arr[2];
+        var interestTime = year + "年" + month + "月" + day2 + "日";
         $(".jixiEndDay60").text(interestTime);
     }
     interestEndTime60(60);
@@ -164,8 +166,8 @@ $(function(){
         var arr=timeStr.split("/");  
         var year = arr[0];
         var month = arr[1];
-        var day = arr[2];
-        var interestTime = year + "年" + month + "月" + day + "日";
+        var day2 = arr[2];
+        var interestTime = year + "年" + month + "月" + day2 + "日";
         $(".jixiEndDay90").text(interestTime);
     }
     interestEndTime90(90);
@@ -178,8 +180,8 @@ $(function(){
         var arr=timeStr.split("/");  
         var year = arr[0];
         var month = arr[1];
-        var day = arr[2];
-        var interestTime = year + "年" + month + "月" + day + "日";
+        var day2 = arr[2];
+        var interestTime = year + "年" + month + "月" + day2 + "日";
         $(".jixiEndDay180").text(interestTime);
     }
     interestEndTime180(180);
@@ -192,8 +194,8 @@ $(function(){
         var arr=timeStr.split("/");  
         var year = arr[0];
         var month = arr[1];
-        var day = arr[2];
-        var interestTime = year + "年" + month + "月" + day + "日";
+        var day2 = arr[2];
+        var interestTime = year + "年" + month + "月" + day2 + "日";
         $(".jixiEndDay360").text(interestTime);
     }
     interestEndTime360(360);
@@ -203,7 +205,7 @@ $(function(){
             window.sessionStorage.certificationSign = "buyHqjCertification";
             window.sessionStorage.productsType = "活期金购买";
             $.ajax({
-                url: 'http://10.0.92.198:1111/authQuery',
+                url: 'http://106.14.165.194:1111/authQuery',
                 type: "GET",
                 headers: {
                     "token": window.localStorage.token
@@ -244,7 +246,7 @@ $(function(){
             window.sessionStorage.period = "60";
             window.sessionStorage.rate = "6";
             $.ajax({
-                url: 'http://10.0.92.198:1111/authQuery',
+                url: 'http://106.14.165.194:1111/authQuery',
                 type: "GET",
                 headers: {
                     "token": window.localStorage.token
@@ -281,11 +283,11 @@ $(function(){
             window.sessionStorage.certificationSign = "buyWzj90Certification";
             window.sessionStorage.productsType = "购买稳赚金90天";
             window.sessionStorage.wzjName = "稳赚金90天";
-            window.sessionStorage.wzjNianHuaRate = "7%";
+            window.sessionStorage.wzjNianHuaRate = "8%";
             window.sessionStorage.period = "90";
-            window.sessionStorage.rate = "7";
+            window.sessionStorage.rate = "8";
             $.ajax({
-                url: 'http://10.0.92.198:1111/authQuery',
+                url: 'http://106.14.165.194:1111/authQuery',
                 type: "GET",
                 headers: {
                     "token": window.localStorage.token
@@ -326,7 +328,7 @@ $(function(){
             window.sessionStorage.period = "180";
             window.sessionStorage.rate = "12";
             $.ajax({
-                url: 'http://10.0.92.198:1111/authQuery',
+                url: 'http://106.14.165.194:1111/authQuery',
                 type: "GET",
                 headers: {
                     "token": window.localStorage.token
@@ -367,7 +369,7 @@ $(function(){
             window.sessionStorage.period = "360";
             window.sessionStorage.rate = "14";
             $.ajax({
-                url: 'http://10.0.92.198:1111/authQuery',
+                url: 'http://106.14.165.194:1111/authQuery',
                 type: "GET",
                 headers: {
                     "token": window.localStorage.token
@@ -406,45 +408,6 @@ $(function(){
             alert("钱袋金");
         }
     });
-/*$(".buyHqjBtn").click(function () {
-    //alert("buyHqjBtn");
-    window.sessionStorage.productsType = "活期金购买";
-    $.ajax({
-        url: 'http://10.0.92.198:1111/authQuery',
-        type: "GET",
-        headers: {
-            "token": window.localStorage.token
-        },
-        data: {
-            "phone": window.localStorage.phoneNumber
-        },
-        success: function (res) {
-            console.log(res);
-            if (res.code == -1) {
-                window.sessionStorage.buyProductType = "buyHqjMark";
-                window.location.href = "unbindbuyHQJ.html";
-            } else if (res.code == -2) {
-                $(".popup").show();
-                $(".popup").text(res.msg);
-                setTimeout('$(".popup").hide(),$(".popup").text("")', 2000);
-            } else if (res.code == -3) {
-                $(".popup").show();
-                $(".popup").text(res.msg);
-                setTimeout('$(".popup").hide(),$(".popup").text("")', 2000);
-            } else if (res.code == -4) {
-                $(".popup").show();
-                $(".popup").text(res.msg);
-                setTimeout('$(".popup").hide(),$(".popup").text("")', 2000);
-            } else {
-                window.location.href = "buyHqj.html";
-            }
-        },
-        error: function (res) {
-            console.log(res);
-        }
-    });
-});*/
-
     //购买稳赚金
     setTimeout('$(".loading").css("display","none")',1000);
     $(".productBtn ").on('click',function(){
@@ -485,6 +448,170 @@ $(function(){
             allowSwipeToNext : false,
             allowSwipeToPrev : false,
             slidesPerView : 3,
+            touchRatio : 0.5,
+            onTap: function(){
+                mySwiper3.slideTo( mySwiper2.clickedIndex)
+            }
+        });
+        var mySwiper3 = new Swiper('#swiper-container3',{
+            initialSlide :1,
+            autoHeight: true,
+            onSlideChangeStart: function(){
+                updateNavPosition();
+                $("body").scrollTop(0);
+            },
+            onSlideChangeEnd:function(swiper){
+                $("body").scrollTop(0);
+                //alert(swiper.activeIndex);
+                if(swiper.activeIndex == 0){
+                    window.sessionStorage.buyProductMark = "buyHqjBtn";
+                    //$(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyHqjBtn");
+                    $(".productBtn0").addClass("bottomColor footBtnOrange").siblings().removeClass("bottomColor footBtnOrange");
+                }else if(swiper.activeIndex == 1){
+                    if($(".WZJWrap").find(".swiper-slide-active").find(".productTitleCenter").text()  == "稳赚金60天"){
+                        //window.sessionStorage.buyProductMark = "buyWzj60Btn";
+                        //$(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyWzj60Btn");
+
+                    }else if($(".WZJWrap").find(".swiper-slide-active").find(".productTitleCenter").text()  == "稳赚金90天"){
+                        //window.sessionStorage.buyProductMark = "buyWzj90Btn";
+                        //$(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyWzj90Btn");
+
+                    }else if($(".WZJWrap").find(".swiper-slide-active").find(".productTitleCenter").text()  == "稳赚金180天"){
+                        //window.sessionStorage.buyProductMark = "buyWzj180Btn";
+                        //$(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyWzj180Btn");
+
+                    }else if($(".WZJWrap").find(".swiper-slide-active").find(".productTitleCenter").text()  == "稳赚金360天"){
+                        //window.sessionStorage.buyProductMark = "buyWzj360Btn";
+                        //$(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyWzj360Btn");
+
+                    }
+                    $(".productBtn1").addClass("bottomColor footBtnOrange").siblings();
+                }
+                else if(swiper.activeIndex == 2){
+                    //$(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyJsj60Btn");
+                    $(".productBtn2").addClass("bottomColor footBtnOrange").siblings();
+                }else if(swiper.activeIndex == 3){
+                    //$(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyQdj60Btn");
+                    $(".productBtn3").addClass("bottomColor footBtnOrange").siblings();
+                }// swiper.activeIndex 这个就是索引， 从 0 开始！ 可看一共有多少元素！
+            }
+        });
+    }
+    //默认展示稳赚金90
+    if(window.sessionStorage.buyProductMark == "wzj90") {
+        $(".productBtn1").addClass("bottomColor footBtnOrange").siblings().removeClass("bottomColor footBtnOrange");
+        window.sessionStorage.buyProductMark = "buyWzj90Btn";
+        var mySwiper = new Swiper('#swiper-container4', {
+            initialSlide: 1,
+            autoHeight: true,
+            nested: true,
+            resistanceRatio: 0,
+            onSlideChangeStart: function (swiper) {
+                $("body").scrollTop(0);
+                if (swiper.activeIndex == 0) {
+                    //window.sessionStorage.buyProductMark = "buyWzj60Btn";
+                    //$(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyWzj60Btn");
+                } else if (swiper.activeIndex == 1) {
+                    //window.sessionStorage.buyProductMark = "buyWzj90Btn";
+                    //$(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyWzj90Btn");
+                } else if (swiper.activeIndex == 2) {
+                    //window.sessionStorage.buyProductMark = "buyWzj180Btn";
+                    //$(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyWzj180Btn");
+                } else if (swiper.activeIndex == 3) {
+                    //window.sessionStorage.buyProductMark = "buyWzj360Btn";
+                    //$(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyWzj360Btn");
+                }
+                // swiper.activeIndex 这个就是索引， 从 0 开始！ 可看一共有多少元素！
+            }
+        });
+        var mySwiper2 = new Swiper('#swiper-container2',{
+            watchSlidesProgress : true,
+            watchSlidesVisibility : true,
+            allowSwipeToNext : false,
+            allowSwipeToPrev : false,
+            slidesPerView : 1,
+            touchRatio : 0.5,
+            onTap: function(){
+                mySwiper3.slideTo( mySwiper2.clickedIndex)
+            }
+        });
+        var mySwiper3 = new Swiper('#swiper-container3',{
+            initialSlide :1,
+            autoHeight: true,
+            onSlideChangeStart: function(){
+                updateNavPosition();
+                $("body").scrollTop(0);
+            },
+            onSlideChangeEnd:function(swiper){
+                $("body").scrollTop(0);
+                //alert(swiper.activeIndex);
+                if(swiper.activeIndex == 0){
+                    window.sessionStorage.buyProductMark = "buyHqjBtn";
+                    //$(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyHqjBtn");
+                    $(".productBtn0").addClass("bottomColor footBtnOrange").siblings().removeClass("bottomColor footBtnOrange");
+                }else if(swiper.activeIndex == 1){
+                    if($(".WZJWrap").find(".swiper-slide-active").find(".productTitleCenter").text()  == "稳赚金60天"){
+                        //window.sessionStorage.buyProductMark = "buyWzj60Btn";
+                        //$(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyWzj60Btn");
+
+                    }else if($(".WZJWrap").find(".swiper-slide-active").find(".productTitleCenter").text()  == "稳赚金90天"){
+                        //window.sessionStorage.buyProductMark = "buyWzj90Btn";
+                        //$(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyWzj90Btn");
+
+                    }else if($(".WZJWrap").find(".swiper-slide-active").find(".productTitleCenter").text()  == "稳赚金180天"){
+                        //window.sessionStorage.buyProductMark = "buyWzj180Btn";
+                        //$(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyWzj180Btn");
+
+                    }else if($(".WZJWrap").find(".swiper-slide-active").find(".productTitleCenter").text()  == "稳赚金360天"){
+                        //window.sessionStorage.buyProductMark = "buyWzj360Btn";
+                        //$(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyWzj360Btn");
+
+                    }
+                    $(".productBtn1").addClass("bottomColor footBtnOrange").siblings();
+                }
+                else if(swiper.activeIndex == 2){
+                    //$(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyJsj60Btn");
+                    $(".productBtn2").addClass("bottomColor footBtnOrange").siblings();
+                }else if(swiper.activeIndex == 3){
+                    //$(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyQdj60Btn");
+                    $(".productBtn3").addClass("bottomColor footBtnOrange").siblings();
+                }// swiper.activeIndex 这个就是索引， 从 0 开始！ 可看一共有多少元素！
+            }
+        });
+    }
+    //默认展示稳赚金90
+    if(window.sessionStorage.buyProductMark == "wzj180") {
+        $(".productBtn1").addClass("bottomColor footBtnOrange").siblings().removeClass("bottomColor footBtnOrange");
+        window.sessionStorage.buyProductMark = "buyWzj90Btn";
+        var mySwiper = new Swiper('#swiper-container4', {
+            initialSlide: 2,
+            autoHeight: true,
+            nested: true,
+            resistanceRatio: 0,
+            onSlideChangeStart: function (swiper) {
+                $("body").scrollTop(0);
+                if (swiper.activeIndex == 0) {
+                    //window.sessionStorage.buyProductMark = "buyWzj60Btn";
+                    //$(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyWzj60Btn");
+                } else if (swiper.activeIndex == 1) {
+                    //window.sessionStorage.buyProductMark = "buyWzj90Btn";
+                    //$(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyWzj90Btn");
+                } else if (swiper.activeIndex == 2) {
+                    //window.sessionStorage.buyProductMark = "buyWzj180Btn";
+                    //$(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyWzj180Btn");
+                } else if (swiper.activeIndex == 3) {
+                    //window.sessionStorage.buyProductMark = "buyWzj360Btn";
+                    //$(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyWzj360Btn");
+                }
+                // swiper.activeIndex 这个就是索引， 从 0 开始！ 可看一共有多少元素！
+            }
+        });
+        var mySwiper2 = new Swiper('#swiper-container2',{
+            watchSlidesProgress : true,
+            watchSlidesVisibility : true,
+            allowSwipeToNext : false,
+            allowSwipeToPrev : false,
+            slidesPerView : 1,
             touchRatio : 0.5,
             onTap: function(){
                 mySwiper3.slideTo( mySwiper2.clickedIndex)

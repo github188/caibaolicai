@@ -6,7 +6,7 @@ $(function(){
     //获取用户信息
     function getUserInfo(){
         $.ajax({
-           url:"http://10.0.92.198:1111/userInfo",
+           url:"http://106.14.165.194:1111/userInfo",
             type:"GET",
             headers:{
                 "token":window.localStorage.token
@@ -37,7 +37,7 @@ $(function(){
              return false;
         }else{
             $.ajax({
-                url:"http://10.0.92.198:1111/userInfo",
+                url:"http://106.14.165.194:1111/userInfo",
                 type:"POST",
                 headers:{
                     "Content-Type":"application/x-www-form-urlencoded",

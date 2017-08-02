@@ -709,6 +709,12 @@ input:focus{
     padding:0.32rem;
     font-size: 0.48rem;
     color:#fff;
+    height: 0.48rem;
+    line-height: 0.48rem;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    -o-text-overflow:ellipsis;
+    overflow:hidden;
 }
 .minorNews{
     width: 100%;
@@ -729,6 +735,10 @@ input:focus{
     flex: 6;
     padding-right: 0.32rem;
     line-height: 1.866666667rem;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    -o-text-overflow:ellipsis;
+    overflow:hidden;
 }
 .minorNewsImg{
     display: inline-block;
@@ -848,10 +858,10 @@ input:focus{
     font-size: 0.7rem;
 }
 .dateFontLeft{
-    font-size: 0.373333333rem;
+    font-size: 0.48rem;
 }
 .dateFontRight{
-    font-size: 0.373333333rem;
+    font-size: 0.48rem;
 }
 .dealWrap{
     width: 100%;
@@ -2532,5 +2542,12 @@ input:focus{
 .shuLine{
     display: inline-block;
     border-right: 1px solid #cccccc;
-
+}
+.UnbundlingBtn{
+    width: 80%;
+    height: 45px;
+    line-height: 45px;
+    font-size: 20px;
+    margin: 0 auto;
+    display: block;
 }

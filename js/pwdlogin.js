@@ -17,7 +17,7 @@ $(function(){
     //判断是否设置支付密码
     function judgeSetPayPwd(){
         $.ajax({
-            url:"http://10.0.92.198:1111/paypwd",
+            url:"http://106.14.165.194:1111/paypwd",
             type:"GET",
             headers:{
                 "token":window.localStorage.token
@@ -52,7 +52,7 @@ $(function(){
     $(".loginBtn").click(function(){
         var payPwd = sha256_digest($(".pwdNum").val());
         $.ajax({
-            url:"http://10.0.92.198:1111/login/pwd",
+            url:"http://106.14.165.194:1111/login/pwd",
             type:"POST",
             headers:{
                 "Content-Type": "application/x-www-form-urlencoded"

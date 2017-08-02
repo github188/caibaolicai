@@ -27,7 +27,7 @@ $(function(){
             var loginPwd = sha256_digest($(".confirmPwd").val());
             console.log(loginPwd);
             $.ajax({
-                url:"http://10.0.92.198:1111/loginpwd",
+                url:"http://106.14.165.194:1111/loginpwd",
                 type:"PUT",
                 headers:{
                     "token":window.localStorage.token

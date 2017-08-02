@@ -1,8 +1,5 @@
 $(function(){
     $("input").css("border","none");
-    $(".goCertification").click(function(){
-       window.location.href = "certification.html";
-    });
     $(".goHqjAsset").click(function(){
         window.location.href = "hqjAsset.html";
     });
@@ -46,10 +43,20 @@ $(function(){
             window.location.href = "productCollection.html";
         }
     });
+    $(".goBuyHqj").click(function(){
+        if(window.localStorage.token == undefined){
+            window.sessionStorage.buyProductMark = "hqj";
+            window.location.href = "ready.html";
+        }else {
+            //window.sessionStorage.pageMark = "hqj";
+            //window.location.href = "productCollection.html";
+            judgeSetPayPwd();
+        }
+    });
     //判断是否设置支付密码
     function judgeSetPayPwd(){
         $.ajax({
-            url:"http://10.0.92.198:1111/paypwd",
+            url:"http://106.14.165.194:1111/paypwd",
             type:"GET",
             headers:{
                 "token":window.localStorage.token
@@ -61,9 +68,11 @@ $(function(){
                 console.log(res);
                 if(res.code == 0){
                     window.sessionStorage.buyProductMark = "hqj";
+                    window.sessionStorage.backMark = "index";
                     window.location.href = "productCollection.html";
                 }else if(res.code == -1){
                     window.sessionStorage.buyProductMark = "hqj";
+                    window.sessionStorage.backMark = "index";
                     window.location.href = "setpaypwd.html";
                     //if(window.sessionStorage.checkedLoginCode == "ziChan"){
                     //    window.location.href = "asset.html";
@@ -76,6 +85,7 @@ $(function(){
                     //}
                 }else{
                     window.sessionStorage.buyProductMark = "hqj";
+                    window.sessionStorage.backMark = "index";
                     window.location.href = "ready.html";
                 }
             },
@@ -84,24 +94,13 @@ $(function(){
             }
         });
     }
-    $(".goBuyHqj").click(function(){
-        if(window.localStorage.token == undefined){
-            window.sessionStorage.buyProductMark = "hqj";
-            window.location.href = "ready.html";
-        }else {
-            //window.sessionStorage.pageMark = "hqj";
-            //window.location.href = "productCollection.html";
-            judgeSetPayPwd();
-        }
 
-
-    });
     if(window.localStorage.token == undefined){
         $(".dataLeftTop").text("昨日注册(人)");
         $(".dataRightTop").text("累计交易(吨)");
         //获取未登录首页的注册人数
         $.ajax({
-            url:"http://10.0.92.198:1111/count",
+            url:"http://106.14.165.194:1111/count",
             type:"GET",
             success:function(res){
                 $(".dataLeftBottom").text(res.result.usersCountYtd);
@@ -128,7 +127,7 @@ $(function(){
         $(".dataRightTop").text("昨日收益克数(克)");
         //资产查询接口
         $.ajax({
-            url:"http://10.0.92.198:1111/assetQuery",
+            url:"http://106.14.165.194:1111/assetQuery",
             type:"GET",
             headers:{
                 "token":window.localStorage.token
@@ -185,7 +184,7 @@ $(function(){
     });
     $(".goRechargeBtn").click(function(){
         $.ajax({
-            url:'http://10.0.92.198:1111/authQuery',//认证查询
+            url:'http://106.14.165.194:1111/authQuery',//认证查询
             type:"GET",
             headers:{
                 "token":window.localStorage.token
@@ -220,7 +219,7 @@ $(function(){
     });
     $(".goWithdrawBtn").click(function(){
         $.ajax({
-            url:'http://10.0.92.198:1111/authQuery',
+            url:'http://106.14.165.194:1111/authQuery',
             type:"GET",
             headers:{
                 "token":window.localStorage.token
@@ -258,5 +257,80 @@ $(function(){
         localStorage.clear();
         window.location.href = "index.html";
     });
+    //    实名绑卡信息查询
+    function bindInfoQuery(){
+        $.ajax({
+            url:'http://106.14.165.194:1111/bindInfo',
+            type:"GET",
+            headers:{
+                "token":window.localStorage.token
+            },
+            data:{
+                "phone":window.localStorage.phoneNumber
+            },
+            success:function(res){
+                console.log(res);
+                if(res.result.IDcard !== null){
+                    window.sessionStorage.authToken = res.result.authToken;//授权码
+                }
+            },
+            error:function(res){
+                console.log(res);
+            }
+        })
+    }
+    bindInfoQuery();
+    //获取数字签名
+    function getMac(){
+        //用户编号
+        var customerIdName = 'customerId';
+        var customerIdNum = window.localStorage.phoneNumber;
+        var customerIdArr = [];
+        customerIdArr.push(customerIdName,customerIdNum);
+        var customerId = customerIdArr.join("=");
+        //授权码
+        var tokenName = 'token';
+        var tokenNum = window.sessionStorage.authToken;
+        var tokenArr = [];
+        tokenArr.push(tokenName,tokenNum);
+        var token = tokenArr.join("=");
+
+        var accountId = "accountId=2120170306142335001";
+        //var customerId = "customerId=window.localStorage.phoneNumber";
+        var payType = "payType=1";
+        var responseUrl = "responseUrl=http://106.14.165.194:1111/payResult";
+
+        var key = 'key=caibao1314';
+        var macArr = [];
+        macArr.push(accountId,customerId,token,key);
+        var mac=macArr.join("&");
+        console.log(mac);
+        window.sessionStorage.mac = md5(mac).toUpperCase();
+        console.log(window.sessionStorage.mac);
+    }
+    //    解绑
+    $(".UnbundlingBtn").click(function(){
+        getMac();
+        $.ajax({
+            url:"http://106.14.165.194:3333/authPay-front/authPay/unbind",
+            type:"POST",
+            headers:{
+                'Content-Type':'application/json'
+            },
+            data:JSON.stringify({
+                "accountId":"2120170306142335001",                           //商户编号
+                "customerId":window.localStorage.phoneNumber,              //用户编号
+                "token":window.sessionStorage.authToken,                  //授权码
+                "mac":window.sessionStorage.mac                             //数字签名
+            }),
+            success:function(res){
+                console.log(res);
+            },
+            error:function(res){
+                console.log(res);
+            }
+        });
+    });
+//    阅读
 
 });

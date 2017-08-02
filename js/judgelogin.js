@@ -25,7 +25,7 @@ $(function(){
     //判断登录密码是否发设置
     function judgeSetLofinPwd(){
         $.ajax({
-            url:"http://10.0.92.198:1111/loginpwd",
+            url:"http://106.14.165.194:1111/loginpwd",
             type:"GET",
             data:{
                 "phone":window.localStorage.phoneNumber
@@ -51,7 +51,7 @@ $(function(){
         }else{
             console.log($(".phoneNum").val());
            $.ajax({
-               url:"http://10.0.92.198:1111/registQuery",
+               url:"http://106.14.165.194:1111/registQuery",
                method:"GET",
                data:{"phone": $.trim($(".phoneNum").val())},
                success:function(res){

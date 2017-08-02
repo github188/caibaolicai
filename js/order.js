@@ -5,7 +5,7 @@ $(function(){
     //    认证查询
     //function authenticationQuery(){
     //    $.ajax({
-    //        url: 'http://10.0.92.198:1111/authQuery',
+    //        url: 'http://106.14.165.194:1111/authQuery',
     //        type: "GET",
     //        headers: {
     //            "token": window.localStorage.token
@@ -202,7 +202,7 @@ $(function(){
     //    实名绑卡信息查询
     function bindInfoQuery(){
         $.ajax({
-            url:'http://10.0.92.198:1111/bindInfo',
+            url:'http://106.14.165.194:1111/bindInfo',
             type:"GET",
             headers:{
                 "token":window.localStorage.token
@@ -414,7 +414,7 @@ $(function(){
         window.sessionStorage.orderId = window.localStorage.phoneNumber + new Date().getTime();//订单号
         if($(".choosePayBank").hasClass("payActive")){
             $.ajax({
-                url:"http://10.0.92.198:1111/currentGold/buyIn",
+                url:"http://106.14.165.194:1111/currentGold/buyIn",
                 type:"POST",
                 headers:{
                     "Content-Type":"application/x-www-form-urlencoded ",
@@ -596,7 +596,7 @@ $(function(){
     //活期金买入接口（银行卡支付）
     /*function buyHqjBalanceYuE(){
         $.ajax({
-            url:"http://10.0.92.198:1111/currentGold/buyIn",
+            url:"http://106.14.165.194:1111/currentGold/buyIn",
             type:"POST",
             headers:{
                 "Content-Type":"application/x-www-form-urlencoded ",
@@ -633,7 +633,7 @@ $(function(){
     //活期金买入（余额支付）
     function buyHqjBalance(){
         $.ajax({
-            url:"http://10.0.92.198:1111/currentGold/buyIn",
+            url:"http://106.14.165.194:1111/currentGold/buyIn",
             type:"POST",
             headers:{
                 "Content-Type":"application/x-www-form-urlencoded ",
@@ -667,7 +667,7 @@ $(function(){
     $(".rechargeConfirmBalanceBtn").click(function(){
         var paypwd = sha256_digest($(".payPwdVal").val());
         $.ajax({
-            url:"http://10.0.92.198:1111/paypwd-check",
+            url:"http://106.14.165.194:1111/paypwd-check",
             type:"POST",
             headers:{
                 "Content-Type":"application/x-www-form-urlencoded",
