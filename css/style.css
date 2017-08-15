@@ -117,13 +117,19 @@ input:focus{
     margin-top: 0.48rem;
     margin-bottom:0.906666667rem;
 }
+.phoneNumWrap{
+    height: 1.333333333rem;
+    line-height: 1.3333333333rem;
+    text-align: center;
+}
 .phoneNum{
-    display: block;
-    height:1.333333333rem;
-    line-height:1.333333333rem;
+    /*display: block;*/
+    /*height:1.333333333rem;*/
+    /*line-height:1.333333333rem;*/
     font-size: 0.426666667rem;/*16px*/
     width: 9.253333333rem;
-    margin:0 auto;
+    color: #000;
+    /*margin:0 auto;*/
 }
 .nextOptWrap{
     margin-top:0.48rem;
@@ -277,9 +283,9 @@ input:focus{
     margin-top:0.8rem;
 }
 /*.messageIcon img{*/
-    /*width: 28px;*/
-    /*height: 28px;*/
-    /*margin-top: -3px;*/
+/*width: 28px;*/
+/*height: 28px;*/
+/*margin-top: -3px;*/
 /*}*/
 .messageIcon{
     font-size:0.426666667rem;
@@ -437,6 +443,7 @@ input:focus{
 }
 .footBtnOrange{
     color:#f2b643 !important;
+    /*color: #ff5855 !important;*/
 }
 .fontBtnIcon{
     display: inline-block;
@@ -459,7 +466,7 @@ input:focus{
 .assetsIcon{
     /*background: url(../images/assetsIconGray.png) no-repeat center;*/
     /*background-size: 100% 100%;*/
- }
+}
 .page{
     width: 100%;
     overflow: hidden;
@@ -493,7 +500,7 @@ input:focus{
     -ms-flex: 2;
     flex: 2;
     text-align: right;
-    font-size: 0.48rem;
+    font-size: 0.32rem;
     color: rgb(242,182,67);
 }
 .slogan{
@@ -553,7 +560,7 @@ input:focus{
     box-sizing: border-box;
     -moz-box-sizing:border-box; /* Firefox */
     -webkit-box-sizing:border-box; /* Safari */
-    border-right: 1px solid #f3a251;
+    border-right: 1px solid #fff;
 }
 .dataRightBottom{
     text-align: center;
@@ -916,8 +923,8 @@ input:focus{
     font-size: 0.64rem;
 }
 /*.actIcon img{*/
-    /*width: 0.64rem;*/
-    /*height: 0.64rem;*/
+/*width: 0.64rem;*/
+/*height: 0.64rem;*/
 /*}*/
 .actTitle{
     display: inline-block;
@@ -1116,7 +1123,7 @@ input:focus{
     box-sizing: border-box;
     -moz-box-sizing:border-box; /* Firefox */
     -webkit-box-sizing:border-box; /* Safari */
-    border-bottom: 2px solid orange;
+    border-bottom: 2px solid #f2b643;
 }
 .height{
     height: 300px;
@@ -1282,6 +1289,9 @@ input:focus{
     width: 22px;
     height: 22px;
     border-radius:100%;
+    box-sizing: border-box;
+    -moz-box-sizing:border-box; /* Firefox */
+    -webkit-box-sizing:border-box; /* Safari */
     border: 1px solid #000;
     margin-top: 0.65rem;
 }
@@ -1953,17 +1963,17 @@ input:focus{
     text-align: right;
     border: none !important;
     font-size: 0.373333333rem;
-     line-height:1.6rem;
-     width: 100%;
-     height: 1.6rem;
-     margin-bottom: 0;
-     padding: 0;
-     -webkit-user-select: text;
-     /*border: 0px solid rgba(0,0,0,.2);*/
-     /*border-radius: 0px;*/
-     outline: 0;
-     background-color: #fff;
-     -webkit-appearance: none;
+    line-height:1.6rem;
+    width: 100%;
+    height: 1.6rem;
+    margin-bottom: 0;
+    padding: 0;
+    -webkit-user-select: text;
+    /*border: 0px solid rgba(0,0,0,.2);*/
+    /*border-radius: 0px;*/
+    outline: 0;
+    background-color: #fff;
+    -webkit-appearance: none;
 }
 .profitComputeCenter{
     height: 1.066666667rem;
@@ -1996,6 +2006,7 @@ input:focus{
     top:0.533333rem;
     left: 0;
     right: 0;
+    padding-bottom: 0.48rem;
 }
 .placeOrderBtn{
     width: 100%;
@@ -2009,9 +2020,8 @@ input:focus{
     height: 1.6rem;
 }
 .inputBuyMoneyCenter{
-    padding:0 0.32rem;
+    padding:0.133333333rem 0.32rem 0;
     height: 1.333333333rem;
-    padding-top: 0.133333333rem;
 }
 .inputBuyMethodTitle{
     -webkit-box-flex: 2;
@@ -2028,6 +2038,7 @@ input:focus{
     flex:4;
     line-height:1.333333333rem;
     font-size: 0.373333333rem;
+    color: #000;
 }
 .changeBuyMethod{
     -webkit-box-flex: 2;
@@ -2374,7 +2385,6 @@ input:focus{
     top: 6rem;
     left:2.8rem;
     margin: auto;
-    z-index: 10;
     color: #fff;
     font-size: 14px;
     z-index: 20;
@@ -2531,7 +2541,8 @@ input:focus{
     height: 4.106666667rem;
 }
 .payActive{
-    background: #f1973c;
+    background: url('../images/chooseIcon.png') no-repeat center center;
+    background-size: 120% 120%;
 }
 .sendAgin{
     border-radius: 0 !important;
@@ -2550,4 +2561,57 @@ input:focus{
     font-size: 20px;
     margin: 0 auto;
     display: block;
+}
+.mapWrap{
+    height: 30%;
+    background: #fff;
+}
+.contactWrap{
+    margin-top:0.266666667rem;
+}
+.contactCenter{
+    padding:0 0.4rem;
+}
+.contactCenter li{
+    height: 1.6rem;
+    /*line-height: 1.6rem;*/
+}
+.contactCenterCenter{
+    -webkit-box-flex: 7;
+    -webkit-flex: 7;
+    -ms-flex: 7;
+    flex: 7;
+    line-height: 0.75rem;
+}
+.noRecordWrap{
+    margin-top: 0.266666667rem;
+    height:16.26666667rem;
+
+}
+.toTransactionPromptFont{
+    color: #cccccc;
+    font-size: 14px;
+    text-align: center;
+    position: fixed;
+    left:0;
+    right: 0;
+    top:32%;
+}
+.goMakeMoney{
+    position: fixed;
+    left: 0;
+    right: 0;
+    top:50%;
+    text-align: center;
+}
+.goMakeMoneyBtn{
+    display: inline-block;
+    font-size: 18px;
+    color: #fff;
+    background: rgb(242,182,67);
+    text-align: center;
+    height: 1.2rem;
+    line-height: 1.2rem;
+    width: 8.533333333rem;
+
 }

@@ -2,6 +2,7 @@
  * Created by hzc on 2017-7-5.
  */
 $(function(){
+    FastClick.attach(document.body);
     //$(".goBack").click(function(){
     //    if(window.sessionStorage.indexMark == "index"){
     //        window.location.href = "index.html";
@@ -11,7 +12,7 @@ $(function(){
     //});
     $(".pleaseInputsSellMoney").focus().attr('placeholder','最多可卖出'+parseFloat(window.sessionStorage.hqjAllAsset).toFixed(2)+'元');
     $(".goSellHqjBtn").click(function(){
-       window.location.href = "sellHqj.html";
+        window.location.href = "sellHqj.html";
     });
     $(".goBuyHqjBtn").click(function(){
         window.sessionStorage.backMark = "hqj";
@@ -200,7 +201,7 @@ $(function(){
             }
         });
     }
-   // 活期金卖出
+    // 活期金卖出
     function sellHqj(){
         var orderId = window.localStorage.phoneNumber + Date.parse(new Date());
         $.ajax({
@@ -233,10 +234,10 @@ $(function(){
             }
         });
     }
-   //监听密码输入框的变化
-   // $("#ipt").on('input onpropertychange',function(){
-   //     if($("#ipt").val().length == 6){
-   //         checkedPwd();
-   //     }
-   // });
+    //监听密码输入框的变化
+    // $("#ipt").on('input onpropertychange',function(){
+    //     if($("#ipt").val().length == 6){
+    //         checkedPwd();
+    //     }
+    // });
 });

@@ -2,6 +2,7 @@
  * Created by hzc on 2017-7-28.
  */
 $(function(){
+    FastClick.attach(document.body);
     $(".balanceNum").text(window.sessionStorage.userBalance);
     //开户银行是否录入
     function bankInfoWhetherInput(){

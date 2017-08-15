@@ -2,6 +2,7 @@
  * Created by hzc on 2017-7-25.
  */
 $(function(){
+    FastClick.attach(document.body);
     $(".pwdNum").focus();
     $(".pwdNum").on('input porpertychange',function(){
         if($(".pwdNum").val().length >= 6){
@@ -30,13 +31,13 @@ $(function(){
                 if(res.code == -1){
                     window.location.href = "setpaypwd.html";
                 }else if(res.code == 0){
-                    if(window.sessionStorage.pageMark == "hqj"){
+                    if(window.sessionStorage.buyProductMark == "hqj"){
                         window.location.href = "productCollection.html";
                     }else if(window.sessionStorage.checkedLoginCode == "ziChan"){
                         window.location.href = "asset.html";
                     }else if(window.sessionStorage.checkedLoginCode == "faXian"){
                         window.location.href = "find.html";
-                    }else if(window.sessionStorage.pageMark ==  "wzj360"){
+                    }else if(window.sessionStorage.buyProductMark ==  "wzj360"){
                         window.location.href = "productCollection.html";
                     }else{
                         window.location.href = "index.html";

@@ -2,6 +2,7 @@
  * Created by hzc on 2017-7-18.
  */
 $(function(){
+    FastClick.attach(document.body);
     $(".accountNumber").text(window.localStorage.phoneNumber);
     //获取用户信息
     function getUserInfo(){

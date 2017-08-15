@@ -2,31 +2,55 @@
  * Created by hzc on 2017-7-6.
  */
 $(function(){
+    FastClick.attach(document.body);
     //    认证查询
-    //function authenticationQuery(){
-    //    $.ajax({
-    //        url: 'http://106.14.165.194:1111/authQuery',
-    //        type: "GET",
-    //        headers: {
-    //            "token": window.localStorage.token
-    //        },
-    //        data: {
-    //            "phone": window.localStorage.phoneNumber
-    //        },
-    //        success: function (res) {
-    //            console.log(res);
-    //            if(res.code == -1 ){
-    //                $(".placeOrderBtn").css("background","rgb(181,181,181)").attr("disabled","disabled");
-    //            }
-    //        },
-    //        error: function (res) {
-    //            console.log(res);
-    //        }
-    //    });
-    //}
-    //authenticationQuery();
-    $(".buyMoney").focus().val(window.sessionStorage.amount);
-    $(".waitPayNum").text(window.sessionStorage.amount);
+    function authenticationQuery(){
+        $.ajax({
+            url: 'http://106.14.165.194:1111/authQuery',
+            type: "GET",
+            headers: {
+                "token": window.localStorage.token
+            },
+            data: {
+                "phone": window.localStorage.phoneNumber
+            },
+            success: function (res) {
+                console.log(res);
+                if(res.code == -1 ){
+                    $(".buyMoney").focus().val(window.sessionStorage.amount);
+                    $(".waitPayNum").text(window.sessionStorage.amount);
+                } else if(res.code == 0){
+                    $(".buyMoney").focus().val("");
+                    $(".waitPayNum").text("");
+                }
+            },
+            error: function (res) {
+                console.log(res);
+            }
+        });
+    }
+    authenticationQuery();
+
+
+    function clearNoNum(obj) {
+        //先把非数字的都替换掉，除了数字和.
+        obj.value = obj.value.replace(/[^\d.]/g,"");
+        //保证只有出现一个.而没有多个.
+        obj.value = obj.value.replace(/\.{2,}/g,".");
+        //必须保证第一个为数字而不是.
+        obj.value = obj.value.replace(/^\./g,"");
+        //保证.只出现一次，而不能出现两次以上
+        obj.value = obj.value.replace(".","$#$").replace(/\./g,"").replace("$#$",".");
+        //只能输入两个小数
+        obj.value = obj.value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3');
+    }
+    $(".buyMoney").keyup(function(){
+        clearNoNum(this);
+    });
+    $(".buyMoney").blur(function(){
+        clearNoNum(this);
+    });
+
     if($(".buyMoney").val().length > 0){
         $(".submitOrder").css("background","rgb(242,182,67)").removeAttr("disabled");
     }
@@ -131,11 +155,18 @@ $(function(){
     $(".headTopRight span").text(window.sessionStorage.goldPrice);
     //监听input的变化
     $(".buyMoney").on('input porpertychange',function(){
-        if(parseFloat($(".buyMoney").val()) < 1){
-            $(".buyMoney").val(1);
+        if(parseFloat($(".buyMoney").val()) < 5){
+            $(".buyMoney").val(5);
         }
         calculateExpectProfit();
-        $(".waitPayMoney").text($(".buyMoney").val());
+        $(".waitPayMoney").text(Math.floor(parseFloat($(".buyMoney").val()) * 100) / 100);
+    });
+    $('.waitPayMoney').on('DOMNodeInserted',function(){
+        if($(".waitPayMoney").text() == "NaN"){
+            $(".waitPayMoney").text("");
+        }else {
+            $(".waitPayMoney").text(Math.floor(parseFloat($(".buyMoney").val()) * 100) / 100);
+        }
     });
     //计算预期收益
     function calculateExpectProfit(){
@@ -144,9 +175,11 @@ $(function(){
         var rateIncrease = 1+ parseFloat(arr[0]) * 0.01;//1 + 利息
         var powerNum = parseFloat(parseInt(window.sessionStorage.iDays) / 360);
         var expectedReturnMoney =(parseFloat(principal * Math.pow(rateIncrease,powerNum)) - principal).toFixed(2);
-        //console.log(principal);
-        //console.log(rateIncrease);
-        console.log(expectedReturnMoney);
+        //alert(principal);
+        //alert(rateIncrease);
+        //alert(parseInt(window.sessionStorage.iDays));
+        //alert(powerNum);
+        //alert(expectedReturnMoney);
         //console.log(Math.pow(rateIncrease,powerNum));
         if($(".expectedReturnMoney").text() == "NaN"){
             $(".expectedReturnMoney").text("0.00");
@@ -165,14 +198,14 @@ $(function(){
     function  DateDiff(sDate1,sDate2){    //sDate1和sDate2是2006-12-18格式
         var  aDate,  oDate1,  oDate2,  iDays;
         aDate  =  sDate1.split("-");
-        oDate1  =  new  Date(aDate[1]  +  '-'  +  aDate[2]  +  '-'  +  aDate[0]);   //转换为12-18-2006格式
+        oDate1  =  new  Date(aDate[1]  +  '/'  +  aDate[2]  +  '/'  +  aDate[0]);   //转换为12-18-2006格式
         aDate  =  sDate2.split("-");
-        oDate2  =  new  Date(aDate[1]  +  '-'  +  aDate[2]  +  '-'  +  aDate[0]);
+        oDate2  =  new  Date(aDate[1]  +  '/'  +  aDate[2]  +  '/'  +  aDate[0]);
         iDays  =  parseInt(Math.abs(oDate1  -  oDate2)  /  1000  /  60  /  60  /24);    //把相差的毫秒数转换为天数
-
+        alert(aDate);
+        alert(oDate1);
+        alert(oDate2)
         window.sessionStorage.iDays = parseInt(iDays);
-        //console.
-        //return  iDays
     }
     //监听 expireDay  div内容变化
     $(".expireDay").on('DOMNodeInserted',function(e){
@@ -182,13 +215,13 @@ $(function(){
     });
     //监听expectedReturnMoney内容变化
     $(".expectedReturnMoney").on('DOMNodeInserted',function(){
-       if($(".expectedReturnMoney").text() == "NaN"){
-           $(".expectedReturnMoney").text("0.00");
-       }
+        if($(".expectedReturnMoney").text() == "NaN"){
+            $(".expectedReturnMoney").text("0.00");
+        }
     });
     //    去认证
     $(".goAuthentication").click(function(){
-        if($(".buyMoney").val() < 1){
+        if($(".buyMoney").val() < 5){
             $(".popup").show();
             $(".popup").text("请输入购买金额");
             setTimeout('$(".popup").text(),$(".popup").hide()',1500);
@@ -198,7 +231,25 @@ $(function(){
             window.location.href = "certification.html";
         }
     });
-
+    function getAssset(){
+        $.ajax({
+            url:"http://106.14.165.194:1111/assetQuery",
+            type:"GET",
+            headers:{
+                "token":window.localStorage.token
+            },
+            data:{
+                "phone":window.localStorage.phoneNumber
+            },
+            success:function(res){
+                window.sessionStorage.userBalance = parseFloat(res.asset.balance).toFixed(2);   //账户余额
+            },
+            error:function(res){
+                console.log(res);
+            }
+        });
+    }
+    getAssset();
     //    实名绑卡信息查询
     function bindInfoQuery(){
         $.ajax({
@@ -227,63 +278,63 @@ $(function(){
                     window.sessionStorage.BankCardTailNumber = res.result.bankCard.substr(res.result.bankCard.length-4,4);
                     $(".accountBalance").text(window.sessionStorage.accountBalance);
                 }
-                if(res.result.bank == "交通银行"){
+                if($.trim(res.result.bank) == "交通银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/jiaotongbank.png');
 
-                }else if(res.result.bank == "中国银行"){
+                }else if($.trim(res.result.bank) == "中国银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/zhongguobank.png');
 
-                }else if(res.result.bank == "工商银行"){
+                }else if($.trim(res.result.bank) == "工商银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/gongshangbank.png');
 
-                }else if(res.result.bank == "建设银行"){
+                }else if($.trim(res.result.bank) == "建设银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/jianshebank.png');
 
-                }else if(res.result.bank == "平安银行"){
+                }else if($.trim(res.result.bank) == "平安银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/pinganbank.png');
 
-                }else if(res.result.bank == "中信银行"){
+                }else if($.trim(res.result.bank) == "中信银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/zhongxinbank.png');
 
-                }else if(res.result.bank == "广大银行"){
+                }else if($.trim(res.result.bank) == "广大银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/guangdabank.png');
 
-                }else if(res.result.bank == "浦发银行"){
+                }else if($.trim(res.result.bank) == "浦发银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/pufabank.png');
 
-                }else if(res.result.bank == "兴业银行"){
+                }else if($.trim(res.result.bank) == "兴业银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/xingyebank.png');
 
-                }else if(res.result.bank == "农业银行"){
+                }else if($.trim(res.result.bank) == "农业银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/nongyebank.png');
 
-                }else if(res.result.bank == "邮政银行"){
+                }else if($.trim(res.result.bank) == "邮政银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/youzhengbank.png');
 
-                }else if(res.result.bank == "招商银行"){
+                }else if($.trim(res.result.bank) == "招商银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/zhaoshangbank.png');
 
-                }else if(res.result.bank == "华夏银行"){
+                }else if($.trim(res.result.bank) == "华夏银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/huaxiabank.png');
 
-                }else if(res.result.bank == "广发银行"){
+                }else if($.trim(res.result.bank) == "广发银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/guangfabank.png');
 
-                }else if(res.result.bank == "民生银行"){
+                }else if($.trim(res.result.bank) == "民生银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/minshengbank.png');
 
@@ -409,6 +460,14 @@ $(function(){
         $(".noFinds").text("余额不足");
         $(".choosePayBalance").off("click");
     }
+    $(".closePopup").click(function(){
+        $('#ipt').val("");
+        $(".inputPwdWrap").find("span").text("");
+        $(".sellTypeMoney").text("");
+        $(".popupBg").css("display","none");
+        $(".sellPopup").css("display","none");
+
+    });
     $(".submitOrder").click(function(){
         window.sessionStorage.amount = parseFloat($(".buyMoney").val()).toFixed(2);//购买金额
         window.sessionStorage.orderId = window.localStorage.phoneNumber + new Date().getTime();//订单号
@@ -448,12 +507,62 @@ $(function(){
                 }
             });
         }else{
-            $(".popupBg").show();
-            $(".popupWrapBalance").show();
-            $(".payPwdVal").focus();
-            $(".userRechargeNum").text("￥" + $('.buyMoney').val());
+            $(".popupBg").css("display","block");
+            $(".sellPopup").css("display","block");
+            $(".sellTypeMoney").text("￥" + $(".buyMoney").val());
+            $("#ipt").focus();
         }
     });
+    //支付密码
+    $('#ipt').focus(function(){
+        $(".sellPopup").css({
+            'top':'1.366666667rem'
+        });
+    });
+    $('#ipt').on('input',function (e){
+        var numLen = 6;
+        var pw = $('#ipt').val();
+        var list = $('.pwdContainer span');
+        for(var i=0; i<=numLen; i++){
+            if(pw[i]){
+                $(list[i]).text('*');
+            }else{
+                $(list[i]).text('');
+            }
+        }
+        if(pw.length == 6){
+            checkedPwd();
+        }
+    });
+    //支付密码验证
+    function checkedPwd(){
+        var checkedPayPwd = sha256_digest($("#ipt").val());
+        $.ajax({
+            url:"http://106.14.165.194:1111/paypwd-check",
+            type:"POST",
+            headers:{
+                "Content-Type":"application/x-www-form-urlencoded ",
+                "token":window.localStorage.token
+            },
+            data:{
+                "phone":window.localStorage.phoneNumber,
+                "paypwd":checkedPayPwd
+            },
+            success:function(res){
+                console.log(res);
+                if(res.code == 0){
+                    rechargeConfirmBalance();
+                }else {
+                    $(".popup").show();
+                    $(".popup").text(res.msg);
+                    setTimeout('$(".popup").hide(),$(".popup").text(""),$("#ipt").val("")',2000);
+                }
+            },
+            error:function(res){
+                console.log(res);
+            }
+        });
+    }
     //短信数字签名
     function messageMac(){
         //用户编号
@@ -584,7 +693,7 @@ $(function(){
                         $(".popup").show();
                         $(".popup").text("交易成功");
                         setTimeout('$(".popup").hide(),$(".popup").text("")',3000);
-                        setTimeout('$(".userRechargeNum").text(""),$(".phoneName").text(""),$(".rechargeBankName").text(""),$(".verificationCodeNum").val(""),$(".BankCardTailNumber").text( ""),clearInterval(timer2), $(".sendAgin").val(""),$(".popupBg").hide(),$(".popupWrap").hide()',3500);
+                        setTimeout('$(".userRechargeNum").text(""),$(".phoneName").text(""),$(".rechargeBankName").text(""),$(".verificationCodeNum").val(""),$(".BankCardTailNumber").text( ""),clearInterval(timer2), $(".sendAgin").val(""),$(".popupBg").hide(),$(".popupWrap").hide(),window.location.href = "hqjAsset.html"',3500);
                     }
                 }
             },
@@ -595,34 +704,34 @@ $(function(){
     });
     //活期金买入接口（银行卡支付）
     /*function buyHqjBalanceYuE(){
-        $.ajax({
-            url:"http://106.14.165.194:1111/currentGold/buyIn",
-            type:"POST",
-            headers:{
-                "Content-Type":"application/x-www-form-urlencoded ",
-                "token":window.localStorage.token
-            },
-            data:{
-                "phone":window.localStorage.phoneNumber,
-                "orderId":window.sessionStorage.orderId,
-                "amount":window.sessionStorage.amount,
-                "payWay":"1"
-            },
-            success:function(res){
-                console.log(res);
-                if(res.code == 0){
+     $.ajax({
+     url:"http://106.14.165.194:1111/currentGold/buyIn",
+     type:"POST",
+     headers:{
+     "Content-Type":"application/x-www-form-urlencoded ",
+     "token":window.localStorage.token
+     },
+     data:{
+     "phone":window.localStorage.phoneNumber,
+     "orderId":window.sessionStorage.orderId,
+     "amount":window.sessionStorage.amount,
+     "payWay":"1"
+     },
+     success:function(res){
+     console.log(res);
+     if(res.code == 0){
 
-                }else{
-                    $(".popup").show();
-                    $(".popup").text(res.msg);
-                    setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
-                }
-            },
-            error:function(res){
-                console.log(res);
-            }
-        });
-    }*/
+     }else{
+     $(".popup").show();
+     $(".popup").text(res.msg);
+     setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
+     }
+     },
+     error:function(res){
+     console.log(res);
+     }
+     });
+     }*/
     $(".payPwdVal").on('input porpertychange',function(){
         if($(".payPwdVal").val().length >= 6){
             $(".rechargeConfirmBalanceBtn").css("background","rgb(242, 182, 67)").removeAttr("disabled");
@@ -664,8 +773,9 @@ $(function(){
         });
     }
     //确认支付（余额）
-    $(".rechargeConfirmBalanceBtn").click(function(){
-        var paypwd = sha256_digest($(".payPwdVal").val());
+    //$(".rechargeConfirmBalanceBtn").click(function(){
+    function rechargeConfirmBalance(){
+        var paypwd = sha256_digest($("#ipt").val());
         $.ajax({
             url:"http://106.14.165.194:1111/paypwd-check",
             type:"POST",
@@ -691,7 +801,9 @@ $(function(){
                 console.log(res);
             }
         });
-    });
+    }
+
+    //});
     $(".closePopupWrap").click(function(){
         clearInterval(timer2);
         $(".userRechargeNum").text("");

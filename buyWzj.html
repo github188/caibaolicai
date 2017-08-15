@@ -8,9 +8,41 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="format-detection" content="telephone=no">
     <title>购买稳赚金</title>
-    <script src="js/flexible.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" href="css/iconfont.css">
+    <style>
+        label{
+            display: block;
+            text-align: center;
+        }
+        ul{
+            box-sizing: border-box;
+            -moz-box-sizing:border-box; /* Firefox */
+            -webkit-box-sizing:border-box; /* Safari */
+            border: 1px solid #c8c8c8;
+            font-size: 0;
+            display: inline-block;
+            position: relative;
+        }
+        ul li{
+            display: inline-block;
+            width: 1.3rem;
+            height: 1.3rem;
+            font-size: 24px;
+            font-weight: 700;
+            text-align: center;
+            line-height:1.53333333rem;
+            box-sizing: border-box;
+            -moz-box-sizing:border-box; /* Firefox */
+            -webkit-box-sizing:border-box; /* Safari */
+            border-left: 1px solid #e6e6e6;
+            vertical-align: middle;
+            overflow: hidden;
+        }
+        ul li:first-child {
+            border-left: none;
+        }
+    </style>
 </head>
 <body>
     <div id="wrap">
@@ -138,25 +170,35 @@
             <input type="button" class="rechargeConfirmBtn" value="确认" style="display: block;height: 1.44rem; line-height: 1.44rem;width: 9.2rem;margin: 0 auto 0.533333333rem;;font-size: 0.426666667rem;background: #f1973c;color:#fff;text-align: center;padding:0;border:none;">
         </div>
     </div>
-    <div class="popupWrapBalance bgGray">
-        <div class="popupTop flex borderBottom">
-            <div class="popupTopLeft closePopupWrapBalance"> <i class="iconfont icon-guanbi"></i> </div>
-            <div class="popupTopCenter">余额支付<span class="userRechargeNum"></span></div>
-            <div class="popupTopRight"></div>
-        </div>
-        <div class="yourPhone">请输入6位支付密码</div>
-        <div class="verificationCodeWrap flex bgWhite">
-            <input type="password" maxlength="6" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')" class="payPwdVal" style="border:none;padding:0;margin-bottom: 0;height: 1.386666667rem;font-size: 0.373333333rem;" placeholder="请输入支付密码">
-        </div>
-        <div class="rechargeBankWrap">
-
-        </div>
-        <div class="rechargeConfirmBtnWrap">
-            <input type="button" class="rechargeConfirmBalanceBtn" value="确认" disabled="disabled" style="display: block;height: 1.44rem; line-height: 1.44rem;width: 9.2rem;margin: 0 auto 0.533333333rem;;font-size: 0.426666667rem;background: rgb(181,181,181);color:#fff;text-align: center;padding:0;border:none;">
+    <!--支付密码框-->
+    <div class="sellPopup bgWhite">
+        <div class="sellPopupCenter">
+            <div class="sellPopupCue flex borderBottom">
+                <div class="flex1"></div>
+                <div class="sellPopupTitle">请输入6位数字支付密码</div>
+                <div class="flex1 closePopup"><i class="iconfont icon-guanbi" style="font-size: 14px;"></i></div>
+            </div>
+            <div class="sellTypeTitle">活期金卖出</div>
+            <div class="sellTypeMoney"></div>
+            <div class="inputPwdWrap">
+                <label for="ipt">
+                    <ul>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                </label>
+                <input type="tel" id="ipt" maxlength="6" style="width: 1px; opacity: 0;height: 1px;border: none;">
+            </div>
         </div>
     </div>
 </body>
+<script src="js/flexible.js"></script>
 <script src="js/zepto.min.js"></script>
+<script src="js/fastclick.js"></script>
 <script src="js/md5.min.js"></script>
 <script src="js/sha256.js"></script>
 <script src="js/wzjorders.js"></script>

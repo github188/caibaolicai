@@ -2,6 +2,7 @@
  * Created by hzc on 2017-7-13.
  */
 $(function(){
+    FastClick.attach(document.body);
     $(".inputPwd").focus();
     $(".inputPwd").on('input',function(){
         if($(".inputPwd").val().length == 6){

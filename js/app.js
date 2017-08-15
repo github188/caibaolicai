@@ -1,4 +1,5 @@
 $(function(){
+    FastClick.attach(document.body);
     $("input").css("border","none");
     $(".goHqjAsset").click(function(){
         window.location.href = "hqjAsset.html";
@@ -15,7 +16,40 @@ $(function(){
     $(".ziChan").click(function(){
         window.location.href = "asset.html";
     });
-
+    function assets(){
+        //资产查询接口
+        $.ajax({
+            url:"http://106.14.165.194:1111/assetQuery",
+            type:"GET",
+            headers:{
+                "token":window.localStorage.token
+            },
+            data:{
+                "phone":window.localStorage.phoneNumber
+            },
+            success:function(res){
+                //console.log(res);
+                //console.log(res.asset);
+                var goldPrice = window.sessionStorage.goldPrice;
+                var assetNum = res.asset.balance + res.asset.huoqiGoldSum + (res.asset.qiandaiGoldSum * goldPrice) + (res.asset.jinshengGoldSum * goldPrice) + res.asset.wenzhuanGoldSum;
+                //console.log(assetNum);
+                $(".asset").text(assetNum.toFixed(2));
+                window.sessionStorage.userBalance = parseFloat(res.asset.balance).toFixed(2);   //账户余额
+                $(".balance").text(parseFloat(res.asset.balance).toFixed(2));                      //账户余额
+                window.sessionStorage.accountBalance = parseFloat(res.asset.balance).toFixed(2);
+                $(".dataLeftBottom").text(parseFloat(res.asset.earnYtdSum).toFixed(2));          //昨日收益金额
+                $(".dataRightBottom").text(parseFloat(res.asset.goldEarnYtdSum).toFixed(2));    //昨日收益黄金克数
+                $(".hqjNum").text(parseFloat(res.asset.huoqiGoldSum).toFixed(2));                //活期金余额（元）
+                $(".jsjNum").text(parseFloat(res.asset.jinshengGoldSum).toFixed(2));            //金生金余额（克）
+                $(".wzjNum").text(parseFloat(res.asset.wenzhuanGoldSum).toFixed(2));            //稳赚金余额（元）
+                $(".qdjNum").text(parseFloat(res.asset.qiandaiGoldSum).toFixed(2));             //钱袋金余额（克）
+            },
+            error:function(res){
+                console.log(res);
+            }
+        });
+    }
+    assets();
     //var checkedLoginCode;
     $(".ziChan").click(function(){
         if(window.localStorage.token == undefined){
@@ -35,23 +69,25 @@ $(function(){
     });
 
     $(".goBuyWzj360").click(function(){
-        if(window.localStorage.token == undefined){
-            window.sessionStorage.buyProductMark = "wzj360";
-            window.location.href = "ready.html";
-        }else {
-            window.sessionStorage.buyProductMark = "wzj360";
-            window.location.href = "productCollection.html";
-        }
+        //if(window.localStorage.token == undefined){
+        //    window.sessionStorage.buyProductMark = "wzj360";
+        //    window.location.href = "ready.html";
+        //}else {
+        window.sessionStorage.backMark = "index";
+        window.sessionStorage.buyProductMark = "wzj360";
+        window.location.href = "productCollection.html";
+        //}
     });
     $(".goBuyHqj").click(function(){
-        if(window.localStorage.token == undefined){
-            window.sessionStorage.buyProductMark = "hqj";
-            window.location.href = "ready.html";
-        }else {
-            //window.sessionStorage.pageMark = "hqj";
-            //window.location.href = "productCollection.html";
-            judgeSetPayPwd();
-        }
+        //if(window.localStorage.token == undefined){
+        //    window.sessionStorage.buyProductMark = "hqj";
+        //    window.location.href = "ready.html";
+        //}else {
+        window.sessionStorage.backMark = "index";
+        window.sessionStorage.buyProductMark = "hqj";
+        window.location.href = "productCollection.html";
+        //judgeSetPayPwd();
+        //}
     });
     //判断是否设置支付密码
     function judgeSetPayPwd(){
@@ -180,7 +216,7 @@ $(function(){
 
     //资产
     $(".goMyInfoBTn").click(function(){
-       window.location.href = "personalInfo.html"
+        window.location.href = "personalInfo.html"
     });
     $(".goRechargeBtn").click(function(){
         $.ajax({
@@ -255,6 +291,7 @@ $(function(){
     //    退出登录
     $(".quitLoginBtn").click(function(){
         localStorage.clear();
+        sessionStorage.clear();
         window.location.href = "index.html";
     });
     //    实名绑卡信息查询

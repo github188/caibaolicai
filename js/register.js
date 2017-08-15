@@ -2,6 +2,8 @@
  * Created by guojing on 2017-7-4.
  */
 $(function(){
+    FastClick.attach(document.body);
+    setTimeout('$(".voiceVerifyWrap").show(),$(".protocolWrap").css("padding","0")',10000);
     $(".verifyCode").focus();
     $(".phoneNumber").text(window.localStorage.phoneNumber);
     function countDown(){

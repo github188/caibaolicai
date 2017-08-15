@@ -2,10 +2,34 @@
  * Created by hzc on 2017-7-20.
  */
 $(function(){
+    FastClick.attach(document.body);
     if(window.sessionStorage.amount == undefined){
         $(".czMoney ").focus();
     }else{
-        $(".czMoney ").val(window.sessionStorage.amount);
+        //认证查询
+        $.ajax({
+            url: 'http://106.14.165.194:1111/authQuery',
+            type: "GET",
+            headers: {
+                "token": window.localStorage.token
+            },
+            data: {
+                "phone": window.localStorage.phoneNumber
+            },
+            success: function (res) {
+                console.log(res);
+                if(res.code == -1 ){
+                    $(".czMoney ").val(window.sessionStorage.amount);
+                }else if(res.code == 0){
+                    $(".czMoney ").focus();
+                    $(".czMoney ").val("");
+                }
+            },
+            error: function (res) {
+                console.log(res);
+            }
+        });
+
     }
     //    实名绑卡信息查询
     function bindInfoQuery(){
@@ -378,11 +402,11 @@ $(function(){
     });
 
     $(".bindCzMoney").on('input onpropertychange',function(){
-       if(parseFloat($(".bindCzMoney").val()) >=1){//测试用
-           $(".confirmBtn").css("background","rgb(242, 182, 67)").removeAttr("disabled");
-       }else{
-           $(".confirmBtn").css("background","#cccccc").attr("disabled",true);
-       }
+        if(parseFloat($(".bindCzMoney").val()) >=1){//测试用
+            $(".confirmBtn").css("background","rgb(242, 182, 67)").removeAttr("disabled");
+        }else{
+            $(".confirmBtn").css("background","#cccccc").attr("disabled",true);
+        }
     });
     //确认支付数字签名
     function payMac(){
@@ -472,7 +496,7 @@ $(function(){
         $(".BankCardTailNumber").text( "(" + window.sessionStorage.BankCardTailNumber + ")");
     });
     $(".reset").click(function(){
-       $(".czMoney").val("");
+        $(".czMoney").val("");
         $(".confirmBtn").css("background","#cccccc").attr("disabled",true);
     });
     $(".clossPopup").click(function() {

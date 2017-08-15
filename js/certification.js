@@ -2,6 +2,7 @@
  * Created by hzc on 2017-7-13.
  */
 $(function(){
+    FastClick.attach(document.body);
     $(".personBankNum").focus();
     $(".goChooseBank").click(function(){
         window.location.href = "choosebank.html";
@@ -415,6 +416,7 @@ $(function(){
     }
     //获取验证码（银生宝）
     $(".ysbVerifyCode").click(function(){
+        window.sessionStorage.orderId = window.localStorage.phoneNumber + new Date().getTime();
         messageMac();
         $.ajax({
            url:"http://106.14.165.194:3333/authPay-front/authPay/sendVercode",

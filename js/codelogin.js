@@ -2,6 +2,7 @@
  * Created by hzc on 2017-7-4.
  */
 $(function(){
+    FastClick.attach(document.body);
     $(".verifyCode").focus();
     $(".phoneNumber").text(window.localStorage.phoneNumber);
     $(".verifyCode").on('input porpertychange',function(){
@@ -98,66 +99,118 @@ $(function(){
         });
     });
     //判断是否设置支付密码
-    function judgeSetPayPwd(){
+    //function judgeSetPayPwd(){
+    //    $.ajax({
+    //        url:"http://106.14.165.194:1111/paypwd",
+    //        type:"GET",
+    //        headers:{
+    //            "token":window.localStorage.token
+    //        },
+    //        data:{
+    //            "phone":window.localStorage.phoneNumber
+    //        },
+    //        success:function(res){
+    //            console.log(res);
+    //            if(res.code == -1){
+    //                window.location.href = "setpaypwd.html";
+    //            }else if(res.code == 0){
+    //                if(window.sessionStorage.buyProductMark == "hqj"){
+    //                    window.location.href = "productCollection.html";
+    //                }else if(window.sessionStorage.checkedLoginCode == "ziChan"){
+    //                    window.location.href = "asset.html";
+    //                }else if(window.sessionStorage.checkedLoginCode == "faXian"){
+    //                    window.location.href = "find.html";
+    //                }else if(window.sessionStorage.buyProductMark ==  "wzj360"){
+    //                    window.location.href = "productCollection.html";
+    //                }else{
+    //                    window.location.href = "index.html";
+    //                }
+    //            }
+    //        },
+    //        error:function(res){
+    //            console.log(res);
+    //        }
+    //    });
+    //}
+    function judgesetLoginPassword(){
         $.ajax({
-            url:"http://106.14.165.194:1111/paypwd",
+            url:"http://106.14.165.194:1111/loginpwd",
             type:"GET",
-            headers:{
-                "token":window.localStorage.token
+            data:{
+                "phone":window.localStorage.phoneNumber
             },
+            success:function(res){
+                console.log(res);
+                if(res.code == 0){
+                    $(".goPwdLoginBtn").show();
+                }else if(res.code == -1){
+                    $(".goPwdLoginBtn").hide();
+                }
+            },
+            error:function (res){
+                console.log(res);
+            }
+        });
+    }
+    judgesetLoginPassword();
+    //判断登录密码是否设置
+    function judgeSetLofinPwd(){
+        $.ajax({
+            url:"http://106.14.165.194:1111/loginpwd",
+            type:"GET",
             data:{
                 "phone":window.localStorage.phoneNumber
             },
             success:function(res){
                 console.log(res);
                 if(res.code == -1){
-                    window.location.href = "setpaypwd.html";
-                }else if(res.code == 0){
-                    if(window.sessionStorage.pageMark == "hqj"){
+                    window.location.href = "setpwdlogin.html";
+                }else if(res.code == 0) {
+                    if (window.sessionStorage.buyProductMark == "hqj") {
                         window.location.href = "productCollection.html";
-                    }else if(window.sessionStorage.checkedLoginCode == "ziChan"){
+                    } else if (window.sessionStorage.checkedLoginCode == "ziChan") {
                         window.location.href = "asset.html";
-                    }else if(window.sessionStorage.checkedLoginCode == "faXian"){
+                    } else if (window.sessionStorage.checkedLoginCode == "faXian") {
                         window.location.href = "find.html";
-                    }else if(window.sessionStorage.pageMark ==  "wzj360"){
+                    } else if (window.sessionStorage.buyProductMark == "wzj360") {
                         window.location.href = "productCollection.html";
-                    }else{
+                    } else {
                         window.location.href = "index.html";
                     }
                 }
             },
-            error:function(res){
+            error:function (res){
                 console.log(res);
             }
         });
     }
     //点击登录
     $(".loginBtn").click(function(){
-       $.ajax({
-           url:"http://106.14.165.194:1111/login",
-           type:"POST",
-           headers:{
-               "Content-Type":"application/x-www-form-urlencoded"
-           },
-           data:{
-               "phone":window.localStorage.phoneNumber,
-               "veriCode":$.trim($(".verifyCode").val())
-           },
-           success:function(res){
-               console.log(res);
-               if(res.code == -1){
-                   $(".popup").show();
-                   $(".popup").text(res.msg);
-                   setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
-               }else if(res.code == 0){
-                   window.localStorage.token = res.token;
-                   judgeSetPayPwd();
-               }
-           },
-           error:function(res){
-               console.log(res);
-           }
-       })
+        $.ajax({
+            url:"http://106.14.165.194:1111/login",
+            type:"POST",
+            headers:{
+                "Content-Type":"application/x-www-form-urlencoded"
+            },
+            data:{
+                "phone":window.localStorage.phoneNumber,
+                "veriCode":$.trim($(".verifyCode").val())
+            },
+            success:function(res){
+                console.log(res);
+                if(res.code == -1){
+                    $(".popup").show();
+                    $(".popup").text(res.msg);
+                    setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
+                }else if(res.code == 0){
+                    window.localStorage.token = res.token;
+                    judgeSetLofinPwd();
+                }
+            },
+            error:function(res){
+                console.log(res);
+            }
+        })
     });
     $(".goPwdLoginBtn").click(function(){
         window.location.href = "pwdlogin.html";
