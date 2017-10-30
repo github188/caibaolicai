@@ -12,6 +12,7 @@ $(function(){
             $(".loginBtn").css("background","rgb(181,181,181)").attr("disabled","disabled");
         }
     });
+    setTimeout('$(".voiceVerifyWrap").show()',10000);
     function countDown(){
         var timer=setTimeout(function(){//按验证按钮后60秒按钮禁用
             clearInterval(timer2);
@@ -34,7 +35,7 @@ $(function(){
     }
     countDown();
     $.ajax({
-        url:"http://106.14.165.194:1111/smsVeri",
+        url:"http://47.74.133.222:1111/smsVeri",
         type:"POST",
         headers:{
             "Content-Type":"application/x-www-form-urlencoded"
@@ -44,15 +45,15 @@ $(function(){
             "usage":"0"
         },
         success:function(res){
-            console.log(res);
+            //console.log(res);
         },
         error:function(res){
-            console.log(res);
+            //console.log(res);
         }
     });
     $(".getVerifyCode").click(function(){
         $.ajax({
-            url:"http://106.14.165.194:1111/smsVeri",
+            url:"http://47.74.133.222:1111/smsVeri",
             type:"POST",
             headers:{
                 "Content-Type":"application/x-www-form-urlencoded"
@@ -62,18 +63,18 @@ $(function(){
                 "usage":"0"
             },
             success:function(res){
-                console.log(res);
+                //console.log(res);
                 countDown();
             },
             error:function(res){
-                console.log(res);
+                //console.log(res);
             }
         });
     });
     //语音验证
     $(".voiceVerifyBtn").click(function(){
         $.ajax({
-            url:"http://106.14.165.194:1111/voiceVeri",
+            url:"http://47.74.133.222:1111/voiceVeri",
             type:"POST",
             headers:{
                 "Content-Type":"application/x-www-form-urlencoded"
@@ -83,7 +84,7 @@ $(function(){
                 "usage":"0"
             },
             success:function(res){
-                console.log(res);
+                //console.log(res);
                 $(".popup").show();
                 $(".popup").css({
                     'top': '14rem',
@@ -94,14 +95,14 @@ $(function(){
                 setTimeout('$(".popup").hide(),$(".popup").text("")',1500);
             },
             error:function(res){
-                console.log(res);
+                //console.log(res);
             }
         });
     });
     //判断是否设置支付密码
     //function judgeSetPayPwd(){
     //    $.ajax({
-    //        url:"http://106.14.165.194:1111/paypwd",
+    //        url:"http://47.74.133.222:1111/paypwd",
     //        type:"GET",
     //        headers:{
     //            "token":window.localStorage.token
@@ -134,13 +135,13 @@ $(function(){
     //}
     function judgesetLoginPassword(){
         $.ajax({
-            url:"http://106.14.165.194:1111/loginpwd",
+            url:"http://47.74.133.222:1111/loginpwd",
             type:"GET",
             data:{
                 "phone":window.localStorage.phoneNumber
             },
             success:function(res){
-                console.log(res);
+                //console.log(res);
                 if(res.code == 0){
                     $(".goPwdLoginBtn").show();
                 }else if(res.code == -1){
@@ -148,7 +149,7 @@ $(function(){
                 }
             },
             error:function (res){
-                console.log(res);
+                //console.log(res);
             }
         });
     }
@@ -156,13 +157,13 @@ $(function(){
     //判断登录密码是否设置
     function judgeSetLofinPwd(){
         $.ajax({
-            url:"http://106.14.165.194:1111/loginpwd",
+            url:"http://47.74.133.222:1111/loginpwd",
             type:"GET",
             data:{
                 "phone":window.localStorage.phoneNumber
             },
             success:function(res){
-                console.log(res);
+                //console.log(res);
                 if(res.code == -1){
                     window.location.href = "setpwdlogin.html";
                 }else if(res.code == 0) {
@@ -180,14 +181,14 @@ $(function(){
                 }
             },
             error:function (res){
-                console.log(res);
+                //console.log(res);
             }
         });
     }
     //点击登录
     $(".loginBtn").click(function(){
         $.ajax({
-            url:"http://106.14.165.194:1111/login",
+            url:"http://47.74.133.222:1111/login",
             type:"POST",
             headers:{
                 "Content-Type":"application/x-www-form-urlencoded"
@@ -197,7 +198,6 @@ $(function(){
                 "veriCode":$.trim($(".verifyCode").val())
             },
             success:function(res){
-                console.log(res);
                 if(res.code == -1){
                     $(".popup").show();
                     $(".popup").text(res.msg);
@@ -208,7 +208,7 @@ $(function(){
                 }
             },
             error:function(res){
-                console.log(res);
+                //console.log(res);
             }
         })
     });

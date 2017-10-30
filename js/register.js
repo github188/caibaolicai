@@ -28,7 +28,7 @@ $(function(){
     }
     countDown();
     $.ajax({
-        url:"http://106.14.165.194:1111/smsVeri",
+        url:"http://47.74.133.222:1111/smsVeri",
         type:"POST",
         headers:{
             "Content-Type":"application/x-www-form-urlencoded"
@@ -38,7 +38,6 @@ $(function(){
             "usage":"1"
         },
         success:function(res){
-            console.log(res);
         },
         error:function(res){
             console.log(res);
@@ -47,7 +46,7 @@ $(function(){
     $(".getVerifyCode").click(function(){
         $(".verifyCode").val("");
         $.ajax({
-            url:"http://106.14.165.194:1111/smsVeri",
+            url:"http://47.74.133.222:1111/smsVeri",
             type:"POST",
             headers:{
                 "Content-Type":"application/x-www-form-urlencoded"
@@ -57,7 +56,6 @@ $(function(){
                 "usage":"1"
             },
             success:function(res){
-                console.log(res);
                 countDown();
             },
             error:function(res){
@@ -65,10 +63,11 @@ $(function(){
             }
         });
     });
+
     //语音验证
     $(".voiceVerifyBtn").click(function(){
         $.ajax({
-            url:"http://106.14.165.194:1111/voiceVeri",
+            url:"http://47.74.133.222:1111/voiceVeri",
             type:"POST",
             headers:{
                 "Content-Type":"application/x-www-form-urlencoded"
@@ -78,7 +77,6 @@ $(function(){
                 "usage":"1"
             },
             success:function(res){
-                console.log(res);
                 $(".popup").show();
                 $(".popup").css({
                     'top': '14rem',
@@ -95,7 +93,7 @@ $(function(){
     });
     $(".registerBtn").click(function(){
         $.ajax({
-            url:"http://106.14.165.194:1111/regist",
+            url:"http://47.74.133.222:1111/regist",
             type:"POST",
             headers:{
                 "Content-Type":"application/x-www-form-urlencoded"
@@ -105,7 +103,6 @@ $(function(){
                 "veriCode":$.trim($(".verifyCode").val())
             },
             success:function(res){
-                console.log(res);
                 if(res.code == 0){
                     window.localStorage.token = res.token;
                     window.location.href = "setpwdlogin.html";

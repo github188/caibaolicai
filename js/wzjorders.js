@@ -3,6 +3,27 @@
  */
 $(function(){
     FastClick.attach(document.body);
+    $(".buyWZJMoney").val(window.sessionStorage.setPayPwdMoney);//(0.5版本添加)
+    function queryAsset(){
+        $.ajax({
+            url:"http://106.14.165.194:1111/assetQuery",
+            type:"GET",
+            headers:{
+                "token":window.localStorage.token
+            },
+            data:{
+                "phone":window.localStorage.phoneNumber
+            },
+            success:function(res){
+                window.sessionStorage.accountBalance = parseFloat(res.asset.balance).toFixed(2);
+            },
+            error:function(res){
+                //console.log(res);
+            }
+        });
+    }
+    queryAsset();
+    $(".buyWZJMoney").focus();
     $(".goBack").click(function(){
         if(window.sessionStorage.buyProductMark == "buyHqjBtn"){
             window.sessionStorage.buyProductMark  = "hqj";
@@ -20,7 +41,6 @@ $(function(){
             window.sessionStorage.buyProductMark = "wzj360";
             setTimeout('window.location.href = "productCollection.html"',100);
         }
-
     });
 
     function clearNoNum(obj) {
@@ -43,7 +63,6 @@ $(function(){
     });
     function inputBuyIntLength(){
         if($(".inputBuyInt").val().length > 0){
-            console.log("test");
             $(".placeOrderBtn").css("background","rgb(242,182,67)").removeAttr("disabled");
         }else {
             $(".placeOrderBtn").css("background","rgb(181,181,181)").attr("disabled","disabled");
@@ -52,7 +71,7 @@ $(function(){
     inputBuyIntLength();
     function getAssset(){
         $.ajax({
-            url:"http://106.14.165.194:1111/assetQuery",
+            url:"http://47.74.133.222:1111/assetQuery",
             type:"GET",
             headers:{
                 "token":window.localStorage.token
@@ -73,7 +92,7 @@ $(function(){
         if(window.sessionStorage.buyType = "buyUseMoney"){
             //认证查询
             $.ajax({
-                url: 'http://106.14.165.194:1111/authQuery',
+                url: 'http://47.74.133.222:1111/authQuery',
                 type: "GET",
                 headers: {
                     "token": window.localStorage.token
@@ -82,16 +101,24 @@ $(function(){
                     "phone": window.localStorage.phoneNumber
                 },
                 success: function (res) {
-                    console.log(res);
                     if(res.code == -1 ){
                         $(".buyWZJMoney").val(window.sessionStorage.amount);
-                        $(".convertIntoNum ").text(window.sessionStorage.convertIntoNum);
-                        $(".expectProfitNum").text(window.sessionStorage.expectProfitNum);
+                        if(window.sessionStorage.convertIntoNum == "undefined"){
+                            $(".convertIntoNum").text("0.00");
+                        }else{
+                            //$(".convertIntoNum ").text("0.00克");
+                            $(".convertIntoNum").text(window.sessionStorage.convertIntoNum);
+                        }
+                        if(window.sessionStorage.expectProfitNum == "undefined"){
+                            $(".expectProfitNum").text("0.00");
+                        }else{
+                            //$(".expectProfitNum").text("0.00元");
+                            $(".expectProfitNum").text(window.sessionStorage.expectProfitNum);
+                        }
                     }else if(res.code == 0){
-                        $(".convertIntoNum ").text("");
-                        $(".expectProfitNum").text("");
-                        $(".buyWZJMoney").val("");
-                        $(".buyWZJMoney").focus();
+                        $(".convertIntoNum ").text("0.00");
+                        $(".expectProfitNum").text("0.00");
+                        $(".buyWZJMoney").val("").focus();
                     }
                 },
                 error: function (res) {
@@ -102,7 +129,7 @@ $(function(){
         }else if(window.sessionStorage.buyType = "buyUseGrammage"){
             //认证查询
             $.ajax({
-                url: 'http://106.14.165.194:1111/authQuery',
+                url: 'http://47.74.133.222:1111/authQuery',
                 type: "GET",
                 headers: {
                     "token": window.localStorage.token
@@ -111,16 +138,22 @@ $(function(){
                     "phone": window.localStorage.phoneNumber
                 },
                 success: function (res) {
-                    console.log(res);
                     if(res.code == -1 ){
                         $(".buyWZJMoney").val(window.sessionStorage.amount);
-                        $(".convertIntoNum ").text(window.sessionStorage.convertIntoNum);
-                        $(".expectProfitNum").text(window.sessionStorage.expectProfitNum);
+                        if(window.sessionStorage.convertIntoNum == "undefined"){
+                            $(".convertIntoNum ").text("0.00");
+                        }else{
+                            $(".convertIntoNum ").text(window.sessionStorage.convertIntoNum);
+                        }
+                        if(window.sessionStorage.expectProfitNum == "undefined"){
+                            $(".expectProfitNum").text("0.00");
+                        }else{
+                            $(".expectProfitNum").text(window.sessionStorage.expectProfitNum);
+                        }
                     }else if(res.code == 0){
-                        $(".convertIntoNum ").text("");
-                        $(".expectProfitNum").text("");
-                        $(".buyWZJMoney").val("");
-                        $(".buyWZJMoney").focus();
+                        $(".convertIntoNum ").text("0.00");
+                        $(".expectProfitNum").text("0.00");
+                        $(".buyWZJMoney").val("").focus();
                     }
                 },
                 error: function (res) {
@@ -167,7 +200,7 @@ $(function(){
     $(".wzjNianHuaRate").text(window.sessionStorage.wzjNianHuaRate);
     //获取金价
     $.ajax({
-        url:"http://106.14.165.194:8000/history-price",
+        url:"http://47.74.133.222:8000/history-price",
         type:"GET",
         success:function(res){
             var goldPrice = JSON.parse(res);
@@ -181,7 +214,7 @@ $(function(){
     //    实名绑卡信息查询
     function bindInfoQuery(){
         $.ajax({
-            url:'http://106.14.165.194:1111/bindInfo',
+            url:'http://47.74.133.222:1111/bankCards',
             type:"GET",
             headers:{
                 "token":window.localStorage.token
@@ -190,78 +223,77 @@ $(function(){
                 "phone":window.localStorage.phoneNumber
             },
             success:function(res){
-                console.log(res);
-                if(res.result.IDcard !== null){
-                    $(".banksName").text(res.result.bank);
-                    var bankCard = res.result.bankCard.substr(0,4) + "****" + res.result.bankCard.substr(res.result.bankCard.length-3,3);
+                if(res.result[0].IDcard !== null){
+                    $(".banksName").text(res.result[0].bank);
+                    var bankCard = res.result[0].bankCard.substr(0,4) + "****" + res.result[0].bankCard.substr(res.result[0].bankCard.length-3,3);
                     $(".banksNum").text(bankCard);
-                    window.sessionStorage.bindBankPhone = res.result.bankPhone;//绑定的手机号
-                    window.sessionStorage.bindBankName = res.result.name;//用户姓名
-                    window.sessionStorage.IDcard = res.result.IDcard;//身份证号
-                    window.sessionStorage.bankCardNum = res.result.bankCard;//银行卡号
-                    window.sessionStorage.authToken = res.result.authToken;//授权码
-                    window.sessionStorage.bankName = res.result.bank;//银行名称
-                    window.sessionStorage.bankPhone = res.result.bankPhone.substr(0,3) + "****" + res.result.bankPhone.substr(res.result.bankPhone.length-4,4);
-                    window.sessionStorage.BankCardTailNumber = res.result.bankCard.substr(res.result.bankCard.length-4,4);
+                    window.sessionStorage.bindBankPhone = res.result[0].bankPhone;//绑定的手机号
+                    window.sessionStorage.bindBankName = res.result[0].name;//用户姓名
+                    window.sessionStorage.IDcard = res.result[0].IDcard;//身份证号
+                    window.sessionStorage.bankCardNum = res.result[0].bankCard;//银行卡号
+                    window.sessionStorage.authToken = res.result[0].authToken;//授权码
+                    window.sessionStorage.bankName = res.result[0].bank;//银行名称
+                    window.sessionStorage.bankPhone = res.result[0].bankPhone.substr(0,3) + "****" + res.result[0].bankPhone.substr(res.result[0].bankPhone.length-4,4);
+                    window.sessionStorage.BankCardTailNumber = res.result[0].bankCard.substr(res.result[0].bankCard.length-4,4);
                     $(".accountBalance").text(window.sessionStorage.accountBalance);
                 }
-                if($.trim(res.result.bank) == "交通银行"){
+                if($.trim(res.result[0].bank) == "交通银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/jiaotongbank.png');
 
-                }else if($.trim(res.result.bank) == "中国银行"){
+                }else if($.trim(res.result[0].bank) == "中国银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/zhongguobank.png');
 
-                }else if($.trim(res.result.bank) == "工商银行"){
+                }else if($.trim(res.result[0].bank) == "工商银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/gongshangbank.png');
 
-                }else if($.trim(res.result.bank) == "建设银行"){
+                }else if($.trim(res.result[0].bank) == "建设银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/jianshebank.png');
 
-                }else if($.trim(res.result.bank) == "平安银行"){
+                }else if($.trim(res.result[0].bank) == "平安银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/pinganbank.png');
 
-                }else if($.trim(res.result.bank) == "中信银行"){
+                }else if($.trim(res.result[0].bank) == "中信银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/zhongxinbank.png');
 
-                }else if($.trim(res.result.bank) == "广大银行"){
+                }else if($.trim(res.result[0].bank) == "广大银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/guangdabank.png');
 
-                }else if($.trim(res.result.bank) == "浦发银行"){
+                }else if($.trim(res.result[0].bank) == "浦发银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/pufabank.png');
 
-                }else if($.trim(res.result.bank) == "兴业银行"){
+                }else if($.trim(res.result[0].bank) == "兴业银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/xingyebank.png');
 
-                }else if($.trim(res.result.bank) == "农业银行"){
+                }else if($.trim(res.result[0].bank) == "农业银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/nongyebank.png');
 
-                }else if($.trim(res.result.bank) == "邮政银行"){
+                }else if($.trim(res.result[0].bank) == "邮政银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/youzhengbank.png');
 
-                }else if($.trim(res.result.bank) == "招商银行"){
+                }else if($.trim(res.result[0].bank) == "招商银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/zhaoshangbank.png');
 
-                }else if($.trim(res.result.bank) == "华夏银行"){
+                }else if($.trim(res.result[0].bank) == "华夏银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/huaxiabank.png');
 
-                }else if($.trim(res.result.bank) == "广发银行"){
+                }else if($.trim(res.result[0].bank) == "广发银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/guangfabank.png');
 
-                }else if($.trim(res.result.bank) == "民生银行"){
+                }else if($.trim(res.result[0].bank) == "民生银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/minshengbank.png');
 
@@ -309,7 +341,7 @@ $(function(){
         var accountId = "accountId=2120170306142335001";
         //var customerId = "customerId=window.localStorage.phoneNumber";
         var payType = "payType=1";
-        var responseUrl = "responseUrl=http://106.14.165.194:1111/payResult";
+        var responseUrl = "responseUrl=http://47.74.133.222:1111/payResult";
         //var name = 'name=$(".accountHolderName").val()';
         //var phoneNo = 'phoneNo=$(".accountHolderPhoneNum").val()';
         //var cardNo ='cardNo=$(".personBankNum").val()';
@@ -321,15 +353,13 @@ $(function(){
         var macArr = [];
         macArr.push(accountId,customerId,payType,token,orderId,purpose,amount,responseUrl,key);
         var mac=macArr.join("&");
-        console.log(mac);
         window.sessionStorage.mac = md5(mac).toUpperCase();
-        console.log(window.sessionStorage.mac);
     }
     //预支付接口（再次）
     function prePaymentAgain(){
         getMac();
         $.ajax({
-            url:"http://106.14.165.194:3333/authPay-front/authPay/pay",
+            url:"http://47.74.133.222:3333/authPay-front/authPay/pay",
             type:"POST",
             headers:{
                 'Content-Type':'application/json'
@@ -341,12 +371,11 @@ $(function(){
                 "payType":"1",                                                 //支付类型
                 "purpose":window.sessionStorage.productsType,             //目的
                 "amount":window.sessionStorage.amount,                     //金额
-                "responseUrl":"http://106.14.165.194:1111/payResult",   //响应地址
+                "responseUrl":"http://47.74.133.222:1111/payResult",   //响应地址
                 "token":window.sessionStorage.authToken,                  //授权码
                 "mac":window.sessionStorage.mac                             //数字签名
             }),
             success:function(res){
-                console.log(res);
                 countDown();
             },
             error:function(res){
@@ -416,14 +445,13 @@ $(function(){
         var messageMacArr = [];
         messageMacArr.push(accountId,customerId,token,orderId,phoneNo,key);
         var messagemac=messageMacArr.join("&");
-        console.log(messagemac);
         window.sessionStorage.messagemac = md5(messagemac).toUpperCase();
     }
     //重发验证码
     $(".sendAgin").click(function(){
         messageMac();
         $.ajax({
-            url:"http://106.14.165.194:3333/authPay-front/authPay/sendVercode",
+            url:"http://47.74.133.222:3333/authPay-front/authPay/sendVercode",
             type:'POST',
             headers:{
                 'Content-Type': 'application/json'
@@ -438,7 +466,6 @@ $(function(){
             }),
             success:function(res){
                 countDown();
-                console.log(res);
             },
             error:function(res){
                 console.log(res);
@@ -479,14 +506,14 @@ $(function(){
         var payMacArr = [];
         payMacArr.push(accountId,customerId,token,orderId,vericode,key);
         var paymac=payMacArr.join("&");
-        console.log(paymac);
         window.sessionStorage.paymac = md5(paymac).toUpperCase();
     }
     //确认支付(在线)
     $(".rechargeConfirmBtn").click(function(){
+        $(".loaded").show();
         payMac();
         $.ajax({
-            url:"http://106.14.165.194:3333/authPay-front/authPay/confirm",
+            url:"http://47.74.133.222:3333/authPay-front/authPay/confirm",
             type:"POST",
             headers:{
                 'Content-Type': 'application/json'
@@ -500,17 +527,15 @@ $(function(){
                 "mac":window.sessionStorage.paymac               //数字签名
             }),
             success:function(res){
-                console.log(res);
                 if(res.result_code == "0000"){
+                    $(".loaded").hide();
                     if(res.desc == "卡上的余额不足[1000051]"){
-                        $(".popup").show();
-                        $(".popup").text("卡上余额不足");
+                        $(".popup").show().text("卡上余额不足");
                         setTimeout('$(".popup").hide(),$(".popup").text("")',3000);
                         setTimeout('$(".userRechargeNum").text(""),$(".phoneName").text(""),$(".rechargeBankName").text(""),$(".verificationCodeNum").val(""),$(".BankCardTailNumber").text( ""),clearInterval(timer2), $(".sendAgin").val(""),$(".popupBg").hide(),$(".popupWrap").hide()',3500);
                     }else{
                         //alert("成功");
-                        $(".popup").show();
-                        $(".popup").text("交易成功");
+                        $(".popup").show().text("交易成功");
                         setTimeout('$(".popup").hide(),$(".popup").text("")',3000);
                         setTimeout('$(".userRechargeNum").text(""),$(".phoneName").text(""),$(".rechargeBankName").text(""),$(".verificationCodeNum").val(""),$(".BankCardTailNumber").text( ""),clearInterval(timer2), $(".sendAgin").val(""),$(".popupBg").hide(),$(".popupWrap").hide(),window.location.href = "wzjAsset.html"',3500);
                     }
@@ -528,10 +553,10 @@ $(function(){
     //        $(".rechargeConfirmBalanceBtn").css("background","rgb(181,181,181)").attr("disabled","disabled");
     //    }
     //});
-    //稳赚金买入（银行卡）
+    //稳赚金买入
     function buyWzjBalance(){
         $.ajax({
-            url:"http://106.14.165.194:1111/wenzhuanGold/buyIn",
+            url:"http://47.74.133.222:1111/wenzhuanGold/buyIn",
             type:"POST",
             headers:{
                 "Content-Type":"application/x-www-form-urlencoded ",
@@ -544,19 +569,20 @@ $(function(){
                 "period":window.sessionStorage.period,
                 "rate":window.sessionStorage.rate,
                 "goldPriceBuy":window.sessionStorage.goldPriceBuy,
-                "payWay":"0"
+                "payWay":"0",
+                "bankCard":window.sessionStorage.bankCardNum
             },
             success:function(res){
-                console.log(res);
+                $(".loaded").hide();
+                window.sessionStorage.setPayPwdMoney = "";//0.5版本
                 if(res.code == 0){
-                    $(".popup").show();
-                    $(".popup").text(res.msg);
+                    $(".popup").show().text(res.msg);
                     setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
                     setTimeout('$(".userRechargeNum").text(""),$(".payPwdVal").val(""),$(".popupBg").hide(),$(".popupWrap").hide(),$(".buyWZJMoney").text(""),window.location.href = "wzjAsset.html"',2500);
                 }else{
-                    $(".popup").show();
-                    $(".popup").text(res.msg);
+                    $(".popup").show().text(res.msg);
                     setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
+                    setTimeout('$(".userRechargeNum").text(""),$(".payPwdVal").val(""),$(".popupBg").hide(),$(".popupWrap").hide(),$(".buyWZJMoney").text(""),$(".sellPopup").hide(),$("#ipt").find("li").text("")',2500);
                 }
             },
             error:function(res){
@@ -570,7 +596,7 @@ $(function(){
     function rechargeConfirmBalance(){
         var paypwd = sha256_digest($("#ipt").val());
         $.ajax({
-            url:"http://106.14.165.194:1111/paypwd-check",
+            url:"http://47.74.133.222:1111/paypwd-check",
             type:"POST",
             headers:{
                 "Content-Type":"application/x-www-form-urlencoded",
@@ -581,12 +607,10 @@ $(function(){
                 "paypwd":paypwd
             },
             success:function(res){
-                console.log(res);
                 if(res.code == 0){
                     buyWzjBalance();
                 }else{
-                    $(".popup").show();
-                    $(".popup").text(res.msg);
+                    $(".popup").show().text(res.msg);
                     setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
                 }
             },
@@ -614,22 +638,48 @@ $(function(){
         $(".noFinds").text("余额不足");
         $(".choosePayBalance").off("click");
     }
+    //判断是否设置支付密码（0.5版本添加）
+    function judgeSetPayPwd(){
+        $.ajax({
+            url:"http://47.74.133.222:1111/paypwd",
+            type:"GET",
+            headers:{
+                "token":window.localStorage.token
+            },
+            data:{
+                "phone":window.localStorage.phoneNumber
+            },
+            success:function(res){
+                if(res.code == -1){
+                    window.sessionStorage.setPayPwd = "wzj";
+                    window.sessionStorage.setPayPwdMoney =$(".buyWZJMoney").val();
+                    window.location.href = "setpaypwd.html";
+                }else if(res.code == 0){
+                    $(".sellTypeMoney").text("￥" + $(".waitPayMoneyBank").text());
+                    $(".popupBg").css("display","block");
+                    $(".sellPopup").css("display","block");
+                    $("#ipt").focus();
+                }
+            },
+            error:function(res){
+                console.log(res);
+            }
+        });
+    }
     $(".submitOrder").click(function(){
         window.sessionStorage.amount = parseFloat($(".buyWZJMoney").val()).toFixed(2);//购买金额
         window.sessionStorage.orderId = window.localStorage.phoneNumber + new Date().getTime();//订单号
         if($(".choosePayBank ").hasClass("payActive")){
             if($(".changeBuyMethodBtn").text() == "切换为按克数购买"){
                 if(parseFloat($(".buyWZJMoney").val()) < 50){
-                    $(".popup").show();
-                    $(".popup").text("购买金额不得小于50元");
+                    $(".popup").show().text("购买金额不得小于50元");
                     setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
                 }else {
                     buy();
                 }
             }else {
                 if (parseFloat($(".convertIntoNum").text()) < 50) {
-                    $(".popup").show();
-                    $(".popup").text("购买金额不得小于50元");
+                    $(".popup").show().text("购买金额不得小于50元");
                     setTimeout('$(".popup").hide(),$(".popup").text("")', 2000);
                 }else {
                     buy();
@@ -637,7 +687,7 @@ $(function(){
             }
             function buy(){
                 $.ajax({
-                    url:"http://106.14.165.194:1111/wenzhuanGold/buyIn",
+                    url:"http://47.74.133.222:1111/wenzhuanGold/buyIn",
                     type:"POST",
                     headers:{
                         "Content-Type":"application/x-www-form-urlencoded ",
@@ -650,22 +700,21 @@ $(function(){
                         "period":window.sessionStorage.period,
                         "rate":window.sessionStorage.rate,
                         "goldPriceBuy":window.sessionStorage.goldPriceBuy,
-                        "payWay":"1"
+                        "payWay":"1",
+                        "bankCard": window.sessionStorage.bankCardNum
                     },
                     success:function(res){
-                        console.log(res);
                         if(res.code == 0){
                             $(".popupBg").show();
                             $(".popupWrap").show();
                             $(".verificationCodeNum").focus();
-                            $(".userRechargeNum").text("￥" + $('.buyWZJMoney').val());
+                            $(".userRechargeNum").text("￥" + $('.waitPayMoneyBank').text());
                             $(".phoneName").text(window.sessionStorage.bankPhone);
                             $(".rechargeBankName").text(window.sessionStorage.bankName);
                             $(".BankCardTailNumber").text( '('+ window.sessionStorage.BankCardTailNumber + ')');
                             prePaymentAgain();
                         }else{
-                            $(".popup").show();
-                            $(".popup").text(res.msg);
+                            $(".popup").show().text(res.msg);
                             setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
                         }
                     },
@@ -676,36 +725,20 @@ $(function(){
             }
         }else{
             if($(".changeBuyMethodBtn").text() == "切换为按克数购买"){
-                console.log("金额")
                 if(parseFloat($(".buyWZJMoney").val()) < 50){
-                    $(".popup").show();
-                    $(".popup").text("购买金额不得小于50元");
+                    $(".popup").show().text("购买金额不得小于50元");
                     setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
                 }else {
-                    $(".sellTypeMoney").text("￥" + $(".inputBuyInt").val());
-                    $(".popupBg").css("display","block");
-                    $(".sellPopup").css("display","block");
-                    $("#ipt").focus();
+                    judgeSetPayPwd();
                 }
             }else{
                 if(parseFloat($(".convertIntoNum").text()) < 50){
-                    $(".popup").show();
-                    $(".popup").text("购买金额不得小于50元");
+                    $(".popup").show().text("购买金额不得小于50元");
                     setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
                 }else {
-                    $(".sellTypeMoney").text("￥" + $(".convertIntoNum").val());
-                    $(".popupBg").css("display","block");
-                    $(".sellPopup").css("display","block");
-                    $("#ipt").focus();
+                    judgeSetPayPwd();
                 }
             }
-        }
-    });
-    $(".buyWZJMoney").on('input',function(){
-        if($(".buyWZJMoney").val().length >0){
-            $(".placeOrderBtn").css("background","rgb(242,182,67)").removeAttr("disabled");
-        }else{
-            $(".placeOrderBtn").css("background","rgb(181,181,181)").attr("disabled","disabled");
         }
     });
     $(".closePopup").click(function(){
@@ -718,27 +751,46 @@ $(function(){
 
     //监听金额输入框
     $(".inputBuyInt").on('input porpertychange',function(){
+        if($(".buyWZJMoney").val().length >0){
+            $(".placeOrderBtn").css("background","rgb(242,182,67)").removeAttr("disabled");
+        }else{
+            $(".placeOrderBtn").css("background","rgb(181,181,181)").attr("disabled","disabled");
+        }
         if($(".changeBuyMethodBtn").text() == "切换为按克数购买"){
-            var convertGramNum = (parseFloat($(".inputBuyInt").val())/parseFloat($(".headTopRight").find("span").text())).toFixed(2);
-            console.log(convertMoney);
-            $(".convertIntoNum ").text(convertGramNum);
-            $(".waitPayNum").text(convertGramNum);
-            if($(".waitPayNum").text() == "NaN"){
-                $(".waitPayNum").text("");
+            if(parseFloat($(".buyWZJMoney").val())>parseFloat($(".accountBalance").text())){
+                $(".yeWaitPay").css("color","#ccc");
+                $(".yeWaitPayMoney").css("color","#ccc");
+                $(".icon-yuezhifu").css("color","#ccc");
+                $(".yuETitle").css("color","#ccc");
+                $(".choosePayBalance").unbind("click").removeClass("payActive");
+                $(".choosePayBank").addClass("payActive");
+            }else{
+                $(".yeWaitPay").css("color","#000");
+                $(".yeWaitPayMoney").css("color","#f6a34e");
+                $(".icon-yuezhifu").css("color","#000");
+                $(".yuETitle").css("color","#000");
+                $(".choosePayBalance").click(function(){
+                    $(".choosePayBank").removeClass("payActive");
+                    $(".choosePayBalance").addClass("payActive");
+                });
             }
-            if($(".wzjNianHuaRate").text() == "6%"){
-                var expectedRevenue = (parseFloat($(".inputBuyInt").val()) * 60 * 0.06)/360;
+            var convertGramNum = (parseFloat($(".inputBuyInt").val())/parseFloat($(".headTopRight").find("span").text())).toFixed(2);
+            $(".convertIntoNum ").text(convertGramNum );
+            if($(".wzjNianHuaRate").text() == "8%"){
+                var expectedRevenue = (parseFloat($(".inputBuyInt").val()) * 60 * 0.08)/360;
                 if($(".inputBuyInt").val().length == 0){
                     $(".expectProfitNum").text("0.00");
                     $(".convertIntoNum").text("0.00");
+                    $(".waitPayMoney").text("0.00");
                 }else{
                     $(".expectProfitNum").text(expectedRevenue.toFixed(2));
                 }
-            }else if($(".wzjNianHuaRate").text() == "8%"){
-                var expectedRevenue = (parseFloat($(".inputBuyInt").val()) * 90 * 0.08)/360;
+            }else if($(".wzjNianHuaRate").text() == "10%"){
+                var expectedRevenue = (parseFloat($(".inputBuyInt").val()) * 90 * 0.1)/360;
                 if($(".inputBuyInt").val().length == 0){
                     $(".expectProfitNum").text("0.00");
                     $(".convertIntoNum").text("0.00");
+                    $(".waitPayMoney").text("0.00");
                 }else{
                     $(".expectProfitNum").text(expectedRevenue.toFixed(2));
                 }
@@ -748,106 +800,118 @@ $(function(){
                 if($(".inputBuyInt").val().length == 0){
                     $(".expectProfitNum").text("0.00");
                     $(".convertIntoNum").text("0.00");
+                    $(".waitPayMoney").text("0.00");
                 }else{
                     $(".expectProfitNum").text(expectedRevenue.toFixed(2));
                 }
-                console.log(expectedRevenue)
             }else if($(".wzjNianHuaRate").text() == "14%"){
                 var expectedRevenue = (parseFloat($(".inputBuyInt").val()) * 360 * 0.14)/360;
                 if($(".inputBuyInt").val().length == 0){
                     $(".expectProfitNum").text("0.00");
                     $(".convertIntoNum").text("0.00");
+                    $(".waitPayMoney").text("0.00");
                 }else{
                     $(".expectProfitNum").text(expectedRevenue.toFixed(2));
                 }
-                console.log(expectedRevenue)
             }
-            $(".waitPayNum").text(Math.floor(parseFloat($(".inputBuyInt").val()) * 100) / 100 );
+            if($(".inputBuyInt").val().length == 0){
+                $(".waitPayMoney").text("0.00");
+            }else{
+                $(".waitPayNum").text(Math.floor(parseFloat($(".inputBuyInt").val()) * 100) / 100 );
+            }
         }else if($(".changeBuyMethodBtn").text() == "切换为按金额购买"){
-            console.log(123);
+            $(".buyWZJMoney").attr("maxlength","7");
             var convertMoney = (parseFloat($(".inputBuyInt").val())*parseFloat($(".headTopRight").find("span").text())).toFixed(2);
-            console.log(convertMoney);
-            $(".convertIntoNum ").text(convertMoney);
+            $(".convertIntoNum").text(convertMoney);
             $(".waitPayNum").text(convertMoney);
-            if($(".waitPayNum").text() == 'NaN'){
-                $(".waitPayNum").text("");
-            }
-            if($(".wzjNianHuaRate").text() == "6%"){
-                var expectedRevenue = (parseFloat($(".convertIntoNum ").text()) * 60 * 0.06)/360;
-                console.log(expectedRevenue);
+            //if($(".waitPayNum").text() == 'NaN'){
+            //    $(".waitPayNum").text("0.00");
+            //}
+            if($(".wzjNianHuaRate").text() == "8%"){
+                var expectedRevenue = (parseFloat($(".convertIntoNum ").text()) * 60 * 0.08)/360;
                 if($(".inputBuyInt").val().length == 0){
                     $(".expectProfitNum").text("0.00");
                     $(".convertIntoNum").text("0.00");
+                    $(".waitPayMoney").text("0.00");
                 }else{
                     $(".expectProfitNum").text(expectedRevenue.toFixed(2));
                 }
-            }else if($(".wzjNianHuaRate").text() == "8%"){
-                var expectedRevenue = (parseFloat($(".convertIntoNum ").text()) * 90 * 0.08)/360;
-                console.log(expectedRevenue);
+            }else if($(".wzjNianHuaRate").text() == "10%"){
+                var expectedRevenue = (parseFloat($(".convertIntoNum ").text()) * 90 * 0.1)/360;
                 if($(".inputBuyInt").val().length == 0){
                     $(".expectProfitNum").text("0.00");
                     $(".convertIntoNum").text("0.00");
+                    $(".waitPayMoney").text("0.00");
                 }else{
                     $(".expectProfitNum").text(expectedRevenue.toFixed(2));
-                    console.log(expectedRevenue);
                 }
             }
             else if($(".wzjNianHuaRate").text() == "12%"){
                 var expectedRevenue = (parseFloat($(".convertIntoNum ").text()) * 180 * 0.12)/360;
-                console.log(expectedRevenue);
                 if($(".inputBuyInt").val().length == 0){
                     $(".expectProfitNum").text("0.00");
                     $(".convertIntoNum").text("0.00");
+                    $(".waitPayMoney").text("0.00");
                 }else{
                     $(".expectProfitNum").text(expectedRevenue.toFixed(2));
                 }
             }else if($(".wzjNianHuaRate").text() == "14%"){
                 var expectedRevenue = (parseFloat($(".convertIntoNum ").text()) * 360 * 0.14)/360;
-                console.log(expectedRevenue);
                 if($(".inputBuyInt").val().length == 0){
                     $(".expectProfitNum").text("0.00");
                     $(".convertIntoNum").text("0.00");
+                    $(".waitPayMoney").text("0.00");
                 }else{
                     $(".expectProfitNum").text(expectedRevenue.toFixed(2));
                 }
             }
-            //console.log($(".expectProfitNum").text());
-            //var expectedRevenue = (parseFloat($(".convertIntoNum ").text()) * cycleDay * rateNum)/360;
-            //if($(".expectProfitNum").text() == 'NaN'){
-            //    $(".expectProfitNum").text("");
-            //}
+            if(parseFloat($(".convertIntoNum").text()) > parseFloat($(".accountBalance").text())){
+                $(".yeWaitPay").css("color","#ccc");
+                $(".yeWaitPayMoney").css("color","#ccc");
+                $(".icon-yuezhifu").css("color","#ccc");
+                $(".yuETitle").css("color","#ccc");
+                $(".choosePayBalance").unbind("click").removeClass("payActive");
+                $(".choosePayBank").addClass("payActive");
+            }else{
+                $(".yeWaitPay").css("color","#000");
+                $(".yeWaitPayMoney").css("color","#f6a34e");
+                $(".icon-yuezhifu").css("color","#000");
+                $(".yuETitle").css("color","#000");
+                $(".choosePayBalance").click(function(){
+                    $(".choosePayBank").removeClass("payActive");
+                    $(".choosePayBalance").addClass("payActive");
+                });
+            }
         }
 
     });
-    $('.waitPayNum').on('DOMNodeInserted',function(){
-        if($(".waitPayNum").text() == "NaN") {
-            $(".waitPayNum").text("");
-        }
-    });
     //点击切换按钮
     $(".changeBuyMethodBtn").click(function(){
-        $(".inputBuyInt").val("");
-        $(".waitPayNum").text("");
-        $(".convertIntoNum ").text("");
-        $(".expectProfitNum").text("");
+        $(".inputBuyInt").val("").focus();
+        $(".waitPayNum").text("元");
         if($(".changeBuyMethodBtn").text() == "切换为按克数购买"){
             $(".inputBuyMethodTitle").text("克数");
             $(".inputBuyInt").attr('placeholder','请输入购买克数');
             $(".convertIntoName ").text("折合人民币（元）");
             $(".changeBuyMethodBtn").text("切换为按金额购买");
+            $(".convertIntoTitle").text("折合人民币");
+            $(".convertIntoNum ").text("0.00");
+            $(".expectProfitNum").text("0.00");
         }else{
             $(".inputBuyMethodTitle").text("金额");
-            $(".inputBuyInt").attr('placeholder','50元起够');
+            $(".inputBuyInt").attr('placeholder','50元起购');
             $(".convertIntoName ").text("折合黄金（克）");
-            $(".changeBuyMethodBtn").text("切换为按克数购买")
+            $(".changeBuyMethodBtn").text("切换为按克数购买");
+            $(".convertIntoTitle").text("折合黄金");
+            $(".convertIntoNum ").text("0.00");
+            $(".expectProfitNum").text("0.00");
         }
     });
     //去认证
     $(".goAuthentication").click(function(){
-        if($(".wzjNianHuaRate").text() == "6%"){
-            console.log(6);
+        if($(".wzjNianHuaRate").text() == "8%"){
             window.sessionStorage.certificationSign = "buyWzj60Certification";
-        }else if($(".wzjNianHuaRate").text() == "8%"){
+        }else if($(".wzjNianHuaRate").text() == "10%"){
             window.sessionStorage.certificationSign = "buyWzj90Certification";
         }else if($(".wzjNianHuaRate").text() == "12%"){
             window.sessionStorage.certificationSign = "buyWzj180Certification";
@@ -866,11 +930,9 @@ $(function(){
             }
         }else{
             window.sessionStorage.orderId = window.localStorage.phoneNumber + Date.parse(new Date());
-            console.log(window.sessionStorage.orderId);
             if($(".changeBuyMethodBtn").text() == "切换为按克数购买"){
                 if(parseFloat($(".inputBuyInt").val()) < 50){
-                    $(".popup").show();
-                    $(".popup").text("购买金额不足50元");
+                    $(".popup").show().text("购买金额不足50元");
                     setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
                 }else {
                     window.sessionStorage.buyType = "buyUseMoney";
@@ -894,7 +956,13 @@ $(function(){
             }
         }
     });
-
+    $(".verificationCodeNum").on('input',function(){
+        if($(".verificationCodeNum").val().length == 6){
+            $(".rechargeConfirmBtn").css("background","rgb(242,182,67)").removeAttr("disabled");
+        }else{
+            $(".rechargeConfirmBtn").css("background","rgb(181,181,181)").attr("disabled","disabled");
+        }
+    });
     //支付密码
     $('#ipt').focus(function(){
         $(".sellPopup").css({
@@ -913,6 +981,9 @@ $(function(){
             }
         }
         if(pw.length == 6){
+            $('#ipt').blur();
+            $(".hideKeyboard").focus();
+            $(".loaded").show();
             checkedPwd();
         }
     });
@@ -920,7 +991,7 @@ $(function(){
     function checkedPwd(){
         var checkedPayPwd = sha256_digest($("#ipt").val());
         $.ajax({
-            url:"http://106.14.165.194:1111/paypwd-check",
+            url:"http://47.74.133.222:1111/paypwd-check",
             type:"POST",
             headers:{
                 "Content-Type":"application/x-www-form-urlencoded ",
@@ -931,13 +1002,12 @@ $(function(){
                 "paypwd":checkedPayPwd
             },
             success:function(res){
-                console.log(res);
                 if(res.code == 0){
                     rechargeConfirmBalance();
                 }else {
-                    $(".popup").show();
-                    $(".popup").text(res.msg);
-                    setTimeout('$(".popup").hide(),$(".popup").text(""),$("#ipt").val("")',2000);
+                    $(".loaded").hide();
+                    $(".popup").show().text(res.msg);
+                    setTimeout('$(".popup").hide(),$(".popup").text(""),$("#ipt").val("").focus(),$(".inputPwdWrap").find("li").text("")',2000);
                 }
             },
             error:function(res){

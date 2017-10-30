@@ -3,12 +3,9 @@
  */
 $(function(){
     FastClick.attach(document.body);
-    if(window.sessionStorage.amount == undefined){
-        $(".czMoney ").focus();
-    }else{
-        //认证查询
+    $(".messageIcon").click(function(){
         $.ajax({
-            url: 'http://106.14.165.194:1111/authQuery',
+            url: 'http://47.74.133.222:1111/authQuery',
             type: "GET",
             headers: {
                 "token": window.localStorage.token
@@ -17,7 +14,31 @@ $(function(){
                 "phone": window.localStorage.phoneNumber
             },
             success: function (res) {
+                if(res.code == -1 ){
+                    window.history.back(-1);
+                }else if(res.code == 0){
+                    location.href = "asset.html";
+                }
+            },
+            error: function (res) {
                 console.log(res);
+            }
+        });
+    });
+    if(window.sessionStorage.amount == undefined){
+        $(".czMoney ").focus();
+    }else{
+        //认证查询
+        $.ajax({
+            url: 'http://47.74.133.222:1111/authQuery',
+            type: "GET",
+            headers: {
+                "token": window.localStorage.token
+            },
+            data: {
+                "phone": window.localStorage.phoneNumber
+            },
+            success: function (res) {
                 if(res.code == -1 ){
                     $(".czMoney ").val(window.sessionStorage.amount);
                 }else if(res.code == 0){
@@ -29,12 +50,11 @@ $(function(){
                 console.log(res);
             }
         });
-
     }
     //    实名绑卡信息查询
     function bindInfoQuery(){
         $.ajax({
-            url:'http://106.14.165.194:1111/bindInfo',
+            url:'http://47.74.133.222:1111/bankCards',
             type:"GET",
             headers:{
                 "token":window.localStorage.token
@@ -43,92 +63,89 @@ $(function(){
                 "phone":window.localStorage.phoneNumber
             },
             success:function(res){
-                console.log(res);
-                $(".banksName").text(res.result.bank);
-                var bankCard = res.result.bankCard.substr(0,4) + "****" + res.result.bankCard.substr(res.result.bankCard.length-3,3);
-                console.log(bankCard);
+                $(".banksName").text(res.result[0].bank);
+                var bankCard = res.result[0].bankCard.substr(0,4) + "****" + res.result[0].bankCard.substr(res.result[0].bankCard.length-3,3);
                 $(".banksNum").text(bankCard);
-                window.sessionStorage.bindBankPhone = res.result.bankPhone;//绑定的手机号
-                window.sessionStorage.bindBankName = res.result.name;//用户姓名
-                window.sessionStorage.IDcard = res.result.IDcard;//身份证号
-                window.sessionStorage.bankCardNum = res.result.bankCard;//银行卡号
-                window.sessionStorage.authToken = res.result.authToken;//授权码
-                window.sessionStorage.bankName = res.result.bank;//银行名称
-                window.sessionStorage.bankPhone = res.result.bankPhone.substr(0,3) + "****" + res.result.bankPhone.substr(res.result.bankPhone.length-4,4);
-                window.sessionStorage.BankCardTailNumber = res.result.bankCard.substr(res.result.bankCard.length-4,4);
+                window.sessionStorage.bindBankPhone = res.result[0].bankPhone;//绑定的手机号
+                window.sessionStorage.bindBankName = res.result[0].name;//用户姓名
+                window.sessionStorage.IDcard = res.result[0].IDcard;//身份证号
+                window.sessionStorage.bankCardNum = res.result[0].bankCard;//银行卡号
+                window.sessionStorage.authToken = res.result[0].authToken;//授权码
+                window.sessionStorage.bankName = res.result[0].bank;//银行名称
+                window.sessionStorage.bankPhone = res.result[0].bankPhone.substr(0,3) + "****" + res.result[0].bankPhone.substr(res.result[0].bankPhone.length-4,4);
+                window.sessionStorage.BankCardTailNumber = res.result[0].bankCard.substr(res.result[0].bankCard.length-4,4);
                 $(".accountBalance").text(window.sessionStorage.accountBalance);
-                console.log($.trim(res.result.bank) == "交通银行")
-                if($.trim(res.result.bank) == "交通银行"){
+                if($.trim(res.result[0].bank) == "交通银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/jiaotongbank.png');
                     $(".rechargeExplain").text("单笔5万" + " " + "单日5万");
 
-                }else if($.trim(res.result.bank) == "中国银行"){
+                }else if($.trim(res.result[0].bank) == "中国银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/zhongguobank.png');
                     $(".rechargeExplain").text("单笔1万" + " " + "单日2万");
 
-                }else if($.trim(res.result.bank) == "工商银行"){
+                }else if($.trim(res.result[0].bank) == "工商银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/gongshangbank.png');
                     $(".rechargeExplain").text("单笔1万" + " " + "单日2万");
 
-                }else if($.trim(res.result.bank) == "建设银行"){
+                }else if($.trim(res.result[0].bank) == "建设银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/jianshebank.png');
                     $(".rechargeExplain").text("单笔5万" + " " + "单日5万");
 
-                }else if($.trim(res.result.bank) == "平安银行"){
+                }else if($.trim(res.result[0].bank) == "平安银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/pinganbank.png');
                     $(".rechargeExplain").text("单笔0.5万" + " " + "单日0.5万");
 
-                }else if($.trim(res.result.bank) == "中信银行"){
+                }else if($.trim(res.result[0].bank) == "中信银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/zhongxinbank.png');
                     $(".rechargeExplain").text("单笔0.5万" + " " + "单日1万");
 
-                }else if($.trim(res.result.bank) == "广大银行"){
+                }else if($.trim(res.result[0].bank) == "广大银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/guangdabank.png');
                     $(".rechargeExplain").text("单笔5万" + " " + "单日5万");
 
-                }else if($.trim(res.result.bank) == "浦发银行"){
+                }else if($.trim(res.result[0].bank) == "浦发银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/pufabank.png');
                     $(".rechargeExplain").text("单笔5万" + " " + "单日5万");
 
-                }else if($.trim(res.result.bank) == "兴业银行"){
+                }else if($.trim(res.result[0].bank) == "兴业银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/xingyebank.png');
                     $(".rechargeExplain").text("单笔5万" + " " + "单日5万");
 
-                }else if($.trim(res.result.bank) == "农业银行"){
+                }else if($.trim(res.result[0].bank) == "农业银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/nongyebank.png');
                     $(".rechargeExplain").text("单笔5万" + " " + "单日5万");
 
-                }else if($.trim(res.result.bank) == "邮政银行"){
+                }else if($.trim(res.result[0].bank) == "邮政银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/youzhengbank.png');
                     $(".rechargeExplain").text("单笔5万" + " " + "单日20万");
 
-                }else if($.trim(res.result.bank) == "招商银行"){
+                }else if($.trim(res.result[0].bank) == "招商银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/zhaoshangbank.png');
                     $(".rechargeExplain").text("单笔万" + " " + "单日万");
 
-                }else if($.trim(res.result.bank) == "华夏银行"){
+                }else if($.trim(res.result[0].bank) == "华夏银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/huaxiabank.png');
                     $(".rechargeExplain").text("单笔万" + " " + "单日万");
 
-                }else if($.trim(res.result.bank) == "广发银行"){
+                }else if($.trim(res.result[0].bank) == "广发银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/guangfabank.png');
                     $(".rechargeExplain").text("单笔万" + " " + "单日万");
 
-                }else if($.trim(res.result.bank) == "民生银行"){
+                }else if($.trim(res.result[0].bank) == "民生银行"){
 
                     $(".bankImgWrap").find("img").attr('src','images/minshengbank.png');
                     $(".rechargeExplain").text("单笔万" + " " + "单日万");
@@ -167,19 +184,18 @@ $(function(){
     //后台获取授权码
     function getAuthToken(){
         $.ajax({
-            url:"http://106.14.165.194:1111/authToken",
+            url:"http://47.74.133.222:1111/authToken",
             "type":"GET",
             headers:{
                 "token":window.localStorage.token
             },
             data:{
-                "phone":window.localStorage.phoneNumber
+                "phone":window.localStorage.phoneNumber,
+                "bankCard":window.sessionStorage.bankCardNum
             },
             success:function(res){
-                console.log(res);
                 if(res.code == 0){
                     window.sessionStorage.payToken = res.authToken.authToken;
-                    console.log(res.authToken.authToken);
                     recharge();//后端充值接口
                 }else {
                     $(".popup").show();
@@ -228,7 +244,7 @@ $(function(){
         var accountId = "accountId=2120170306142335001";
         //var customerId = "customerId=window.localStorage.phoneNumber";
         var payType = "payType=1";
-        var responseUrl = "responseUrl=http://106.14.165.194:1111/payResult";
+        var responseUrl = "responseUrl=http://47.74.133.222:1111/payResult";
         //var name = 'name=$(".accountHolderName").val()';
         //var phoneNo = 'phoneNo=$(".accountHolderPhoneNum").val()';
         //var cardNo ='cardNo=$(".personBankNum").val()';
@@ -240,9 +256,7 @@ $(function(){
         var macArr = [];
         macArr.push(accountId,customerId,payType,token,orderId,purpose,amount,responseUrl,key);
         var mac=macArr.join("&");
-        console.log(mac);
         window.sessionStorage.mac = md5(mac).toUpperCase();
-        console.log(window.sessionStorage.mac);
     }
     //倒计时
     function countDown(){
@@ -276,7 +290,7 @@ $(function(){
     function paymentAgain(){
         getMac();
         $.ajax({
-            url:"http://106.14.165.194:3333/authPay-front/authPay/pay",
+            url:"http://47.74.133.222:3333/authPay-front/authPay/pay",
             type:"POST",
             headers:{
                 'Content-Type':'application/json'
@@ -288,12 +302,11 @@ $(function(){
                 "payType":"1",                                                 //支付类型
                 "purpose":"充值",                                             //目的
                 "amount":$(".bindCzMoney").val(),                           //金额
-                "responseUrl":"http://106.14.165.194:1111/payResult",   //响应地址
+                "responseUrl":"http://47.74.133.222:1111/payResult",   //响应地址
                 "token":window.sessionStorage.payToken,                  //授权码
                 "mac":window.sessionStorage.mac                             //数字签名
             }),
             success:function(res){
-                console.log(res);
                 if(res.result_code == "0000"){
                     countDown();
                 }else{
@@ -311,7 +324,7 @@ $(function(){
     //后端充值接口
     function recharge(){
         $.ajax({
-            url:"http://106.14.165.194:1111/recharge",
+            url:"http://47.74.133.222:1111/recharge",
             "type":"POST",
             headers:{
                 "Content-Type":"application/x-www-form-urlencoded ",
@@ -320,10 +333,13 @@ $(function(){
             data:{
                 "phone":window.localStorage.phoneNumber,
                 "orderId":window.sessionStorage.orderId,
-                "amount":$(".bindCzMoney").val()
+                "amount":$(".bindCzMoney").val(),
+                "bankCard":window.sessionStorage.bankCardNum,
+                "name":window.sessionStorage.bindBankName,
+                "IDcard":window.sessionStorage.IDcard,
+                "bankPhone":window.sessionStorage.bindBankPhone
             },
             success:function(res){
-                console.log(res);
                 if(res.code == 0){
                     paymentAgain();
                 }else {
@@ -371,14 +387,13 @@ $(function(){
         var messageMacArr = [];
         messageMacArr.push(accountId,customerId,token,orderId,phoneNo,key);
         var messagemac=messageMacArr.join("&");
-        console.log(messagemac);
         window.sessionStorage.messagemac = md5(messagemac).toUpperCase();
     }
     //重发验证码
     $(".sendAgin").click(function(){
         messageMac();
         $.ajax({
-            url:"http://106.14.165.194:3333/authPay-front/authPay/sendVercode",
+            url:"http://47.74.133.222:3333/authPay-front/authPay/sendVercode",
             type:'POST',
             headers:{
                 'Content-Type': 'application/json'
@@ -393,7 +408,6 @@ $(function(){
             }),
             success:function(res){
                 countDown();
-                console.log(res);
             },
             error:function(res){
                 console.log(res);
@@ -442,14 +456,14 @@ $(function(){
         var payMacArr = [];
         payMacArr.push(accountId,customerId,token,orderId,vericode,key);
         var paymac=payMacArr.join("&");
-        console.log(paymac);
         window.sessionStorage.paymac = md5(paymac).toUpperCase();
     }
     //确认支付
     $(".rechargeConfirmBtn").click(function(){
+        $(".loaded").show();
         payMac();
         $.ajax({
-            url:"http://106.14.165.194:3333/authPay-front/authPay/confirm",
+            url:"http://47.74.133.222:3333/authPay-front/authPay/confirm",
             type:"POST",
             headers:{
                 'Content-Type': 'application/json'
@@ -463,19 +477,19 @@ $(function(){
                 "mac":window.sessionStorage.paymac              //数字签名
             }),
             success:function(res){
-                console.log(res);
                 if(res.result_code == "0000"){
+                    $(".loaded").hide();
                     if(res.desc == "卡上的余额不足[1000051]"){
                         $(".popup").show();
                         $(".popup").text("卡上余额不足");
-                        setTimeout('$(".popup").hide(),$(".popup").text("")',3000);
-                        setTimeout('$(".userRechargeNum").text(""),$(".verificationCodeNum").val(""),$(".BankCardTailNumber").text( ""),clearInterval(timer2), $(".sendAgin").val(""),$(".popupBg").hide(),$(".popupWrap").hide()',3500);
+                        setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
+                        setTimeout('$(".userRechargeNum").text(""),$(".verificationCodeNum").val(""),$(".BankCardTailNumber").text( ""),clearInterval(timer2), $(".sendAgin").val(""),$(".popupBg").hide(),$(".popupWrap").hide()',2100);
                     }else{
                         //alert("成功");
                         $(".popup").show();
                         $(".popup").text("交易成功");
-                        setTimeout('$(".popup").hide(),$(".popup").text("")',3000);
-                        setTimeout('$(".userRechargeNum").text(""),$(".verificationCodeNum").val(""),$(".BankCardTailNumber").text( ""),clearInterval(timer2), $(".sendAgin").val(""),$(".popupBg").hide(),$(".popupWrap").hide(),window.location.href = "asset.html"',3500);
+                        setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
+                        setTimeout('$(".userRechargeNum").text(""),$(".verificationCodeNum").val(""),$(".BankCardTailNumber").text( ""),clearInterval(timer2), $(".sendAgin").val(""),$(".popupBg").hide(),$(".popupWrap").hide(),window.location.href = "asset.html"',2100);
                     }
                 }
             },
@@ -484,7 +498,13 @@ $(function(){
             }
         })
     });
-
+    $(".verificationCodeNum").on('input',function(){
+        if($(".verificationCodeNum").val().length == 6){
+            $(".rechargeConfirmBtn").css("background","rgb(242,182,67)").removeAttr("disabled");
+        }else{
+            $(".rechargeConfirmBtn").css("background","rgb(181,181,181)").attr("disabled","disabled");
+        }
+    });
     $(".confirmBtn").click(function(){
         window.sessionStorage.orderId = window.localStorage.phoneNumber + new Date().getTime();//订单号
         getAuthToken();//获取授权码

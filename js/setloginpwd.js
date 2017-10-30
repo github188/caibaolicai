@@ -1,6 +1,7 @@
 /**
  * Created by hzc on 2017-7-21.
  */
+
 $(function(){
     FastClick.attach(document.body);
     $(".inputPwd").focus();
@@ -26,9 +27,8 @@ $(function(){
             $(".setLoginPwdBtn").css("background", "rgb(181,181,181)").attr("disabled", "disabled");
         }else{
             var loginPwd = sha256_digest($(".confirmPwd").val());
-            console.log(loginPwd);
             $.ajax({
-                url:"http://106.14.165.194:1111/loginpwd",
+                url:"http://47.74.133.222:1111/loginpwd",
                 type:"PUT",
                 headers:{
                     "token":window.localStorage.token
@@ -38,7 +38,6 @@ $(function(){
                     "pwd":loginPwd
                 },
                 success:function(res){
-                    console.log(res);
                     if(res.code == 0){
                         window.location.href = "index.html";
                     }

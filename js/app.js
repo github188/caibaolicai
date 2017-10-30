@@ -13,13 +13,24 @@ $(function(){
     $(".yueDu").click(function(){
         window.location.href = "read.html";
     });
-    $(".ziChan").click(function(){
-        window.location.href = "asset.html";
+
+    //获取金价
+    $.ajax({
+        url:"http://47.74.133.222:8000/history-price",
+        method:"GET",
+        success:function(res){
+            var goldPrice = JSON.parse(res);
+            window.sessionStorage.goldPrice = goldPrice.week[0].price;
+            $(".goldPrice").text(goldPrice.week[0].price);
+        },
+        error:function(res){
+            //console.log(res);
+        }
     });
     function assets(){
         //资产查询接口
         $.ajax({
-            url:"http://106.14.165.194:1111/assetQuery",
+            url:"http://47.74.133.222:1111/assetQuery",
             type:"GET",
             headers:{
                 "token":window.localStorage.token
@@ -28,12 +39,9 @@ $(function(){
                 "phone":window.localStorage.phoneNumber
             },
             success:function(res){
-                //console.log(res);
-                //console.log(res.asset);
                 var goldPrice = window.sessionStorage.goldPrice;
                 var assetNum = res.asset.balance + res.asset.huoqiGoldSum + (res.asset.qiandaiGoldSum * goldPrice) + (res.asset.jinshengGoldSum * goldPrice) + res.asset.wenzhuanGoldSum;
-                //console.log(assetNum);
-                $(".asset").text(assetNum.toFixed(2));
+                $(".asset").text(parseFloat(assetNum).toFixed(2));
                 window.sessionStorage.userBalance = parseFloat(res.asset.balance).toFixed(2);   //账户余额
                 $(".balance").text(parseFloat(res.asset.balance).toFixed(2));                      //账户余额
                 window.sessionStorage.accountBalance = parseFloat(res.asset.balance).toFixed(2);
@@ -45,7 +53,7 @@ $(function(){
                 $(".qdjNum").text(parseFloat(res.asset.qiandaiGoldSum).toFixed(2));             //钱袋金余额（克）
             },
             error:function(res){
-                console.log(res);
+                //console.log(res);
             }
         });
     }
@@ -92,7 +100,7 @@ $(function(){
     //判断是否设置支付密码
     function judgeSetPayPwd(){
         $.ajax({
-            url:"http://106.14.165.194:1111/paypwd",
+            url:"http://47.74.133.222:1111/paypwd",
             type:"GET",
             headers:{
                 "token":window.localStorage.token
@@ -101,7 +109,7 @@ $(function(){
                 "phone":window.localStorage.phoneNumber
             },
             success:function(res){
-                console.log(res);
+                //console.log(res);
                 if(res.code == 0){
                     window.sessionStorage.buyProductMark = "hqj";
                     window.sessionStorage.backMark = "index";
@@ -126,7 +134,7 @@ $(function(){
                 }
             },
             error:function(res){
-                console.log(res);
+                //console.log(res);
             }
         });
     }
@@ -136,34 +144,34 @@ $(function(){
         $(".dataRightTop").text("累计交易(吨)");
         //获取未登录首页的注册人数
         $.ajax({
-            url:"http://106.14.165.194:1111/count",
+            url:"http://47.74.133.222:1111/count",
             type:"GET",
             success:function(res){
                 $(".dataLeftBottom").text(res.result.usersCountYtd);
                 $(".dataRightBottom").text(res.result.goldSum);
             },
             error:function(res){
-                console.log(res);
+                //console.log(res);
             }
         });
         //获取金价
-        $.ajax({
-            url:"http://106.14.165.194:8000/history-price",
-            type:"GET",
-            success:function(res){
-                var goldPrice = JSON.parse(res);
-                $(".goldPrice").text(goldPrice.week[0].price+"元/克");
-            },
-            error:function(res){
-                console.log(res);
-            }
-        });
+        //$.ajax({
+        //    url:"http://47.74.133.222:8000/history-price",
+        //    type:"GET",
+        //    success:function(res){
+        //        var goldPrice = JSON.parse(res);
+        //        $(".goldPrice").text(goldPrice.week[0].price+"元/克");
+        //    },
+        //    error:function(res){
+        //        console.log(res);
+        //    }
+        //});
     }else{
         $(".dataLeftTop").text("昨日收益(元)");
         $(".dataRightTop").text("昨日收益克数(克)");
         //资产查询接口
         $.ajax({
-            url:"http://106.14.165.194:1111/assetQuery",
+            url:"http://47.74.133.222:1111/assetQuery",
             type:"GET",
             headers:{
                 "token":window.localStorage.token
@@ -172,12 +180,9 @@ $(function(){
                 "phone":window.localStorage.phoneNumber
             },
             success:function(res){
-                //console.log(res);
-                //console.log(res.asset);
                 var goldPrice = window.sessionStorage.goldPrice;
                 var assetNum = res.asset.balance + res.asset.huoqiGoldSum + (res.asset.qiandaiGoldSum * goldPrice) + (res.asset.jinshengGoldSum * goldPrice) + res.asset.wenzhuanGoldSum;
-                //console.log(assetNum);
-                $(".asset").text(assetNum.toFixed(2));
+                $(".asset").text(parseFloat(assetNum).toFixed(2));
                 window.sessionStorage.userBalance = parseFloat(res.asset.balance).toFixed(2);   //账户余额
                 $(".balance").text(parseFloat(res.asset.balance).toFixed(2));                      //账户余额
                 window.sessionStorage.accountBalance = parseFloat(res.asset.balance).toFixed(2);
@@ -189,20 +194,7 @@ $(function(){
                 $(".qdjNum").text(parseFloat(res.asset.qiandaiGoldSum).toFixed(2));             //钱袋金余额（克）
             },
             error:function(res){
-                console.log(res);
-            }
-        });
-        //获取金价接口
-        $.ajax({
-            url:"http://106.14.165.194:8000/history-price",
-            type:"GET",
-            success:function(res){
-                var goldPrice = JSON.parse(res);
-                $(".goldPrice").text(goldPrice.week[0].price + "元/克");
-                window.sessionStorage.goldPrice = goldPrice.week[0].price;
-            },
-            error:function(res){
-                console.log(res);
+                //console.log(res);
             }
         });
     }
@@ -220,7 +212,7 @@ $(function(){
     });
     $(".goRechargeBtn").click(function(){
         $.ajax({
-            url:'http://106.14.165.194:1111/authQuery',//认证查询
+            url:'http://47.74.133.222:1111/authQuery',//认证查询
             type:"GET",
             headers:{
                 "token":window.localStorage.token
@@ -229,33 +221,30 @@ $(function(){
                 "phone":window.localStorage.phoneNumber
             },
             success:function(res){
-                console.log(res);
+                //console.log(res);
                 if(res.code == -1){
                     window.location.href = "unbindrecharge.html";
                 }else if(res.code == -2){
-                    $(".popup").show();
-                    $(".popup").text(res.msg);
+                    $(".popup").show().text(res.msg);
                     setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
                 }else if(res.code == -3){
-                    $(".popup").show();
-                    $(".popup").text(res.msg);
+                    $(".popup").show().text(res.msg);
                     setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
                 }else if(res.code == -4){
-                    $(".popup").show();
-                    $(".popup").text(res.msg);
+                    $(".popup").show().text(res.msg);
                     setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
                 }else{
                     window.location.href = "recharge.html";
                 }
             },
             error:function(res){
-                console.log(res);
+                //console.log(res);
             }
         });
     });
     $(".goWithdrawBtn").click(function(){
         $.ajax({
-            url:'http://106.14.165.194:1111/authQuery',
+            url:'http://47.74.133.222:1111/authQuery',
             type:"GET",
             headers:{
                 "token":window.localStorage.token
@@ -264,27 +253,24 @@ $(function(){
                 "phone":window.localStorage.phoneNumber
             },
             success:function(res){
-                console.log(res);
+                //console.log(res);
                 if(res.code == -1){
                     window.location.href = "unbindwithdrawal.html";
                 }else if(res.code == -2){
-                    $(".popup").show();
-                    $(".popup").text(res.msg);
+                    $(".popup").show().text(res.msg);
                     setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
                 }else if(res.code == -3){
-                    $(".popup").show();
-                    $(".popup").text(res.msg);
+                    $(".popup").show().text(res.msg);
                     setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
                 }else if(res.code == -4){
-                    $(".popup").show();
-                    $(".popup").text(res.msg);
+                    $(".popup").show().text(res.msg);
                     setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
                 }else{
                     window.location.href = "withdrawCash.html";
                 }
             },
             error:function(res){
-                console.log(res);
+                //console.log(res);
             }
         });
     });
@@ -292,12 +278,13 @@ $(function(){
     $(".quitLoginBtn").click(function(){
         localStorage.clear();
         sessionStorage.clear();
-        window.location.href = "index.html";
+        $(".popup").show().text("退出成功");
+        setTimeout('$(".popup").text("").hide(),window.location.href = "index.html"',1500);
     });
     //    实名绑卡信息查询
     function bindInfoQuery(){
         $.ajax({
-            url:'http://106.14.165.194:1111/bindInfo',
+            url:'http://47.74.133.222:1111/bankCards',
             type:"GET",
             headers:{
                 "token":window.localStorage.token
@@ -306,13 +293,13 @@ $(function(){
                 "phone":window.localStorage.phoneNumber
             },
             success:function(res){
-                console.log(res);
+                //console.log(res);
                 if(res.result.IDcard !== null){
                     window.sessionStorage.authToken = res.result.authToken;//授权码
                 }
             },
             error:function(res){
-                console.log(res);
+                //console.log(res);
             }
         })
     }
@@ -335,21 +322,21 @@ $(function(){
         var accountId = "accountId=2120170306142335001";
         //var customerId = "customerId=window.localStorage.phoneNumber";
         var payType = "payType=1";
-        var responseUrl = "responseUrl=http://106.14.165.194:1111/payResult";
+        var responseUrl = "responseUrl=http://47.74.133.222:1111/payResult";
 
         var key = 'key=caibao1314';
         var macArr = [];
         macArr.push(accountId,customerId,token,key);
         var mac=macArr.join("&");
-        console.log(mac);
+        //console.log(mac);
         window.sessionStorage.mac = md5(mac).toUpperCase();
-        console.log(window.sessionStorage.mac);
+        //console.log(window.sessionStorage.mac);
     }
     //    解绑
     $(".UnbundlingBtn").click(function(){
         getMac();
         $.ajax({
-            url:"http://106.14.165.194:3333/authPay-front/authPay/unbind",
+            url:"http://47.74.133.222:3333/authPay-front/authPay/unbind",
             type:"POST",
             headers:{
                 'Content-Type':'application/json'
@@ -361,13 +348,21 @@ $(function(){
                 "mac":window.sessionStorage.mac                             //数字签名
             }),
             success:function(res){
-                console.log(res);
+                //console.log(res);
             },
             error:function(res){
-                console.log(res);
+                //console.log(res);
             }
         });
     });
-//    阅读
-
+//---------------------------------0.5VERSION-----------------------------------//
+    $(".goAccountSecurity").click(function(){
+        location.href = "accounts.html";
+    });
+    $(".goTransactionRecords").click(function(){
+        location.href = "records.html"
+    });
+    $(".goCertification").click(function(){
+        location.href = "authentication.html"
+    });
 });

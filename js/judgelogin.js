@@ -3,6 +3,12 @@
  */
 $(function(){
     FastClick.attach(document.body);
+    if($(".phoneNum").val().length == 11){
+        $(".nextOpt").removeAttr("disabled").css("background","rgb(242,182,67)");
+        window.localStorage.phoneNumber = $(".phoneNum").val();
+    }else {
+        $(".nextOpt").attr("disabled","disabled").css("background","rgb(181,181,181)");
+    }
     $(".close").click(function(){
         window.location.href = "index.html";
     });
@@ -25,13 +31,13 @@ $(function(){
     //判断登录密码是否设置
     function judgeSetLofinPwd(){
         $.ajax({
-            url:"http://106.14.165.194:1111/loginpwd",
+            url:"http://47.74.133.222:1111/loginpwd",
             type:"GET",
             data:{
                 "phone":window.localStorage.phoneNumber
             },
             success:function(res){
-                console.log(res);
+                //console.log(res);
                 if(res.code == 0){
                     window.location.href = "pwdlogin.html";
                 }else if(res.code == -1){
@@ -39,7 +45,7 @@ $(function(){
                 }
             },
             error:function (res){
-                console.log(res);
+                //console.log(res);
             }
         });
     }
@@ -49,13 +55,12 @@ $(function(){
             $(".popup").text("号码格式错误");
             setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
         }else{
-            console.log($(".phoneNum").val());
+            //console.log($(".phoneNum").val());
             $.ajax({
-                url:"http://106.14.165.194:1111/registQuery",
+                url:"http://47.74.133.222:1111/registQuery",
                 method:"GET",
                 data:{"phone": $.trim($(".phoneNum").val())},
                 success:function(res){
-                    console.log(res);
                     //window.sessionStorage.code = res.code;
                     if(res.code == 0){
                         judgeSetLofinPwd();
@@ -67,7 +72,7 @@ $(function(){
                     }
                 },
                 error:function(res){
-                    console.log(res);
+                    //console.log(res);
                 }
             })
         }

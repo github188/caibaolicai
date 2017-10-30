@@ -3,6 +3,7 @@
  */
 $(function(){
     FastClick.attach(document.body);
+    $(".goldPrice").text(window.sessionStorage.goldPrice);
     $(".goBackBtn").click(function(){
         if(window.sessionStorage.backMark == "index" ){
             window.location.href = "index.html";
@@ -10,129 +11,92 @@ $(function(){
             window.location.href = "hqjAsset.html";
         }else if(window.sessionStorage.backMark == "wzj"){
             window.location.href = "wzjAsset.html";
-        }else{
+        }else if(window.sessionStorage.backMark == "record"){
+            window.location.href = "records.html";
+        }else if(window.sessionStorage.backMark == "authentication"){
+            window.location.href = "authentication.html";
+        }
+        else{
             window.location.href = "index.html";
         }
     });
-
-    /*function swiperInit(){
-     var swiper = new Swiper('#swiper-container4', {
-     autoHeight: true,
-     nested:true,
-     resistanceRatio: 0,
-     //        onSlideChangeEnd: function(swiper){
-     //            $("body").scrollTop(0);
-     //        },
-     onSlideChangeStart:function(swiper){
-     //            alert(swiper.activeIndex+'');
-     $("body").scrollTop(0);
-     if(swiper.activeIndex == 0){
-     $(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyWzj60Btn");
-     }else if(swiper.activeIndex == 1){
-     $(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyWzj90Btn");
-     }else if(swiper.activeIndex == 2){
-     $(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyWzj180Btn");
-     }else if(swiper.activeIndex == 3){
-     $(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyWzj360Btn");
-     }
-     // swiper.activeIndex 这个就是索引， 从 0 开始！ 可看一共有多少元素！
-     }
-     });
-     var mySwiper2 = new Swiper('#swiper-container2',{
-     watchSlidesProgress : true,
-     watchSlidesVisibility : true,
-     allowSwipeToNext : false,
-     allowSwipeToPrev : false,
-     slidesPerView : 3,
-     touchRatio : 0.5,
-     onTap: function(){
-     mySwiper3.slideTo( mySwiper2.clickedIndex)
-     }
-     });
-     var mySwiper3 = new Swiper('#swiper-container3',{
-     autoHeight: true,
-     onSlideChangeStart: function(){
-     updateNavPosition();
-     $("body").scrollTop(0);
-     },
-     //        onSlideChangeStart: function(swiper){
-     //            $("body").scrollTop(0);
-     ////            $("body").animate({scrollTop:0},700);
-     //        },
-
-     onSlideChangeEnd:function(swiper){
-     $("body").scrollTop(0);
-     if(swiper.activeIndex == 0){
-     $(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyHqjBtn").removeClass('buyWzj60Btn buyWzj90Btn buyWzj180Btn buyWzj360Btn');
-     $(".productBtn0").addClass("bottomColor footBtnOrange").siblings().removeClass("bottomColor footBtnOrange");
-     }else if(swiper.activeIndex == 1){
-     if($(".WZJWrap").find(".swiper-slide-active").find(".productTitleCenter").text()  == "稳赚金60天"){
-
-     $(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyWzj60Btn").removeClass('buyHqjBtn buyWzj90Btn buyWzj180Btn buyWzj360Btn');
-
-     }else if($(".WZJWrap").find(".swiper-slide-active").find(".productTitleCenter").text()  == "稳赚金90天"){
-
-     $(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyWzj90Btn").removeClass('buyWzj60Btn buyHqjBtn buyWzj180Btn buyWzj360Btn');
-
-     }else if($(".WZJWrap").find(".swiper-slide-active").find(".productTitleCenter").text()  == "稳赚金180天"){
-
-     $(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyWzj180Btn").removeClass('buyWzj60Btn buyWzj90Btn buyHqjBtn buyWzj360Btn');
-
-     }else if($(".WZJWrap").find(".swiper-slide-active").find(".productTitleCenter").text()  == "稳赚金360天"){
-
-     $(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyWzj360Btn").removeClass('buyWzj60Btn buyWzj90Btn buyWzj180Btn buyHqjBtn');
-
-     }
-     $(".productBtn1").addClass("bottomColor footBtnOrange").siblings().removeClass("bottomColor footBtnOrange");
-     }
-     else if(swiper.activeIndex == 2){
-     $(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyJsj60Btn");
-     $(".productBtn2").addClass("bottomColor footBtnOrange").siblings().removeClass("bottomColor footBtnOrange");
-     }else if(swiper.activeIndex == 3){
-     $(".iWantbuyBtn").attr('class'," ").addClass("iWantbuyBtn buyQdj60Btn");
-     $(".productBtn3").addClass("bottomColor footBtnOrange").siblings().removeClass("bottomColor footBtnOrange");
-     }// swiper.activeIndex 这个就是索引， 从 0 开始！ 可看一共有多少元素！
-     }
-     });
-     function updateNavPosition(){
-     $('#swiper-container2 .active-nav').removeClass('active-nav');
-     var activeNav = $('#swiper-container2 .swiper-slide').eq(mySwiper3.activeIndex).addClass('active-nav');
-     if (!activeNav.hasClass('swiper-slide-visible')) {
-     console.log(1);
-     if (activeNav.index()>mySwiper2.activeIndex) {
-     console.log(2);
-     var thumbsPerNav = Math.floor(mySwiper2.width/activeNav.width())-1;
-     mySwiper2.slideTo(activeNav.index()-thumbsPerNav)
-     }
-     else {
-     console.log(3);
-     mySwiper2.slideTo(activeNav.index())
-     }
-     }
-     }
-     }*/
-    //swiperInit();
     //收益发放日
-    function profitGiveDay(day){
+    //function profitGiveDay(day){
+    //    var dayTime=day*24*60*60*1000; //参数天数的时间戳
+    //    var nowTime=new Date().getTime(); //当天的时间戳
+    //    var t = new Date(nowTime+dayTime).toLocaleString(); //把两个时间戳转换成普通时间
+    //    var timeStr = t.substr(0,9);
+    //    var arr=timeStr.split("/");
+    //    var year = arr[0];
+    //    var month = arr[1];
+    //    var day2 = arr[2];
+    //    var interestTime = year + "年" + month + "月" + day2 + "日" + "00:00:00";
+    //    $(".profitGiveDay").text(interestTime);
+    //}
+    //profitGiveDay(2);
+    //收益发放日60天
+    function profitGiveDay60(day){
         var dayTime=day*24*60*60*1000; //参数天数的时间戳
         var nowTime=new Date().getTime(); //当天的时间戳
         var t = new Date(nowTime+dayTime).toLocaleString(); //把两个时间戳转换成普通时间
-        var timeStr = t.substr(0,9);
+        var timeStr = t.substr(0,10).replace(/[\u4E00-\u9FA5]/g,'');
         var arr=timeStr.split("/");
         var year = arr[0];
         var month = arr[1];
         var day2 = arr[2];
-        var interestTime = year + "年" + month + "月" + day2 + "日" + "00:00:00";
-        $(".profitGiveDay").text(interestTime);
+        var interestTime = year + "年" + month + "月" + day2 + "日"+ "00:00:00";
+        $(".profitGiveDay60").text(interestTime);
     }
-    profitGiveDay(2);
+    profitGiveDay60(61);
+    //收益发放日90天
+    function profitGiveDay90(day){
+        var dayTime=day*24*60*60*1000; //参数天数的时间戳
+        var nowTime=new Date().getTime(); //当天的时间戳
+        var t = new Date(nowTime+dayTime).toLocaleString(); //把两个时间戳转换成普通时间
+        var timeStr = t.substr(0,10).replace(/[\u4E00-\u9FA5]/g,'');
+        var arr=timeStr.split("/");
+        var year = arr[0];
+        var month = arr[1];
+        var day2 = arr[2];
+        //console.log(arr);console.log(t);
+        var interestTime = year + "年" + month + "月" + day2 + "日"+ "00:00:00";
+        $(".profitGiveDay90").text(interestTime);
+    }
+    profitGiveDay90(91);
+    //收益发放日180天
+    function profitGiveDay180(day){
+        var dayTime=day*24*60*60*1000; //参数天数的时间戳
+        var nowTime=new Date().getTime(); //当天的时间戳
+        var t = new Date(nowTime+dayTime).toLocaleString(); //把两个时间戳转换成普通时间
+        var timeStr = t.substr(0,10).replace(/[\u4E00-\u9FA5]/g,'');
+        var arr=timeStr.split("/");
+        var year = arr[0];
+        var month = arr[1];
+        var day2 = arr[2];
+        var interestTime = year + "年" + month + "月" + day2 + "日"+ "00:00:00";
+        $(".profitGiveDay180").text(interestTime);
+    }
+    profitGiveDay180(181);
+    //收益发放日360天
+    function profitGiveDay360(day){
+        var dayTime=day*24*60*60*1000; //参数天数的时间戳
+        var nowTime=new Date().getTime(); //当天的时间戳
+        var t = new Date(nowTime+dayTime).toLocaleString(); //把两个时间戳转换成普通时间
+        var timeStr = t.substr(0,10).replace(/[\u4E00-\u9FA5]/g,'');
+        var arr=timeStr.split("/");
+        var year = arr[0];
+        var month = arr[1];
+        var day2 = arr[2];
+        var interestTime = year + "年" + month + "月" + day2 + "日"+ "00:00:00";
+        $(".profitGiveDay360").text(interestTime);
+    }
+    profitGiveDay360(361);
     //计息起始日
     function showTime(day){
         var dayTime=day*24*60*60*1000; //参数天数的时间戳
         var nowTime=new Date().getTime(); //当天的时间戳
         var t = new Date(nowTime+dayTime).toLocaleString(); //把两个时间戳转换成普通时间
-        var timeStr = t.substr(0,9);
-        console.log(timeStr);
+        var timeStr = t.substr(0,10).replace(/[\u4E00-\u9FA5]/g,'');
         var arr=timeStr.split("/");
         var year = arr[0];
         var month = arr[1];
@@ -141,12 +105,13 @@ $(function(){
         $(".jiXiDay").text(interestTime);
     }
     showTime(1); //当前时间添加1天
+
     //计息结束日60天
     function interestEndTime60(day){
         var dayTime=day*24*60*60*1000; //参数天数的时间戳
         var nowTime=new Date().getTime(); //当天的时间戳
         var t = new Date(nowTime+dayTime).toLocaleString(); //把两个时间戳转换成普通时间
-        var timeStr = t.substr(0,9);
+        var timeStr = t.substr(0,10).replace(/[\u4E00-\u9FA5]/g,'');
         var arr=timeStr.split("/");
         var year = arr[0];
         var month = arr[1];
@@ -160,7 +125,7 @@ $(function(){
         var dayTime=day*24*60*60*1000; //参数天数的时间戳
         var nowTime=new Date().getTime(); //当天的时间戳
         var t = new Date(nowTime+dayTime).toLocaleString(); //把两个时间戳转换成普通时间
-        var timeStr = t.substr(0,9);
+        var timeStr = t.substr(0,10).replace(/[\u4E00-\u9FA5]/g,'');
         var arr=timeStr.split("/");
         var year = arr[0];
         var month = arr[1];
@@ -174,7 +139,7 @@ $(function(){
         var dayTime=day*24*60*60*1000; //参数天数的时间戳
         var nowTime=new Date().getTime(); //当天的时间戳
         var t = new Date(nowTime+dayTime).toLocaleString(); //把两个时间戳转换成普通时间
-        var timeStr = t.substr(0,9);
+        var timeStr = t.substr(0,10).replace(/[\u4E00-\u9FA5]/g,'');
         var arr=timeStr.split("/");
         var year = arr[0];
         var month = arr[1];
@@ -188,7 +153,7 @@ $(function(){
         var dayTime=day*24*60*60*1000; //参数天数的时间戳
         var nowTime=new Date().getTime(); //当天的时间戳
         var t = new Date(nowTime+dayTime).toLocaleString(); //把两个时间戳转换成普通时间
-        var timeStr = t.substr(0,9);
+        var timeStr = t.substr(0,10).replace(/[\u4E00-\u9FA5]/g,'');
         var arr=timeStr.split("/");
         var year = arr[0];
         var month = arr[1];
@@ -199,6 +164,9 @@ $(function(){
     interestEndTime360(360);
     //点击购买活期金产品
     $(".iWantbuyBtn").click(function(){
+        window.sessionStorage.convertIntoNum = undefined;
+        window.sessionStorage.expectProfitNum = undefined;
+        window.sessionStorage.amount = "";
         if(window.sessionStorage.buyProductMark == "buyHqjBtn"){
             if(window.localStorage.token == undefined){
                 window.sessionStorage.buyProductMark = "hqj";
@@ -207,7 +175,7 @@ $(function(){
                 window.sessionStorage.certificationSign = "buyHqjCertification";
                 window.sessionStorage.productsType = "活期金购买";
                 $.ajax({
-                    url: 'http://106.14.165.194:1111/authQuery',
+                    url: 'http://47.74.133.222:1111/authQuery',
                     type: "GET",
                     headers: {
                         "token": window.localStorage.token
@@ -216,17 +184,15 @@ $(function(){
                         "phone": window.localStorage.phoneNumber
                     },
                     success: function (res) {
-                        console.log(res);
+                        //console.log(res);
                         if (res.code == -1) {
                             window.sessionStorage.buyProductType = "buyHqjMark";
                             window.location.href = "unbindbuyHQJ.html";
                         } else if (res.code == -2) {
-                            $(".popup").show();
-                            $(".popup").text(res.msg);
+                            $(".popup").show().text(res.msg);
                             setTimeout('$(".popup").hide(),$(".popup").text("")', 2000);
                         } else if (res.code == -3) {
-                            $(".popup").show();
-                            $(".popup").text(res.msg);
+                            $(".popup").show().text(res.msg);
                             setTimeout('$(".popup").hide(),$(".popup").text("")', 2000);
                         } else if (res.code == -4) {
                             $(".popup").show();
@@ -237,7 +203,7 @@ $(function(){
                         }
                     },
                     error: function (res) {
-                        console.log(res);
+                        //console.log(res);
                     }
                 });
             }
@@ -249,11 +215,11 @@ $(function(){
                 window.sessionStorage.certificationSign = "buyWzj60Certification";
                 window.sessionStorage.productsType = "购买稳赚金60天";
                 window.sessionStorage.wzjName = "稳赚金60天";
-                window.sessionStorage.wzjNianHuaRate = "6%";
+                window.sessionStorage.wzjNianHuaRate = "8%";
                 window.sessionStorage.period = "60";
-                window.sessionStorage.rate = "6";
+                window.sessionStorage.rate = "8";
                 $.ajax({
-                    url: 'http://106.14.165.194:1111/authQuery',
+                    url: 'http://47.74.133.222:1111/authQuery',
                     type: "GET",
                     headers: {
                         "token": window.localStorage.token
@@ -262,7 +228,7 @@ $(function(){
                         "phone": window.localStorage.phoneNumber
                     },
                     success: function (res) {
-                        console.log(res);
+                        //console.log(res);
                         if (res.code == -1) {
                             window.sessionStorage.buyProductType = "buyWzj60Mark";
                             window.location.href = "unbindbuyWZJ.html";
@@ -283,7 +249,7 @@ $(function(){
                         }
                     },
                     error: function (res) {
-                        console.log(res);
+                        //console.log(res);
                     }
                 });
             }
@@ -295,11 +261,11 @@ $(function(){
                 window.sessionStorage.certificationSign = "buyWzj90Certification";
                 window.sessionStorage.productsType = "购买稳赚金90天";
                 window.sessionStorage.wzjName = "稳赚金90天";
-                window.sessionStorage.wzjNianHuaRate = "8%";
+                window.sessionStorage.wzjNianHuaRate = "10%";
                 window.sessionStorage.period = "90";
-                window.sessionStorage.rate = "8";
+                window.sessionStorage.rate = "10";
                 $.ajax({
-                    url: 'http://106.14.165.194:1111/authQuery',
+                    url: 'http://47.74.133.222:1111/authQuery',
                     type: "GET",
                     headers: {
                         "token": window.localStorage.token
@@ -308,7 +274,7 @@ $(function(){
                         "phone": window.localStorage.phoneNumber
                     },
                     success: function (res) {
-                        console.log(res);
+                        //console.log(res);
                         if (res.code == -1) {
                             window.sessionStorage.buyProductType = "buyWzj90Mark";
                             window.location.href = "unbindbuyWZJ.html";
@@ -329,7 +295,7 @@ $(function(){
                         }
                     },
                     error: function (res) {
-                        console.log(res);
+                        //console.log(res);
                     }
                 });
             }
@@ -345,7 +311,7 @@ $(function(){
                 window.sessionStorage.period = "180";
                 window.sessionStorage.rate = "12";
                 $.ajax({
-                    url: 'http://106.14.165.194:1111/authQuery',
+                    url: 'http://47.74.133.222:1111/authQuery',
                     type: "GET",
                     headers: {
                         "token": window.localStorage.token
@@ -354,7 +320,7 @@ $(function(){
                         "phone": window.localStorage.phoneNumber
                     },
                     success: function (res) {
-                        console.log(res);
+                        //console.log(res);
                         if (res.code == -1) {
                             window.sessionStorage.buyProductType = "buyWzj180Mark";
                             window.location.href = "unbindbuyWZJ.html";
@@ -375,7 +341,7 @@ $(function(){
                         }
                     },
                     error: function (res) {
-                        console.log(res);
+                        //console.log(res);
                     }
                 });
             }
@@ -391,7 +357,7 @@ $(function(){
                 window.sessionStorage.period = "360";
                 window.sessionStorage.rate = "14";
                 $.ajax({
-                    url: 'http://106.14.165.194:1111/authQuery',
+                    url: 'http://47.74.133.222:1111/authQuery',
                     type: "GET",
                     headers: {
                         "token": window.localStorage.token
@@ -400,7 +366,7 @@ $(function(){
                         "phone": window.localStorage.phoneNumber
                     },
                     success: function (res) {
-                        console.log(res);
+                        //console.log(res);
                         if (res.code == -1) {
                             window.sessionStorage.buyProductType = "buyWzj360Mark";
                             window.location.href = "unbindbuyWZJ.html";
@@ -421,7 +387,7 @@ $(function(){
                         }
                     },
                     error: function (res) {
-                        console.log(res);
+                        //console.log(res);
                     }
                 });
             }
@@ -685,7 +651,7 @@ $(function(){
         });
     }
     //默认显示稳赚金360
-    if(window.sessionStorage.buyProductMark == "wzj360"){
+    if(window.sessionStorage.buyProductMark == "assetsWzj360Btn" || window.sessionStorage.buyProductMark == "wzj360"){
         $(".productBtn1").addClass("bottomColor footBtnOrange").siblings().removeClass("bottomColor footBtnOrange");
         window.sessionStorage.buyProductMark = "buyWzj360Btn";
         var mySwiper = new Swiper('#swiper-container4',{

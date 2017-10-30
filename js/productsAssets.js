@@ -21,13 +21,13 @@ $(function(){
     });
     $(".goBuyWZJBtn").click(function(){
         window.sessionStorage.backMark = "wzj";
-        window.sessionStorage.buyProductMark  = "assetsWzj60Btn";
+        window.sessionStorage.buyProductMark  = "assetsWzj360Btn";
         window.location.href = "productCollection.html";
     });
     function productsAssets(){
         //活期金资产查询
         $.ajax({
-            url:"http://106.14.165.194:1111/cgQuery",
+            url:"http://47.74.133.222:1111/cgQuery",
             type:"GET",
             headers:{
                 "token":window.localStorage.token
@@ -47,12 +47,12 @@ $(function(){
                 $(".hqjEarningsSum").text(huoqiEarnSum);//活期金累计收益
             },
             error:function(res){
-                console.log(res);
+                //console.log(res);
             }
         });
         //稳赚金资产查询
         $.ajax({
-            url:"http://106.14.165.194:1111/wenzhuanGold",
+            url:"http://47.74.133.222:1111/wenzhuanGold",
             type:"GET",
             headers:{
                 "token":window.localStorage.token
@@ -66,12 +66,12 @@ $(function(){
                 $(".wenZhuanEarnProfit").text(parseFloat(res.asset.wenzhuanEarnSum).toFixed(2));
             },
             error:function(res){
-                console.log(res);
+                //console.log(res);
             }
         });
         //稳赚金预期总收益
         $.ajax({
-            url:"http://106.14.165.194:1111/wenzhuanGold/earnSum",
+            url:"http://47.74.133.222:1111/wenzhuanGold/earnSum",
             type:"GET",
             headers:{
                 "token":window.localStorage.token
@@ -80,9 +80,6 @@ $(function(){
                 "phone":window.localStorage.phoneNumber
             },
             success:function(res){
-                //console.log(res);
-                //console.log(res.earnSum);
-                //console.log(typeof (res.earnSum));
                 if(res.earnSum == null){
                     $(".wenzhuanGoldSum").text("0.00");
                 }else{
@@ -113,6 +110,8 @@ $(function(){
             }
         }
         if(pw.length == 6){
+            $(".hideKeyboard").focus();
+            $(".loaded").show();
             checkedPwd();
         }
     });
@@ -120,8 +119,7 @@ $(function(){
     $(".sellAllHqj").click(function(){
         if(parseFloat($(".salableMoney").text()).toFixed(2) == 0.00){
             $(".sellBtn").css("background","rgb(181,181,181)").attr("disabled","disabled");
-            $(".popup").show();
-            $(".popup").text("您暂无可卖出金额");
+            $(".popup").show().text("您暂无可卖出金额");
             setTimeout('$(".popup").text(),$(".popup").hide()',2000);
         }else {
             $(".pleaseInputsSellMoney").val(parseFloat($(".salableMoney").text()));
@@ -146,11 +144,6 @@ $(function(){
         } else{
             $(".sellBtn").css("background","rgb(181,181,181)").attr("disabled","disabled");
         }
-        //if($(".pleaseInputsSellMoney").val() >0 && $(".pleaseInputsSellMoney").val()<=window.sessionStorage.hqjAllAsset){
-        //    $(".sellBtn").css("background","rgb(242,182,67)").removeAttr("disabled");
-        //}else{
-        //
-        //}
     });
     $(".sellBtn").click(function(){
         $(".sellTypeMoney").text("￥" + $(".pleaseInputsSellMoney").val());
@@ -176,7 +169,7 @@ $(function(){
     function checkedPwd(){
         var checkedPayPwd = sha256_digest($("#ipt").val());
         $.ajax({
-            url:"http://106.14.165.194:1111/paypwd-check",
+            url:"http://47.74.133.222:1111/paypwd-check",
             type:"POST",
             headers:{
                 "Content-Type":"application/x-www-form-urlencoded ",
@@ -187,17 +180,15 @@ $(function(){
                 "paypwd":checkedPayPwd
             },
             success:function(res){
-                console.log(res);
                 if(res.code == 0){
                     sellHqj();
                 }else {
-                    $(".popup").show();
-                    $(".popup").text(res.msg);
-                    setTimeout('$(".popup").hide(),$(".popup").text(""),$("#ipt").val("")',2000);
+                    $(".popup").show().text(res.msg);
+                    setTimeout('$(".popup").hide(),$(".popup").text(""),$("#ipt").val("").focus(),$(".loaded").hide(),$(".inputPwdWrap").find("li").text("")',1500);
                 }
             },
             error:function(res){
-                console.log(res);
+                //console.log(res);
             }
         });
     }
@@ -205,7 +196,7 @@ $(function(){
     function sellHqj(){
         var orderId = window.localStorage.phoneNumber + Date.parse(new Date());
         $.ajax({
-            url:"http://106.14.165.194:1111/currentGold/sellOut",
+            url:"http://47.74.133.222:1111/currentGold/sellOut",
             type:"POST",
             headers:{
                 "Content-Type":"application/x-www-form-urlencoded ",
@@ -217,20 +208,19 @@ $(function(){
                 "amount":$(".pleaseInputsSellMoney").val()
             },
             success:function(res){
-                console.log(res);
+                //console.log(res);
                 if(res.code == 0){
-                    $(".popup").show();
-                    $(".popup").text(res.msg);
+                    $(".loaded").hide();
+                    $(".popup").show().text(res.msg);
                     setTimeout('$(".popup").hide(),$(".popup").text(""),$("#ipt").val("")',2000);
-                    setTimeout('$(".sellPopup ").hide(),$(".popupBg").hide(),window.location.href = "hqjAsset.html" ',2500);
+                    setTimeout('$(".sellPopup ").hide(),$(".popupBg").hide(),window.location.href = "hqjAsset.html" ',2100);
                 }else {
-                    $(".popup").show();
-                    $(".popup").text(res.msg);
-                    setTimeout('$(".popup").hide(),$(".popup").text(""),$(".sellPopup ").hide(),$(".popupBg").hide()',2000);
+                    $(".popup").show().text(res.msg);
+                    setTimeout('$(".popup").hide(),$(".popup").text(""),$(".sellPopup ").hide(),$(".popupBg").hide()',2100);
                 }
             },
             error:function(res){
-                console.log(res);
+                //console.log(res);
             }
         });
     }

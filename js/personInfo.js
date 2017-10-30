@@ -7,7 +7,7 @@ $(function(){
     //获取用户信息
     function getUserInfo(){
         $.ajax({
-           url:"http://106.14.165.194:1111/userInfo",
+            url:"http://47.74.133.222:1111/userInfo",
             type:"GET",
             headers:{
                 "token":window.localStorage.token
@@ -16,29 +16,30 @@ $(function(){
                 "phone":window.localStorage.phoneNumber
             },
             success:function(res){
-                console.log(res);
                 $(".nicknameName").val(res.userInfo.nickName);
                 $(".gender").val(res.userInfo.sex);
                 $(".birthday").val(res.userInfo.birthday);
                 $(".mailbox").val(res.userInfo.email);
             },
             error:function(res){
-                console.log(res);
+                //console.log(res);
             }
         });
     }
     getUserInfo();
     $(".saveInfoBtn").click(function(){
+        $(".saveInfoBtn").attr("disabled","disabled");
         var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/
         if(!myreg.test($(".email").val()))
         {
             $(".popup").show();
             $(".popup").text("邮箱格式错误");
             setTimeout('$(".popup").hide()',2000);
-             return false;
+            $(".saveInfoBtn").removeAttr("disabled");
+            return false;
         }else{
             $.ajax({
-                url:"http://106.14.165.194:1111/userInfo",
+                url:"http://47.74.133.222:1111/userInfo",
                 type:"POST",
                 headers:{
                     "Content-Type":"application/x-www-form-urlencoded",
@@ -53,7 +54,7 @@ $(function(){
                     "email":$(".email").val()
                 },
                 success:function(res){
-                    console.log(res);
+                    $(".saveInfoBtn").removeAttr("disabled");
                     if(res.code == 0){
                         $(".popup").show();
                         $(".popup").text(res.msg);
@@ -65,7 +66,7 @@ $(function(){
                     }
                 },
                 error:function(res){
-                    console.log(res);
+                    //console.log(res);
                 }
             })
         }

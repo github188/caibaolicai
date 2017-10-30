@@ -1,245 +1,314 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-touch-fullscreen" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="format-detection" content="telephone=no">
-    <title>首页</title>
+    <meta charset="UTF-8">
+    <title>财宝理财</title>
+    <link rel="shortcut icon" href="images/caibaosmall.png">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/iconfont.css">
-    <script src="js/flexible.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
-<div id="wrap">
-    <div class="wrapCenter">
-            <div class="swiper-wrapper" style="transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">
-                <!--------------------------首页---------------------->
-                <div class="swiper-slide swiper-slide-active swiper-no-swiping page">
-                    <div class="headTop flex bgWhite">
-                        <div class="headTopLeft">
-                            <span class="messageIcon" style="font-size:0.266666667rem;display: inline-block;width: 1.4rem;">
-                                <i class="iconfont icon-message-copy"></i>
-                            </span>
-                        </div>
-                        <div class="headTopCenter"><span class="logo"><img src="images/logo.png" alt=""></span>财宝理财</div>
-                        <div class="headTopRight">
-                            <span class="goldPrice" style="font-size: 14px;"></span>
-                            <!--<span style="font-size: 12px;"></span>-->
-                        </div>
+    <div class="headWrap">
+        <header class="head">
+            <nav class="navWrap">
+                <div class="logoWrap relative">
+                    <div class="logoImgWrap">
+                        <img src="images/caibaosmall.png" alt="">
                     </div>
-                    <div class="dataModuleWrap bgYellow">
-                        <div class="dataModuleTop flex">
-                            <div class="dataLeft">
-                                <div class="dataLeftTop"></div>
-                                <div class="dataLeftBottom"></div>
-                            </div>
-                            <div class="dataRight">
-                                <div class="dataRightTop"></div>
-                                <div class="dataRightBottom"></div>
-                            </div>
-                        </div>
-                        <div class="dataModuleBottom">
-                            <div class="slogan">10万人的选择，24亿存款的信任</div>
-                        </div>
-                    </div>
-                    <!--展示最新到期信息框-->
-                    <div class="productCard bgWhite">
-                        <div class="indexCenter borderBottom">
-                            <div class="productTop flex">
-                                <div class="productTopLeft"><i class="iconfont icon-jiaoyijine" style="font-size: 0.853333333rem;"></i></div>
-                                <div class="productTopCenter">
-                                    <div>稳赚金360天</div>
-                                    <div>到期时间：2017年7月11日</div>
-                                </div>
-                                <div class="productTopRight"><i class="iconfont icon-shenglvehao" style="font-size: 24px;"></i></div>
-                            </div>
-                            <div class="productRemind flex">
-                                <div class="productTopLeft"></div>
-                                <div class="productTopCenter productRemindFont">小主，您有交易即将到期</div>
-                                <div class="productTopRight"></div>
-                            </div>
-                            <div class="flex">
-                                <!--<div class="productTopLeft"></div>-->
-                                <div class="productTopCenter productExpireProfit">到期收益：1000.00元，到期本金1000.00克</div>
-                                <!--<div class="productTopRight"></div>-->
-                            </div>
-                            <div class="flex">
-                                <!--<div class="productTopLeft"></div>-->
-                                <div class="productTopCenter productExpireMoney">到期金额：20.00克</div>
-                                <!--<div class="productTopRight"></div>-->
-                            </div>
-
-
-                        </div>
-                        <input type="button" class="readNow bgWhite" value="立即查看">
-                        <!--<div class="productCardCenter">-->
-                            <!--<div class="cardTop">-->
-                                <!--<div class="cardTopCenter flex">-->
-                                    <!--<div class="productName">稳赚金360天</div>-->
-                                    <!--<div class="productDes">稳定生息&nbsp;省心省力</div>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                            <!--<div class="cardBottom">-->
-                                <!--<div class="cardBottomTop">保本增值 稳赚收益<span class="subFont">50元起购</span></div>-->
-                                <!--<div class="productData flex">-->
-                                    <!--<div class="productDataleft">-->
-                                        <!--<div class="percentNum">9<span style="font-size: 0.48rem;">%</span><span class="fontSup">+5%</span></div>-->
-                                        <!--<div class="font10">预期年化收益率</div>-->
-                                    <!--</div>-->
-                                    <!--<div class="productDataCenter">-->
-                                        <!--<div class="typeName fontCenter">360天</div>-->
-                                        <!--<div class="font10 fontCenter">期限</div>-->
-                                    <!--</div>-->
-                                    <!--<div class="productDataRight">-->
-                                        <!--<a href="javascript:" class="buyBtn goBuyWzj360">买入</a>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    </div>
-                    <!--最新交易信息框-->
-                    <div class="productCard bgWhite">
-                        <div class="indexCenter borderBottom">
-                            <div class="productTop flex">
-                                <div class="productTopLeft"><i class="iconfont icon-jiaoyijine" style="font-size: 0.853333333rem;"></i></div>
-                                <div class="productTopCenter">
-                                    <div>稳赚金360天</div>
-                                    <div>到期时间：2017年7月11日</div>
-                                </div>
-                                <div class="productTopRight"><i class="iconfont icon-shenglvehao" style="font-size: 24px;"></i></div>
-                            </div>
-                            <div class="productMiddle flex">
-                                <div class="dealMoneyWrap flex1">
-                                    <div class="dealMoney">10000</div>
-                                    <div>交易金额</div>
-                                </div>
-                                <div class="productMiddleExpire flex1">
-                                    <div class="expireMoney">140</div>
-                                    <div>预期收益</div>
-                                </div>
-                            </div>
-                        </div>
-                        <input type="button" class="readNow bgWhite" value="立即查看">
-                    </div>
-                    <!--产品框-->
-                    <div class="productCard bgWhite">
-                        <div class="productCardCenter">
-                            <div class="cardTop">
-                                <div class="cardTopCenter flex">
-                                    <div class="productName">活期金</div>
-                                    <div class="productDes">次日计息&nbsp;随时买卖</div>
-                                </div>
-                            </div>
-                            <div class="cardBottom">
-                                <div class="cardBottomTop">每日计息&nbsp;灵活卖出<span class="subFont">1元起购</span></div>
-                                <div class="productData flex">
-                                    <div class="productDataleft">
-                                        <div class="percentNum">6<span class="font10">%</span></div>
-                                        <div class="font10">预期年化收益率</div>
-                                    </div>
-                                    <div class="productDataCenter">
-                                        <div class="typeName fontCenter">活期</div>
-                                        <div class="font10 fontCenter">期限</div>
-                                    </div>
-                                    <div class="productDataRight">
-                                        <a href="javascript:" class="buyBtn goBuyHqj">买入</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--热门活动框-->
-                    <div class="productCard bgWhite">
-                        <a class="activeWrap">
-                            <img src="images/newImg.png" alt="">
-                        </a>
-                    </div>
-                    <!--最新文章框-->
-                    <div class="productCard bgWhite newArticle">
-                        <div class="indexCenter">
-                            <div class="productTop flex">
-                                <div class="productTopLeft"><i class="iconfont icon-Group" style="font-size: 0.853333333rem;"></i></div>
-                                <div class="productTopCenter">
-                                    <div>13556555656</div>
-                                    <div class="productTopCenterBottom">2分钟前</div>
-                                </div>
-                                <div class="productTopRight"><i class="iconfont icon-shenglvehao" style="font-size: 24px;"></i></div>
-                            </div>
-                            <div class="articleTile">不明白</div>
-                            <div class="articleContent">为什么我到期的钱提不出来？老是显示错误，客服不忙解决问题</div>
-                        </div>
-                        <div class="newArticleBottom  borderTop">
-                            <div class="newArticleBottomCenter flex">
-                                <div class="flex1 articleRead">
-                                    <i class="iconfont icon-yuedu1" style="font-size: 0.426666667rem;"></i>
-                                    <span class="articleReadNum">5</span>
-                                    <span class="articleFont">阅读</span>
-                                </div>
-                                <div class="flex1 articleComment">
-                                    <i class="iconfont icon-wode-" style="font-size: 0.426666667rem;"></i>
-                                    <span class="articleCommentNum">3</span>
-                                    <span class="articleFont">评论</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--浏览器信息-->
-                    <div class="browserInfo bgWhite" style="padding: 20px;margin: 20px 0;">
-                        <div class="browserInfo1"></div>
-                        <hr>
-                        <div class="browserInfo2"></div>
+                    <div class="logoFontWrap">
+                        <h3 class="logoTitle">财宝理财</h3><br>
+                        <p class="logoFont">财宝，就在这里</p>
                     </div>
                 </div>
-            </div>
-            <div class=" flex indexFoots bgWhite">
-                <div class="swiper-slide footBtn footBtnOrange shouYe">
-                    <span class="homeIcon fontBtnIcon"><i class="iconfont icon-shouyefanhuishouye"></i></span><br>
-                    首页
+                <div class="goldPriceWrap">
+                    今日金价：<span class="goldPrice">465.22</span><span class="goldUnit">元/克</span>
                 </div>
-                <div class="swiper-slide footBtn yueDu">
-                    <span class="readIcon fontBtnIcon"><i class="iconfont icon-yuedu"></i></span><br>
-                    阅读
+                <ul class="nav">
+                    <li><a href="index.html">首页</a></li>
+                    <li><a href="products.html">我要投资</a></li>
+                    <li><a href="about.html" class="cpys">产品优势</a></li>
+                    <li>
+                        <a href="">安全保障</a>&nbsp;&nbsp;<i class="iconfont icon-right-copy" style="font-size: 12px;"></i>
+                        <ul class="secNav bgWhite">
+                            <li><a href="about.html">安全保障</a></li>
+                            <li><a href="about.html">关于我们</a></li>
+                            <li><a href="about.html">团队介绍</a></li>
+                            <li><a href="about.html">发展历程</a></li>
+                            <li><a href="about.html">产品优势</a></li>
+                            <li><a href="about.html">合作伙伴</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="loginBtnWrap">
+                    <li>
+                        <a href="">注册/登录</a>&nbsp;&nbsp;<i class="iconfont icon-right-copy" style="font-size: 12px;"></i>
+                        <ul class="loginSecNav bgWhite">
+                            <li><a href="register.html">免费注册</a></li>
+                            <li><a href="login.html">请登录</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="downAPP">
+                    <span class="downFont">下载APP</span>
+                    <div class="ewm bgWhite">
+                        <img src="images/1508228178.png" alt="">
+                        <p>扫描二维码下载APP</p>
+                    </div>
                 </div>
-                <div class="swiper-slide footBtn faXian">
-                    <span class="findIcon fontBtnIcon"><i class="iconfont icon-faxian"></i></span><br>
-                    发现
-                </div>
-                <div class="swiper-slide footBtn ziChan">
-                    <span class="assetsIcon fontBtnIcon"><i class="iconfont icon-wodezichan"></i></span><br>
-                    资产
-                </div>
-            </div>
-        <div class="footCover"></div>
+            </nav>
+        </header>
     </div>
-</div>
-</body>
-<script src="js/zepto.min.js"></script>
-<script src="js/fastclick.js"></script>
-<script src="js/app.js"></script>
-<script>
-    $(".browserInfo1").html("浏览器信息:" + "<br/>" + window.navigator.userAgent);
-    var browser={
-        versions:function(){
-            var u = navigator.userAgent, app = navigator.appVersion;
-            return {//移动终端浏览器版本信息
-                trident: u.indexOf('Trident') > -1, //IE内核
-                presto: u.indexOf('Presto') > -1, //opera内核
-                webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
-                gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
-                mobile: !!u.match(/AppleWebKit.*Mobile.*/)||!!u.match(/AppleWebKit/), //是否为移动终端
-                ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
-                android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
-                iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者QQHD浏览器
-                iPad: u.indexOf('iPad') > -1, //是否iPad
-                webApp: u.indexOf('Safari') == -1 //是否web应该程序，没有头部与底部
-            };
-        }(),
-        language:(navigator.browserLanguage || navigator.language).toLowerCase()
-    };
-    $(".browserInfo2").html("trident:" + browser.versions.trident + "<br/>"+ "presto:" + browser.versions.presto + "<br/>"+ "webKit:" +browser.versions.webKit+ "<br/>" +  "gecko:" +browser.versions.gecko+ "<br/>" + "mobile:" +browser.versions.mobile + "<br/>"+ "ios：" +browser.versions.ios+ "<br/>" + "android：" +browser.versions.android + "<br/>"+ "iPhone：" +browser.versions.iPhone + "<br/>"+ "iPad：" +browser.versions.iPad + "<br/>"+ "webApp：" +browser.versions.webApp );
+    <section class="banner ">
+        <div class="bannerMain relative">
+            <div class="bgWhite fixedCard">
+                <div class="fixedCardTop relative">
+                    <i class="iconfont icon-wending" style="font-size: 40px;color: #f2b643;display: inline-block"></i>
+                    <div class="fixedCardTopTitle ">
+                        <span>年化10%</span>&nbsp;<span>新手特权</span>
+                    </div><br>
+                    <span class="sykj">收益可提现</span>
+                </div>
+                <div class="fixedCardTop relative marginTop20">
+                    <img src="images/n6.png" alt="">
+                    <div class="fixedCardTopTitle ">
+                        <span>财富天下实力注资5000万</span>
+                    </div><br>
+                    <span class="sykj">收益可提现</span>
+                </div>
+                <input type="button" value="注册领8888元" class="register888">
+            </div>
+        </div>
+    </section>
+    <section class="productWrap">
+        <div class="pageCenter">
+            <div class="productWrapTitle">
+                <span class="rowLine"></span>
+                <div class="titleTop">
+                    <span class="titleTopFont">产品多选</span><br>
+                    <span class="titleTopFontEng">diverse products</span><br>
+                    <span class="bottomLine"></span><br>
+                </div>
+                <span class="rowLine"></span>
+            </div>
+            <div class="productContent">
+                <ul>
+                    <li class="productCard">
+                        <div class="xinShou">
+                            <img src="images/newUsersUse.png" alt="">
+                        </div>
+                        <h3 class="productCardTitle">新手活期金</h3>
+                        <div class="textCenter">
+                            <span class="bigNum">11.8</span><span class="smallNum">%</span>
+                        </div>
+                        <p class="productCardSYL">预期年化收益率</p>
+                        <div class="proCircle flex">
+                            <div class="flex1">90天</div>
+                            <div class="flex1">100元起购</div>
+                        </div>
+                        <div class="productCardBtnWrap">
+                            <input type="button" class="productCardBtn" value="立即抢购">
+                        </div>
+                    </li>
+                    <li class="productCard">
+                        <div class="xinShou"><img src="images/newUsersUse.png" alt=""></div>
+                        <h3 class="productCardTitle">新手30天稳赚金</h3>
+                        <div class="textCenter">
+                            <span class="bigNum">18</span><span class="smallNum">%</span>
+                        </div>
+                        <p class="productCardSYL">预期年化收益率</p>
+                        <div class="proCircle flex">
+                            <div class="flex1">30天</div>
+                            <div class="flex1">100元起购</div>
+                        </div>
+                        <div class="productCardBtnWrap">
+                            <input type="button" class="productCardBtn" value="立即抢购">
+                        </div>
+                    </li>
+                    <li class="productCard">
+                        <div class="xinShou"><img src="images/newUsersUse.png" alt=""></div>
+                        <h3 class="productCardTitle">新手360天稳赚金</h3>
+                        <div class="textCenter">
+                            <span class="bigNum">18</span><span class="smallNum">%</span>
+                        </div>
+                        <p class="productCardSYL">预期年化收益率</p>
+                        <div class="proCircle flex">
+                            <div class="flex1">360天</div>
+                            <div class="flex1">100元起购</div>
+                        </div>
+                        <div class="productCardBtnWrap">
+                            <input type="button" class="productCardBtn" value="立即抢购">
+                        </div>
+                    </li>
+                    <li class="productCard">
+                        <div class="tuiJian"><img src="images/u255.png" alt=""></div>
+                        <h3 class="productCardTitle">活期金</h3>
+                        <div class="textCenter">
+                            <span class="bigNum">4</span><span class="smallNum">%</span><span class="bigNum">+</span><span class="bigNum">2</span><span class="smallNum">%</span>
+                        </div>
+                        <p class="productCardSYL">预期年化收益率</p>
+                        <div class="proCircle flex">
+                            <div class="flex1">活期</div>
+                            <div class="flex1">100元起购</div>
+                        </div>
+                        <div class="productCardBtnWrap">
+                            <input type="button" class="productCardBtn" value="立即抢购">
+                        </div>
+                    </li>
+                    <li class="productCard">
+                        <div class="tuiJian"><img src="images/u255.png" alt=""></div>
+                        <h3 class="productCardTitle">30天稳赚金</h3>
+                        <div class="textCenter">
+                            <span class="bigNum">5</span><span class="smallNum">%</span><span class="bigNum">+</span><span class="bigNum">1</span><span class="smallNum">%</span>
+                        </div>
+                        <p class="productCardSYL">预期年化收益率</p>
+                        <div class="proCircle flex">
+                            <div class="flex1">30天</div>
+                            <div class="flex1">100元起购</div>
+                        </div>
+                        <div class="productCardBtnWrap">
+                            <input type="button" class="productCardBtn" value="立即抢购">
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <section class="safetyWrap relative">
+        <div class="pageCenter">
+            <div class="safetyWrapTitle">
+                <span class="rowLine"></span>
+                <div class="titleTop">
+                    <span class="titleTopFont">安全保障</span><br>
+                    <span class="titleTopFontEng">safety guarantee</span><br>
+                    <span class="bottomLine"></span><br>
+                </div>
+                <span class="rowLine"></span>
+            </div>
+            <div class="safetyContent">
+                <div class="safetyCardWrap">
+                    <div class="safetyCard safetyCard1">
+                        <div>
+                            <img src="images/u202.png" alt=""><span class="safetyTitle">优质资产甄选</span>
+                        </div>
+                        <p>财宝理财上线的资产由中華財寶香港有限公司和深圳金创赢资产管理有限公司严格筛选，标的资产高度分散，信息充分披露，财宝理财全程监管资产运作，更好的保证您的权益。</p>
+                    </div>
+                    <div class="safetyCard safetyCard2">
+                        <div>
+                            <img src="images/u132.png" alt=""><span class="safetyTitle">资金安全透明</span>
+                        </div>
+                        <p>财宝理财的资产涉及的所有资金账户均在中国银行股份有限公司开通托管账户，所有黄金资产账户均在西部黄金股份有限公司开通黄金账户。用户交易资金均通过上海银生宝电子支付服务有限公司进行支付，执行同卡进出原则，确保资金安全透明。</p>
+                    </div>
+                </div>
+                <div class="safetyCardWrap">
+                    <div class="safetyCard safetyCard3">
+                        <div>
+                            <img src="images/u204.png" alt=""><span class="safetyTitle">严格遵守法律</span>
+                        </div>
+                        <p>财宝理财聘用专业律师团队作为法律顾问，对所有资产进行审核把关，确保合法合规，更好的保障您的权益。</p>
+                    </div>
+                    <div class="safetyCard safetyCard4">
+                        <div>
+                            <img src="images/u206.png" alt=""><span class="safetyTitle">网络安全防护</span>
+                        </div>
+                        <p>
+                            1、专业防火墙隔离系统，提升交易数据安全性，保障用户账户及资金安全。<br>
 
-</script>
+                            2、完善的数据备份系统，有效防止数据丢失，确保用户数据真实有效。<br>
+
+                            3、用户数据多重加密措施，防护用户隐私数据安全，有效杜绝信息泄露。<br>
+
+                            4、基于大数据技术的运维检测系统，全天24小时不间断监控管理。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+        <section class="footerWrap flex">
+            <div class="flex1" style="border-right: 1px solid #fafafa;   ">
+                <h3 class="footerJJ">平台简介</h3>
+                <ul class="footerUl">
+                    <li><a href="about.html">安全保障</a></li>
+                    <li><a href="about.html">关于我们</a></li>
+                    <li><a href="about.html">团队介绍</a></li>
+                </ul>
+                <ul class="footerUl">
+                    <li><a href="about.html">发展历程</a></li>
+                    <li><a href="about.html">产品优势</a></li>
+                    <li><a href="about.html">合作伙伴</a></li>
+                </ul>
+            </div>
+            <div class="flex1">
+                <div class="footerRightWrap relative">
+                    <ul class="footerIconWrap relative">
+                        <li>
+                            <img src="images/u21.png" alt="">下载APP
+                            <div class="footImgWrap1 footImgWrap">
+                                <img src="images/1508228178.png" alt="">
+                                <p style="padding:3px 5px 2px 5px">扫描二维码下载APP</p>
+                            </div>
+                        </li>
+                        <li>
+                            <img src="images/u111.png" alt="">
+                            <div class="footImgWrap2 footImgWrap">
+                                <img src="images/1508228178.png" alt="">
+                                <p style="padding:3px 5px 2px 5px">关注公众号不定期<br>参与抽奖活动</p>
+                            </div>
+                        </li>
+                        <li>
+                            <img src="images/u128.png" alt="">
+                            <div class="footImgWrap3 footImgWrap">
+                                <img src="images/1508228178.png" alt="">
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="footerRightUl">
+                        <li>
+                            <img src="images/u117.png" alt="">
+                        </li>
+                        <li class="phoneNum">4000-94-4000</li>
+                        <li>
+                            <p>工作日：9:00-17:30</p>
+                            <p>非工作日请留言</p>
+                        </li>
+                    </ul>
+                    <div class=""></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="footerBottom">
+            <p>©2017 财宝理财｜ 版权所有 ©招财网 西安招财投资服务有限公司 地址：西安市高新区锦业路东段32号锦业时代广场B1栋26层</p>
+            <p>电话：4000-94-4000｜ 陕ICP备14007227号</p>
+        </section>
+    </footer>
+    <section class="rightFix bgWhite">
+        <ul class="rightFixUl">
+            <li class="relative">
+                <a href="">电话</a>
+                <div class="rightFixImgWrap bgWhite noPadding">
+                    <span class="kfrx">客服热线：4000-94-4000</span>
+                </div>
+            </li>
+            <li class="relative">
+                <a href="">APP</a>
+                <div class="rightFixImgWrap bgWhite">
+                    <img src="images/1508228178.png" alt="">
+                    <p style="padding:3px 5px 2px 5px">扫描二维码下载APP</p>
+                </div>
+            </li>
+            <li class="relative">
+                <a href="">公众号</a>
+                <div class="rightFixImgWrap bgWhite">
+                    <img src="images/1508228178.png" alt="">
+                    <p>关注公众号不定期<br>参与抽奖活动</p>
+                </div>
+            </li>
+        </ul>
+    </section>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/dom.js"></script>
+</body>
 </html>

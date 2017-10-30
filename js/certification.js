@@ -58,6 +58,7 @@ $(function(){
         }
     });
     $(".ysbPayBtn").click(function(){
+        $(".ysbPayBtn").attr("disabled","disabled");
         //if($(".personBankNum").val() == ""){
         //    $(".popup").show();
         //    $(".popup").text("请输入开户卡号");
@@ -75,14 +76,47 @@ $(function(){
         //    $(".popup").text("请输入手机号");
         //    setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
         //}else{
+        //alert("ysbPayBtn");
+        if($(".ysbPayBtn").val() == "获取验证码"){
             uniquenessQuery();
             $("#ysbCode").removeAttr("readonly");
-            //countDown();
+        }else if($(".ysbPayBtn").val() == "重新获取"){
+            //window.sessionStorage.orderId = window.localStorage.phoneNumber + new Date().getTime();//订单号
+            messageMac();
+            $.ajax({
+                url:"http://47.74.133.222:3333/authPay-front/authPay/sendVercode",
+                type:'POST',
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                data:JSON.stringify({
+                    "accountId":"2120170306142335001",//商户编号
+                    "customerId":window.localStorage.phoneNumber,//用户编号
+                    "orderId":window.sessionStorage.orderId,//订单号
+                    "phoneNo":$(".accountHolderPhoneNum").val(),//手机号
+                    "token":window.sessionStorage.payToken,
+                    "mac":window.sessionStorage.messagemac//数字签名
+                }),
+                success:function(res){
+                    console.log("000");
+                    if(res.result_code == "0000"){
+                        countDown();
+                    }else{
+                        $(".ysbPayBtn").removeAttr("disabled");
+                        $(".popup").show().text(res.result_msg);
+                        setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
+                    }
+                },
+                error:function(res){
+                    //console.log(res);
+                }
+            });
+        }
+        //countDown();
         //}
     });
     //倒计时
     function countDown(){
-        //alert("111");
         var timer=setTimeout(function(){//按验证按钮后60秒按钮禁用
             clearInterval(timer2);
             $(".ysbPayBtn").val("重新获取").css({
@@ -140,8 +174,8 @@ $(function(){
         var idCardNoArr = [];
         idCardNoArr.push(idCardNoName,idCardNoNum);
         var idCardNo = idCardNoArr.join("=");
-        console.log(idCardNoNum);
-        console.log(idCardNo);
+        //console.log(idCardNoNum);
+        //console.log(idCardNo);
         //订单号
         var orderIdName = 'orderId';
         var orderIdNum = window.sessionStorage.orderId;
@@ -166,7 +200,7 @@ $(function(){
         //支付类型
         var payType = "payType=0";
         //响应地址
-        var responseUrl = "responseUrl=http://106.14.165.194:1111/payResult";
+        var responseUrl = "responseUrl=http://47.74.133.222:1111/payResult";
         //var name = 'name=$(".accountHolderName").val()';
         //var phoneNo = 'phoneNo=$(".accountHolderPhoneNum").val()';
         //var cardNo ='cardNo=$(".personBankNum").val()';
@@ -180,9 +214,9 @@ $(function(){
         var macArr = [];
         macArr.push(accountId,customerId,payType,name,phoneNo,cardNo,idCardNo,orderId,purpose,amount,responseUrl,key);
         var mac=macArr.join("&");
-        console.log(mac);
+        //console.log(mac);
         window.sessionStorage.mac = md5(mac).toUpperCase();
-        console.log(window.sessionStorage.mac);
+        //console.log(window.sessionStorage.mac);
     }
     //短信数字签名
     function messageMac(){
@@ -218,14 +252,14 @@ $(function(){
         var messageMacArr = [];
         messageMacArr.push(accountId,customerId,token,orderId,phoneNo,key);
         var messagemac=messageMacArr.join("&");
-        console.log(messagemac);
+        //console.log(messagemac);
         window.sessionStorage.messagemac = md5(messagemac).toUpperCase();
     }
 
     //实名绑卡唯一性查询
     function uniquenessQuery(){
         $.ajax({
-            url:"http://106.14.165.194:1111/bindInfo/unique",
+            url:"http://47.74.133.222:1111/bankCard/unique",
             type:"GET",
             headers:{
                 "token":window.localStorage.token
@@ -235,28 +269,31 @@ $(function(){
                 "IDcard":$(".personIdCardNum").val().replace(/\s/g, "")
             },
             success:function(res){
-                console.log(res);
+                //console.log(res);
                 if(res.code == 0){
-                    if(window.sessionStorage.certificationSign = "rechargeCertification"){
+                    if(window.sessionStorage.certificationSign == "rechargeCertification"){
                         recharge();
                     }else{
                         buyProducts();
                     }
                 }else {
-                    $(".popup").show();
-                    $(".popup").text("身份证号已被绑定");
+                    $(".ysbPayBtn").removeAttr("disabled");
+                    $(".popup").show().text("身份证号已被绑定");
                     setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
                 }
             },
             error:function(res){
-                console.log(res);
+                //console.log(res);
+                //console.log(res.status);
+                $(".popup").show().text(res.statusText);
+                setTimeout('$(".popup").text(""),$(".popup").hide()',2000);
             }
         });
     }
     //后端充值接口
     function recharge(){
         $.ajax({
-            url:"http://106.14.165.194:1111/recharge",
+            url:"http://47.74.133.222:1111/recharge",
             "type":"POST",
             headers:{
                 "Content-Type":"application/x-www-form-urlencoded ",
@@ -265,20 +302,23 @@ $(function(){
             data:{
                 "phone":window.localStorage.phoneNumber,
                 "orderId":window.sessionStorage.orderId,
-                "amount":window.sessionStorage.amount
+                "amount":window.sessionStorage.amount,
+                "bankCard":$(".personBankNum").val().replace(/\s/g, ""),
+                "name":$(".accountHolderName").val(),
+                "IDcard":$(".personIdCardNum").val().replace(/\s/g, ""),
+                "bankPhone":$(".accountHolderPhoneNum").val()
             },
             success:function(res){
-                console.log(res);
+                //console.log(res);
                 if(res.code == 0){
                     prePayment();
                 }else {
-                    $(".popup").show();
-                    $(".popup").text(res.msg);
+                    $(".popup").show().text(res.msg);
                     setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
                 }
             },
             error:function(res){
-                console.log(res);
+                //console.log(res);
             }
         });
     }
@@ -286,7 +326,7 @@ $(function(){
     function buyProducts(){
         if( window.sessionStorage.buyProductType == "buyHqjMark" ){
             $.ajax({
-                url:"http://106.14.165.194:1111/currentGold/buyIn",
+                url:"http://47.74.133.222:1111/currentGold/buyIn",
                 type:"POST",
                 headers:{
                     "Content-Type":"application/x-www-form-urlencoded ",
@@ -296,25 +336,25 @@ $(function(){
                     "phone":window.localStorage.phoneNumber,
                     "orderId":window.sessionStorage.orderId,
                     "amount":window.sessionStorage.amount,
-                    "payWay":"1"
+                    "payWay":"1",
+                    "bankCard":$(".personBankNum").val().replace(/\s/g, "")
                 },
                 success:function(res){
                     if(res.code == 0){
                         prePayment();
                     }else{
-                        $(".popup").show();
-                        $(".popup").text(res.msg);
+                        $(".popup").show().text(res.msg);
                         setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
                     }
-                    console.log(res);
+                    //console.log(res);
                 },
                 error:function(res){
-                    console.log(res);
+                    //console.log(res);
                 }
             });
         }else if(window.sessionStorage.buyProductType == "buyWzj60Mark" || window.sessionStorage.buyProductType == "buyWzj90Mark" || window.sessionStorage.buyProductType == "buyWzj180Mark" || window.sessionStorage.buyProductType == "buyWzj360Mark"){
             $.ajax({
-                url:"http://106.14.165.194:1111/wenzhuanGold/buyIn",
+                url:"http://47.74.133.222:1111/wenzhuanGold/buyIn",
                 type:"POST",
                 headers:{
                     "Content-Type":"application/x-www-form-urlencoded ",
@@ -327,20 +367,20 @@ $(function(){
                     "period":window.sessionStorage.period,
                     "rate":window.sessionStorage.rate,
                     "goldPriceBuy":window.sessionStorage.goldPriceBuy,
-                    "payWay":"1"
+                    "payWay":"1",
+                    "bankCard":$(".personBankNum").val().replace(/\s/g, "")
                 },
                 success:function(res){
                     if(res.code == 0){
                         prePayment();
                     }else{
-                        $(".popup").show();
-                        $(".popup").text(res.msg);
+                        $(".popup").show().text(res.msg);
                         setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
                     }
-                    console.log(res);
+                    //console.log(res);
                 },
                 error:function(res){
-                    console.log(res);
+                    //console.log(res);
                 }
             });
         }
@@ -348,7 +388,7 @@ $(function(){
     //实名绑卡
     function bindCard(){
         $.ajax({
-            url:"http://106.14.165.194:1111/bindInfo",
+            url:"http://47.74.133.222:1111/bankCard",
             type:"POST",
             headers:{
                 "Content-Type":"application/x-www-form-urlencoded ",
@@ -364,10 +404,10 @@ $(function(){
                 "authToken":window.sessionStorage.payToken            //三方支付的授权码
             },
             success:function(res){
-                console.log(res);
+                //console.log(res);
             },
             error:function(res){
-                console.log(res);
+                //console.log(res);
             }
         });
     }
@@ -375,7 +415,7 @@ $(function(){
     function prePayment(){
         getMac();
         $.ajax({
-            url:"http://106.14.165.194:3333/authPay-front/authPay/pay",
+            url:"http://47.74.133.222:3333/authPay-front/authPay/pay",
             type:"POST",
             headers:{
                 'Content-Type':'application/json'
@@ -391,56 +431,28 @@ $(function(){
                 "orderId":window.sessionStorage.orderId,                   //订单号
                 "purpose":window.sessionStorage.productsType,             //目的
                 "amount":window.sessionStorage.amount,                     //金额
-                "responseUrl":"http://106.14.165.194:1111/payResult",   //响应地址
+                "responseUrl":"http://47.74.133.222:1111/payResult",   //响应地址
                 "mac":window.sessionStorage.mac                             //数字签名
             }),
             dataType: "json",
             success:function(res){
-                console.log(res);
                 if(res.result_code == "0000"){
                     window.sessionStorage.payToken = res.token;
                     countDown();
                     bindCard();
-                    $(".ysbPayBtn").attr("class","ysbVerifyCode");
+                    //$(".ysbPayBtn").attr("class","ysbVerifyCode").removeClass("ysbPayBtn");
                 }else{
                     //$(".ysbPayBtn").addClass("ysbVerifyCode");
-                    $(".popup").show();
-                    $(".popup").text(res.result_msg);
+                    $(".popup").show().text(res.result_msg);
                     setTimeout('$(".popup").hide(),$(".popup").text("")',3000);
                 }
             },
             error:function(res){
-                console.log(res);
+                //console.log(res);
             }
         });
     }
-    //获取验证码（银生宝）
-    $(".ysbVerifyCode").click(function(){
-        window.sessionStorage.orderId = window.localStorage.phoneNumber + new Date().getTime();
-        messageMac();
-        $.ajax({
-           url:"http://106.14.165.194:3333/authPay-front/authPay/sendVercode",
-           type:'POST',
-           headers:{
-               'Content-Type': 'application/json'
-           },
-           data:JSON.stringify({
-               "accountId":"2120170306142335001",//商户编号
-               "customerId":window.localStorage.phoneNumber,//用户编号
-               "orderId":window.sessionStorage.orderId,//订单号
-               "phoneNo":$(".accountHolderPhoneNum").val(),//手机号
-               "token":window.sessionStorage.payToken,
-               "mac":window.sessionStorage.messagemac//数字签名
-           }),
-           success:function(res){
-               countDown();
-                console.log(res);
-           },
-           error:function(res){
-                console.log(res);
-           }
-       });
-    });
+
     $("#ysbCode").on('input porpertychange',function(){
         if($("#ysbCode").val().length == 6){
             $(".nextBtn").css("background","rgb(242,182,67)").removeAttr("disabled");
@@ -448,9 +460,9 @@ $(function(){
     });
     //    下一步
     $(".nextBtn").click(function(){
-        if(window.sessionStorage.certificationSign = "rechargeCertification"){
+        if(window.sessionStorage.certificationSign == "rechargeCertification"){
             window.location.href = "recharge.html";
-        }else if(window.sessionStorage.certificationSign = "buyHqjCertification"){
+        }else if(window.sessionStorage.certificationSign == "buyHqjCertification"){
             window.location.href = "buyhqj.html";
         }else{
             window.location.href = "buyWzj.html";

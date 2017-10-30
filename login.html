@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录-财宝理财</title>
+    <link rel="shortcut icon" href="images/caibaosmall.png">
+    <link rel="stylesheet" href="css/swiper-3.4.2.min.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/iconfont.css">
+    <style>
+        .swiper-container {
+            width: 100%;
+            height: 100%;
+
+        }
+        .swiper-slide {
+            text-align: center;
+            font-size: 18px;
+            width: 100% !important;
+            /* Center slide text vertically */
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            -webkit-justify-content: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            -webkit-align-items: center;
+            align-items: center;
+        }
+        .swiper-slide img{
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<div id="wrap">
+    <div class="headWrap">
+        <header class="head">
+            <nav class="navWrap">
+                <div class="logoWrap relative">
+                    <div class="logoImgWrap">
+                        <img src="images/caibaosmall.png" alt="">
+                    </div>
+                    <div class="logoFontWrap">
+                        <h3 class="logoTitle">财宝理财</h3><br>
+                        <p class="logoFont">财宝，就在这里</p>
+                    </div>
+                </div>
+                <div class="goldPriceWrap">
+                    今日金价：<span class="goldPrice">465.22</span><span class="goldUnit">元/克</span>
+                </div>
+                <ul class="nav">
+                    <li><a href="index.html">首页</a></li>
+                    <li><a href="products.html">我要投资</a></li>
+                    <li><a href="about.html" class="cpys">产品优势</a></li>
+                    <li>
+                        <a href="">安全保障</a>&nbsp;&nbsp;<i class="iconfont icon-right-copy" style="font-size: 12px;"></i>
+                        <ul class="secNav bgWhite">
+                            <li><a href="about.html">安全保障</a></li>
+                            <li><a href="about.html">关于我们</a></li>
+                            <li><a href="about.html">团队介绍</a></li>
+                            <li><a href="about.html">发展历程</a></li>
+                            <li><a href="about.html">产品优势</a></li>
+                            <li><a href="about.html">合作伙伴</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="loginBtnWrap">
+                    <li>
+                        <a href="">注册/登录</a>&nbsp;&nbsp;<i class="iconfont icon-right-copy" style="font-size: 12px;"></i>
+                        <ul class="loginSecNav bgWhite">
+                            <li><a href="register.html">免费注册</a></li>
+                            <li><a href="login.html">请登录</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="downAPP">
+                    <span class="downFont">下载APP</span>
+                    <div class="ewm bgWhite">
+                        <img src="images/1508228178.png" alt="">
+                        <p>扫描二维码下载APP</p>
+                    </div>
+                </div>
+            </nav>
+        </header>
+    </div>
+        <section class="container">
+            <div class="containerWrap">
+                <div class="containerContent">
+                    <div class="containerLeft">
+                        <div class="containerLeftSlide">
+                            <div class="swiper-container">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                        <img src="images/4.jpg" alt="">
+                                        <div class="swiperFont">1111<br>2222</div>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="images/5.jpg" alt="">
+                                        <div class="swiperFont">333<br>444</div>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="images/6.jpg" alt="">
+                                        <div class="swiperFont">555<br>666</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="containerRight bgWhite">
+                        <div class="loginCard bgWhite">
+                            <div class="tabBar flex border_Bottom">
+                                <span class="bar1 flex1 textYellow">密码登录</span>
+                                <span class="bar2 flex1">短信登录</span>
+                            </div>
+                            <div class="tab tab1 pwdLogin" style="display: block;">
+                                <div class="infoWrap">
+                                    <span class="registerName">手机号</span>
+                                    <input type="phone" placeholder="请输入注册的手机号码" class="phoneNumSet" maxlength="11">
+                                </div>
+                                <div class="infoWrap">
+                                    <span class="registerName">密&nbsp;&nbsp;&nbsp;码</span>
+                                    <input type="password" placeholder="6-16位字符组成" class="pwdNum" maxlength="16" minlength="6">
+                                </div>
+                                <div class="loginButtonWrap">
+                                    <input type="button" value="登录" class="loginBtn loginPwdBtn">
+                                </div>
+                            </div>
+                            <div class="tab tab2 codeLogin">
+                                <div class="infoWrap">
+                                    <span class="registerName">手机号</span>
+                                    <input type="phone" placeholder="请输入您的手机号码" class="phoneNumSet" maxlength="11">
+                                </div>
+                                <div class="infoWrap">
+                                    <span class="registerName">验证码</span>
+                                    <input type="phone" placeholder="请输入验证码" class="phoneCode" maxlength="6">
+                                    <input type="button" value="点我获取" class="getCode">
+                                </div>
+                                <div class="loginButtonWrap">
+                                    <input type="button" value="登录" class="loginBtn loginCodeBtn">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+        <footer class="footer">
+            <section class="footerWrap flex">
+                <div class="flex1" style="border-right: 1px solid #fafafa;   ">
+                    <h3 class="footerJJ">平台简介</h3>
+                    <ul class="footerUl">
+                        <li><a href="about.html">安全保障</a></li>
+                        <li><a href="about.html">关于我们</a></li>
+                        <li><a href="about.html">团队介绍</a></li>
+                    </ul>
+                    <ul class="footerUl">
+                        <li><a href="about.html">发展历程</a></li>
+                        <li><a href="about.html">产品优势</a></li>
+                        <li><a href="about.html">合作伙伴</a></li>
+                    </ul>
+                </div>
+                <div class="flex1">
+                    <div class="footerRightWrap relative">
+                        <ul class="footerIconWrap relative">
+                            <li>
+                                <img src="images/u21.png" alt="">下载APP
+                                <div class="footImgWrap1 footImgWrap">
+                                    <img src="images/1508228178.png" alt="">
+                                    <p style="padding:3px 5px 2px 5px">扫描二维码下载APP</p>
+                                </div>
+                            </li>
+                            <li>
+                                <img src="images/u111.png" alt="">
+                                <div class="footImgWrap2 footImgWrap">
+                                    <img src="images/1508228178.png" alt="">
+                                    <p style="padding:3px 5px 2px 5px">关注公众号不定期<br>参与抽奖活动</p>
+                                </div>
+                            </li>
+                            <li>
+                                <img src="images/u128.png" alt="">
+                                <div class="footImgWrap3 footImgWrap">
+                                    <img src="images/1508228178.png" alt="">
+                                </div>
+                            </li>
+                        </ul>
+                        <ul class="footerRightUl">
+                            <li>
+                                <img src="images/u117.png" alt="">
+                            </li>
+                            <li class="phoneNum">4000-94-4000</li>
+                            <li>
+                                <p>工作日：9:00-17:30</p>
+                                <p>非工作日请留言</p>
+                            </li>
+                        </ul>
+                        <div class=""></div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="footerBottom">
+                <p>©2017 财宝理财｜ 版权所有 ©招财网 西安招财投资服务有限公司 地址：西安市高新区锦业路东段32号锦业时代广场B1栋26层</p>
+                <p>电话：4000-94-4000｜ 陕ICP备14007227号</p>
+            </section>
+        </footer>
+        <section class="rightFix bgWhite">
+            <ul class="rightFixUl">
+                <li class="relative">
+                    <a href="">电话</a>
+                    <div class="rightFixImgWrap bgWhite noPadding">
+                        <span class="kfrx">客服热线：4000-94-4000</span>
+                    </div>
+                </li>
+                <li class="relative">
+                    <a href="">APP</a>
+                    <div class="rightFixImgWrap bgWhite">
+                        <img src="images/1508228178.png" alt="">
+                        <p style="padding:3px 5px 2px 5px">扫描二维码下载APP</p>
+                    </div>
+                </li>
+                <li class="relative">
+                    <a href="">公众号</a>
+                    <div class="rightFixImgWrap bgWhite">
+                        <img src="images/1508228178.png" alt="">
+                        <p>关注公众号不定期<br>参与抽奖活动</p>
+                    </div>
+                </li>
+            </ul>
+        </section>
+    </div>
+</div>
+<script src="js/jquery.min.js"></script>
+<script src="js/swiper-3.4.2.jquery.min.js"></script>
+<script src="js/dom.js"></script>
+<script>
+
+    var swiper = new Swiper('.swiper-container', {
+//        pagination: '.swiper-pagination',
+//        nextButton: '.swiper-button-next',
+//        prevButton: '.swiper-button-prev',
+//        paginationClickable: true,
+        spaceBetween: 30,
+        centeredSlides: true,
+        autoplay: 2500,
+        autoplayDisableOnInteraction: false
+    });
+    $(".tabBar").find("span").click(function(){
+        console.log($(this).index())
+        $(this).addClass("textYellow bar1 flex1").siblings().addClass("flex1").removeClass("textYellow");
+        $(".loginCard").find(".tab").hide();
+        $(".loginCard").find(".tab").eq($(this).index()).show();
+    });
+</script>
+</body>
+</html>

@@ -1,10 +1,10 @@
 /**
  * Created by hzc on 2017-7-13.
  */
+
 $(function(){
     FastClick.attach(document.body);
-    $(".inputPwd").focus();
-    $(".inputPwd").on('input',function(){
+    $(".inputPwd").focus().on('input',function(){
         if($(".inputPwd").val().length == 6){
             $(".confirmPwd").focus();
         }
@@ -17,9 +17,8 @@ $(function(){
             setTimeout('$(".popup").hide(),$(".popup").text("")',2000);
         }else {
             var payPwd = sha256_digest($(".confirmPwd").val());
-            console.log(payPwd);
             $.ajax({
-                url:"http://106.14.165.194:1111/paypwd",
+                url:"http://47.74.133.222:1111/paypwd",
                 type:"POST",
                 headers:{
                     "Content-Type":"application/x-www-form-urlencoded",
@@ -30,18 +29,13 @@ $(function(){
                     "paypwd":payPwd
                 },
                 success:function(res){
-                    console.log(res);
                     if(res.code == 0){
-                        if(window.sessionStorage.pageMark == "hqj"){
-                            window.location.href = "productCollection.html";
-                        }else if(window.sessionStorage.checkedLoginCode == "ziChan"){
-                            window.location.href = "asset.html";
-                        }else if(window.sessionStorage.checkedLoginCode == "faXian"){
-                            window.location.href = "find.html";
-                        }else if(window.sessionStorage.pageMark ==  "wzj360"){
-                            window.location.href = "productCollection.html";
-                        }else{
-                            window.location.href = "index.html";
+                        if(window.sessionStorage.setPayPwd == "hqj"){
+                            window.location.href = "buyHqj.html";
+                        }else if(window.sessionStorage.setPayPwd == "wzj"){
+                            window.location.href = "buyWzj.html";
+                        }else if(window.sessionStorage.setPayPwd == "tiXian") {
+                            window.location.href = "withdrawCash.html";
                         }
                     }else{
                         $(".popup").show();
