@@ -375,6 +375,9 @@ input::-webkit-input-placeholder {
     display: none;
     position: absolute;
 }
+.footImgWrap p{
+    margin:0;
+}
 .footImgWrap1{
     padding: 5px 0 5px 0;
     background-color: #fff;
@@ -407,6 +410,9 @@ input::-webkit-input-placeholder {
     font-size: 16px;
     word-spacing: 1px;
     cursor:pointer;
+}
+.register888:focus{
+    border: none;
 }
 .footerIconWrap .footImgWrap p{
     font-size: 10px;
@@ -858,7 +864,7 @@ input::-webkit-input-placeholder {
 .hqiProTitle{
     padding-top: 60px;
 }
-.aboutWrap{
+.aboutWrap,.newsWrap{
     padding-top:90px;
 }
 #aboutNav{
@@ -1415,6 +1421,10 @@ input::-webkit-input-placeholder {
 }
 .recruitmentCnt{
     display: none;
+    margin:0 15px;
+}
+.recruitmentCnt p{
+    margin: 0;
 }
 .recruitmentCnt h3{
     font-size: 20px;
@@ -1463,15 +1473,61 @@ input::-webkit-input-placeholder {
     color: #f2b643;
     text-decoration: underline;
 }
-.coverageCardFont a,h4,p{
+.coverageCardFont a{
     width: 96%;
     margin:15px 0 0 20px;
     line-height: 25px;
 }
-coverageCardFont p{
+.coverageCardFont p{
     font-size: 15px;
+    width: 96%;
+    margin:15px 0 0 20px;
+    line-height: 25px;
 }
 .coverageCardFont h4{
     font-size: 14px;
     text-align: right;
+    width: 96%;
+    margin:0 0 0 20px;
+    line-height: 25px;
+}
+.newsContent{
+    margin:0 50px;
+    color: #6d6d72;
+    font-size: 16px;
+}
+.newsContent h2{
+    padding:30px;
+    font-size: 20px;
+    text-align: center;
+    color: #000;
+}
+.newsContent p{
+    margin: 15px 0;
+    text-indent: 32px;
+    line-height: 25px;
+}
+.newsContent h3{
+    text-align: center;
+    padding:10px;
+}
+.newsContent h4{
+    text-align: right;
+    padding-bottom: 50px;
+}
+.newsContent div{
+    line-height: 25px;
+    padding-top: 15px;
+}
+.newsContent div img{
+    width: 88%;
+    display: block;
+    margin: 0 auto;
+}
+.goBackNews{
+    padding-top: 20px;
+    display: block;
+    text-align: right;
+    color: #f2b643;
+    line-height: 20px;
 }

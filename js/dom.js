@@ -14,4 +14,8 @@ $(function(){
     $("#aboutNav").find("li").click(function () {
         window.sessionStorage.tabMark = $(this).text();
     });
+    $(".newsNav").on("click","li",function () {
+        window.sessionStorage.tabMark = $(this).text();
+        location.href = "../about.html"
+    })
 });
